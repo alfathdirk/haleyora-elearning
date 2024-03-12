@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/widget/card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -107,6 +110,61 @@ class HomePage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Bidang Pekerjaan",
+                style: GoogleFonts.poppins(
+                    fontSize: 12, fontWeight: FontWeight.w600, color: darkText),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 20,
+            ),
+            shrinkWrap: true,
+            children: [
+              CustomCard(
+                child: InkWell(
+                  onTap: () {
+                    Get.toNamed("/detail");
+                  },
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.book,
+                        size: 30,
+                        color: primaryColor,
+                      ),
+                      Text(
+                        "Kursus",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: darkText),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              CustomCard(
+                child: Text("Kursus 1"),
+              ),
+              CustomCard(
+                child: Text("Kursus 1"),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -124,6 +182,40 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+        Container(
+            height: MediaQuery.of(context).size.height / 4,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: CustomCard(
+                    child: Container(
+                      width: 280,
+                      child: const Text("Kursus 1"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: CustomCard(
+                    child: Container(
+                      width: 280,
+                      child: const Text("Kursus 1"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 20),
+                  child: CustomCard(
+                    child: Container(
+                      width: 280,
+                      child: const Text("Kursus 1"),
+                    ),
+                  ),
+                ),
+              ],
+            ))
       ],
     );
   }
