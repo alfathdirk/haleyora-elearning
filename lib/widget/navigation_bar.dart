@@ -1,5 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:haleyora/constants.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final Function(int) onTabTapped;
@@ -10,16 +13,89 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: primaryColor,
       color: Colors.white,
-      buttonBackgroundColor: Colors.white,
+      buttonBackgroundColor: primaryColor,
       height: 65,
-      items: const <Widget>[
-        Icon(Icons.home, size: 30, color: Colors.black),
-        Icon(Icons.search, size: 30, color: Colors.black),
-        Icon(Icons.add, size: 30, color: Colors.black),
-        Icon(Icons.favorite, size: 30, color: Colors.black),
-        Icon(Icons.person, size: 30, color: Colors.black),
+      items: [
+        Container(
+          height: 45,
+          child: Column(
+            children: [
+              Icon(CupertinoIcons.house_alt, size: 30, color: Colors.black),
+              Text(
+                "BERANDA",
+                style: GoogleFonts.mulish(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 45,
+          child: Column(
+            children: [
+              Icon(CupertinoIcons.square_list, size: 30, color: Colors.black),
+              Text(
+                "KURSUS",
+                style: GoogleFonts.mulish(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 45,
+          child: Column(
+            children: [
+              Icon(Icons.emoji_events_outlined, size: 30, color: Colors.black),
+              Text("PENCAPAIAN",
+                  style: GoogleFonts.mulish(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  )),
+            ],
+          ),
+        ),
+        Container(
+          height: 45,
+          child: Column(
+            children: [
+              const Icon(CupertinoIcons.book, size: 30, color: Colors.black),
+              Text(
+                "KURSUSKU",
+                style: GoogleFonts.mulish(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 45,
+          child: Column(
+            children: [
+              Icon(Icons.person_2_outlined, size: 30, color: Colors.black),
+              Text(
+                "AKUN",
+                style: GoogleFonts.mulish(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
       animationDuration: const Duration(milliseconds: 200),
       animationCurve: Curves.easeInOut,
