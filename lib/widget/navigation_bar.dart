@@ -18,11 +18,11 @@ class CustomNavigationBar extends StatelessWidget {
       buttonBackgroundColor: primaryColor,
       height: 65,
       items: [
-        Container(
+        SizedBox(
           height: 45,
           child: Column(
             children: [
-              Icon(CupertinoIcons.house_alt, size: 30, color: Colors.black),
+              const Icon(CupertinoIcons.house_alt, size: 30, color: Colors.black),
               Text(
                 "BERANDA",
                 style: GoogleFonts.mulish(
@@ -34,11 +34,11 @@ class CustomNavigationBar extends StatelessWidget {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 45,
           child: Column(
             children: [
-              Icon(CupertinoIcons.square_list, size: 30, color: Colors.black),
+              const Icon(CupertinoIcons.square_list, size: 30, color: Colors.black),
               Text(
                 "KURSUS",
                 style: GoogleFonts.mulish(
@@ -50,11 +50,11 @@ class CustomNavigationBar extends StatelessWidget {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 45,
           child: Column(
             children: [
-              Icon(Icons.emoji_events_outlined, size: 30, color: Colors.black),
+              const Icon(Icons.emoji_events_outlined, size: 30, color: Colors.black),
               Text("PENCAPAIAN",
                   style: GoogleFonts.mulish(
                     fontSize: 10,
@@ -64,7 +64,7 @@ class CustomNavigationBar extends StatelessWidget {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 45,
           child: Column(
             children: [
@@ -80,11 +80,11 @@ class CustomNavigationBar extends StatelessWidget {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 45,
           child: Column(
             children: [
-              Icon(Icons.person_2_outlined, size: 30, color: Colors.black),
+              const Icon(Icons.person_2_outlined, size: 30, color: Colors.black),
               Text(
                 "AKUN",
                 style: GoogleFonts.mulish(

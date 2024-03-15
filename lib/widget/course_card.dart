@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
@@ -10,7 +9,7 @@ class CourseCard extends StatelessWidget {
   final String description;
   final String imageUrl;
 
-  const CourseCard({
+  const CourseCard({super.key, 
     required this.title,
     required this.description,
     required this.imageUrl,
@@ -25,7 +24,7 @@ class CourseCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
@@ -41,7 +40,7 @@ class CourseCard extends StatelessWidget {
               bottom: 0,
               right: 12,
               child: Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50),
@@ -50,13 +49,13 @@ class CourseCard extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 1,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
                 child: InkWell(
                   onTap: () {},
-                  child: Icon(
+                  child: const Icon(
                     CupertinoIcons.bookmark,
                     color: primaryColor,
                     size: 16,
@@ -80,7 +79,7 @@ class CourseCard extends StatelessWidget {
                     color: orangeText,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   title,
                   style: GoogleFonts.poppins(
@@ -88,14 +87,14 @@ class CourseCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             CupertinoIcons.eye,
                             color: lightGrey,
                             size: 10,
@@ -112,7 +111,7 @@ class CourseCard extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             CupertinoIcons.time,
                             color: lightGrey,
                             size: 10,

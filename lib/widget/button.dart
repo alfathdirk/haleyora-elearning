@@ -5,10 +5,14 @@ import 'package:haleyora/constants.dart';
 class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color color;
+  final Color textColor;
 
-  const RoundedButton({
+  const RoundedButton({super.key, 
     required this.text,
     required this.onPressed,
+    this.color = primaryColor,
+    this.textColor = Colors.white,
   });
 
   @override
@@ -17,16 +21,14 @@ class RoundedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100.0)),
-          backgroundColor: primaryColor,
+          backgroundColor: color,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          // padding: EdgeInsets.only(
-          //     left: 120, right: 120, top: 20, bottom: 20),
         ),
         onPressed: onPressed,
         child: Text(
           text,
           style: GoogleFonts.poppins(
-              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+              fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
         ));
   }
 }

@@ -1,16 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
-import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 
-class CoursePage extends StatelessWidget {
+class CoursePage extends StatefulWidget {
   const CoursePage({Key? key}) : super(key: key);
+
+  @override
+  State<CoursePage> createState() => _coursePageState();
+}
+
+class _coursePageState extends State<CoursePage> {
+  String title = "All";
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,15 @@ class CoursePage extends StatelessWidget {
               Expanded(
                 child: RoundedButton(
                   text: "Semua",
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      if (title != "All") {
+                        title = "All";
+                      }
+                    });
+                  },
+                  color: title == 'All' ? primaryColor : Colors.white,
+                  textColor: title == 'All' ? Colors.white : primaryColor,
                 ),
               ),
               const SizedBox(
@@ -36,7 +46,15 @@ class CoursePage extends StatelessWidget {
               Expanded(
                 child: RoundedButton(
                   text: "Ditandai",
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      if (title != "Ditandai") {
+                        title = "Ditandai";
+                      }
+                    });
+                  },
+                  color: title != 'All' ? primaryColor : Colors.white,
+                  textColor: title != 'All' ? Colors.white : primaryColor,
                 ),
               ),
             ],

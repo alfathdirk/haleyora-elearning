@@ -135,7 +135,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -193,35 +193,35 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: [
+                  children: const [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, bottom: 20),
+                      padding: EdgeInsets.only(left: 20, bottom: 20),
                       child: CustomCard(
-                        child: Container(
+                        child: SizedBox(
                           width: 280,
-                          child: const Text("Kursus 1"),
+                          child: Text("Kursus 1"),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, bottom: 20),
+                      padding: EdgeInsets.only(left: 20, bottom: 20),
                       child: CustomCard(
-                        child: Container(
+                        child: SizedBox(
                           width: 280,
-                          child: const Text("Kursus 1"),
+                          child: Text("Kursus 1"),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, bottom: 20),
+                      padding: EdgeInsets.only(left: 20, bottom: 20),
                       child: CustomCard(
-                        child: Container(
+                        child: SizedBox(
                           width: 280,
-                          child: const Text("Kursus 1"),
+                          child: Text("Kursus 1"),
                         ),
                       ),
                     ),
