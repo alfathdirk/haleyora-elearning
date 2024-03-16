@@ -151,20 +151,21 @@ class CourseDetail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromARGB(95, 165, 165, 165),
-                                  blurRadius: 11,
-                                  spreadRadius: 0.2,
-                                ),
-                              ],
-                            ),
-                            child: Center(
+                          child: GestureDetector(
+                            onTap: () => print('Mulai Ujian'),
+                            child: Container(
+                              padding: EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(95, 165, 165, 165),
+                                    blurRadius: 11,
+                                    spreadRadius: 0.2,
+                                  ),
+                                ],
+                              ),
                               child: Column(
                                 children: [
                                   Icon(
@@ -187,20 +188,21 @@ class CourseDetail extends StatelessWidget {
                         ),
                         SizedBox(width: 20),
                         Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromARGB(95, 165, 165, 165),
-                                  blurRadius: 11,
-                                  spreadRadius: 0.2,
-                                ),
-                              ],
-                            ),
-                            child: Center(
+                          child: GestureDetector(
+                            onTap: () => print('Tugas'),
+                            child: Container(
+                              padding: EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(95, 165, 165, 165),
+                                    blurRadius: 11,
+                                    spreadRadius: 0.2,
+                                  ),
+                                ],
+                              ),
                               child: Column(
                                 children: [
                                   Icon(
@@ -233,10 +235,13 @@ class CourseDetail extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Icon(
-                            Icons.picture_as_pdf_outlined,
-                            color: greyText,
-                            size: 30,
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.picture_as_pdf_outlined,
+                              size: 30,
+                              color: greyText,
+                            ),
                           ),
                         ],
                       ),
