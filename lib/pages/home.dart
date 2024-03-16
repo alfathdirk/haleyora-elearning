@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:haleyora/pages/dashboard/achievment_page.dart';
 import 'package:haleyora/pages/dashboard/course_page.dart';
 import 'package:haleyora/pages/dashboard/home_page.dart';
+import 'package:haleyora/pages/dashboard/profile.dart';
 import 'package:haleyora/widget/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,15 +22,11 @@ class HomeScreen extends StatelessWidget {
         body: PageView(
           controller: _pageController,
           children: const <Widget>[
-            AchievmentPage(),
-            CoursePage(),
             HomePage(),
-            Center(
-              child: Text("Favorite"),
-            ),
-            Center(
-              child: Text("Profile"),
-            ),
+            CoursePage(),
+            AchievmentPage(),
+            CoursePage(title: "Pinned"),
+            ProfilePage(),
           ],
         ));
   }

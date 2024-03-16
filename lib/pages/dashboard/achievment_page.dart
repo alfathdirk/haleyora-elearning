@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
@@ -41,7 +38,7 @@ class AchievmentPage extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
                                   const ProgressPieChart(
@@ -71,7 +68,7 @@ class AchievmentPage extends StatelessWidget {
                                           fontSize: 24,
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width: 180,
                                         child: Text(
                                           "Selamat, Selesaikan pencapaianmu sekarang.",
@@ -124,7 +121,7 @@ class AchievmentPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: CustomCard(
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Row(
                           children: [
                             Image.network(
@@ -132,7 +129,7 @@ class AchievmentPage extends StatelessWidget {
                               width: 50,
                               height: 50,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -178,7 +175,7 @@ class AchievmentPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width / 1.4,
                                   child: Row(
@@ -195,7 +192,7 @@ class AchievmentPage extends StatelessWidget {
                                               fontSize: 10,
                                             ),
                                           ),
-                                          Icon(
+                                          const Icon(
                                             Icons.arrow_forward_ios,
                                             color: primaryColor,
                                             size: 10,
@@ -212,7 +209,7 @@ class AchievmentPage extends StatelessWidget {
                                               fontSize: 10,
                                             ),
                                           ),
-                                          Icon(
+                                          const Icon(
                                             Icons.arrow_forward_ios,
                                             color: primaryColor,
                                             size: 10,

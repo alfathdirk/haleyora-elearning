@@ -5,7 +5,8 @@ import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
 
 class CoursePage extends StatefulWidget {
-  const CoursePage({Key? key}) : super(key: key);
+  final String? title;
+  const CoursePage({Key? key, this.title}) : super(key: key);
 
   @override
   State<CoursePage> createState() => _coursePageState();
@@ -13,6 +14,12 @@ class CoursePage extends StatefulWidget {
 
 class _coursePageState extends State<CoursePage> {
   String title = "All";
+
+  @override
+  void initState() {
+    super.initState();
+    title = widget.title ?? "All";
+  }
 
   @override
   Widget build(BuildContext context) {
