@@ -8,7 +8,8 @@ class RoundedButton extends StatelessWidget {
   final Color color;
   final Color textColor;
 
-  const RoundedButton({super.key, 
+  const RoundedButton({
+    super.key,
     required this.text,
     required this.onPressed,
     this.color = primaryColor,
@@ -27,7 +28,7 @@ class RoundedButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.mulish(
               fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
         ));
   }
