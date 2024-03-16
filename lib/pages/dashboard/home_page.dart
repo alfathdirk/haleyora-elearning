@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 100,
-                    width: MediaQuery.of(context).size.width / 1.1,
+                    width: MediaQuery.of(context).size.width - 40,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

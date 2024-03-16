@@ -22,11 +22,12 @@ class CustomNavigationBar extends StatelessWidget {
           height: 45,
           child: Column(
             children: [
-              const Icon(CupertinoIcons.house_alt, size: 30, color: Colors.black),
+              const Icon(CupertinoIcons.house_alt,
+                  size: 30, color: Colors.black),
               Text(
                 "BERANDA",
                 style: GoogleFonts.mulish(
-                  fontSize: 10,
+                  fontSize: 8,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -38,11 +39,12 @@ class CustomNavigationBar extends StatelessWidget {
           height: 45,
           child: Column(
             children: [
-              const Icon(CupertinoIcons.square_list, size: 30, color: Colors.black),
+              const Icon(CupertinoIcons.square_list,
+                  size: 30, color: Colors.black),
               Text(
                 "KURSUS",
                 style: GoogleFonts.mulish(
-                  fontSize: 10,
+                  fontSize: 8,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -54,10 +56,11 @@ class CustomNavigationBar extends StatelessWidget {
           height: 45,
           child: Column(
             children: [
-              const Icon(Icons.emoji_events_outlined, size: 30, color: Colors.black),
+              const Icon(Icons.emoji_events_outlined,
+                  size: 30, color: Colors.black),
               Text("PENCAPAIAN",
                   style: GoogleFonts.mulish(
-                    fontSize: 10,
+                    fontSize: 8,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   )),
@@ -72,7 +75,7 @@ class CustomNavigationBar extends StatelessWidget {
               Text(
                 "KURSUSKU",
                 style: GoogleFonts.mulish(
-                  fontSize: 10,
+                  fontSize: 8,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -84,11 +87,12 @@ class CustomNavigationBar extends StatelessWidget {
           height: 45,
           child: Column(
             children: [
-              const Icon(Icons.person_2_outlined, size: 30, color: Colors.black),
+              const Icon(Icons.person_2_outlined,
+                  size: 30, color: Colors.black),
               Text(
                 "AKUN",
                 style: GoogleFonts.mulish(
-                  fontSize: 10,
+                  fontSize: 8,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),

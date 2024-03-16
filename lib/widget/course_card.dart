@@ -9,7 +9,8 @@ class CourseCard extends StatelessWidget {
   final String description;
   final String imageUrl;
 
-  const CourseCard({super.key, 
+  const CourseCard({
+    super.key,
     required this.title,
     required this.description,
     required this.imageUrl,
@@ -21,8 +22,9 @@ class CourseCard extends StatelessWidget {
       child: Column(
         children: [
           Stack(children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Container(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              height: 150,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(14),
@@ -49,7 +51,6 @@ class CourseCard extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 1,
-                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),
@@ -73,7 +74,7 @@ class CourseCard extends StatelessWidget {
                   title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.mulish(
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                     color: orangeText,
@@ -82,9 +83,9 @@ class CourseCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   title,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.mulish(
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -101,7 +102,7 @@ class CourseCard extends StatelessWidget {
                           ),
                           Text(
                             " 182 dipelajari",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.mulish(
                               fontSize: 10,
                               fontWeight: FontWeight.normal,
                               color: lightGrey,
@@ -118,7 +119,7 @@ class CourseCard extends StatelessWidget {
                           ),
                           Text(
                             " 130 Menit",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.mulish(
                               fontSize: 10,
                               fontWeight: FontWeight.normal,
                               color: lightGrey,

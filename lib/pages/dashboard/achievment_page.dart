@@ -175,9 +175,9 @@ class AchievmentPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                Container(
                                   width:
-                                      MediaQuery.of(context).size.width / 1.4,
+                                      MediaQuery.of(context).size.width - 136,
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -196,7 +196,7 @@ class AchievmentPage extends StatelessWidget {
                                             Icons.arrow_forward_ios,
                                             color: primaryColor,
                                             size: 10,
-                                          )
+                                          ),
                                         ],
                                       ),
                                       Row(

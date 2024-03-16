@@ -27,7 +27,8 @@ class _coursePageState extends State<CoursePage> {
         child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
