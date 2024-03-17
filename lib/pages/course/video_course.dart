@@ -6,26 +6,29 @@ class VideoPlayerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
       height: double.infinity,
-      child: Stack(
-        children: [
-          VideoPlayerWidget(
-            videoUrl:
-                'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-          ),
-          Positioned(
-            top: 40,
-            left: 20,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      child: Container(
+        color: Colors.black,
+        child: Stack(
+          children: [
+            VideoPlayerWidget(
+              videoUrl:
+                  'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
-          ),
-        ],
+            Positioned(
+              top: 20,
+              left: 10,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

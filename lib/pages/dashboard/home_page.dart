@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
+import 'package:haleyora/widget/course_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -194,37 +195,20 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 20),
-                      child: CustomCard(
-                        child: SizedBox(
-                          width: 280,
-                          child: Text("Kursus 1"),
+                  children: [
+                    for (var i = 0; i < 5; i++)
+                      Container(
+                        width: 300,
+                        padding: const EdgeInsets.only(left: 20, bottom: 20),
+                        child: CourseCard(
+                          title: "Kursus",
+                          imageUrl: "https://picsum.photos/200/300?random=$i",
+                          description: "Kursus ini akan membantu anda",
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 20),
-                      child: CustomCard(
-                        child: SizedBox(
-                          width: 280,
-                          child: Text("Kursus 1"),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 20),
-                      child: CustomCard(
-                        child: SizedBox(
-                          width: 280,
-                          child: Text("Kursus 1"),
-                        ),
-                      ),
-                    ),
+                      )
                   ],
                 ))
           ],

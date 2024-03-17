@@ -1,6 +1,7 @@
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/video_course.dart';
 import 'package:haleyora/pages/home.dart';
+import 'package:haleyora/pages/quiz/quiz.dart';
 import 'pages/auth/login.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class Routes {
   static String loginPage = "/login";
   static String courseDetail = "/course-detail";
   static String videoPlayer = "/video-player";
+  static String quizPage = "/quiz";
 }
 
 /// assign this list variable into your GetMaterialApp as the value of getPages parameter.
@@ -31,5 +33,9 @@ final pages = [
   GetPage(
     name: Routes.videoPlayer,
     page: () => const VideoPlayerApp(),
+  ),
+  GetPage(
+    name: Routes.quizPage,
+    page: () => const QuizPage(),
   ),
 ];

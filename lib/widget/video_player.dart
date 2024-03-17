@@ -37,9 +37,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         if (snapshot.connectionState == ConnectionState.done) {
           return Stack(
             children: [
-              AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+              Center(
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                ),
               ),
               Positioned(
                 bottom: 10,
@@ -63,15 +65,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width - 70,
-                      height: 10,
-                      child: VideoProgressIndicator(_controller,
-                          padding: const EdgeInsets.all(0),
-                          allowScrubbing: true,
-                          colors: const VideoProgressColors(
-                            playedColor: Colors.blue,
-                            bufferedColor: Colors.grey,
-                            backgroundColor: Colors.white,
-                          )),
+                      height: 7,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: VideoProgressIndicator(_controller,
+                            padding: const EdgeInsets.all(0),
+                            allowScrubbing: true,
+                            colors: const VideoProgressColors(
+                              playedColor: Colors.blue,
+                              bufferedColor: Colors.grey,
+                              backgroundColor: Colors.white,
+                            )),
+                      ),
                     ),
                   ],
                 ),

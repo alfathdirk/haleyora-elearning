@@ -10,21 +10,21 @@ class AchievmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          AppBar(
-            title: Text(
-              "Pencapaian",
-              style: GoogleFonts.jost(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            AppBar(
+              title: Text(
+                "Pencapaian",
+                style: GoogleFonts.jost(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
             ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-          SingleChildScrollView(
-            child: Column(
+            Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,14 +118,15 @@ class AchievmentPage extends StatelessWidget {
                 ),
                 for (var i = 0; i < 3; i++)
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding:
+                        const EdgeInsets.only(bottom: 12, left: 16, right: 16),
                     child: CustomCard(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16.0),
                         child: Row(
                           children: [
                             Image.network(
-                              'https://picsum.photos/50/50',
+                              'https://picsum.photos/50/50?random=$i',
                               width: 50,
                               height: 50,
                             ),
@@ -228,8 +229,8 @@ class AchievmentPage extends StatelessWidget {
                   )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
