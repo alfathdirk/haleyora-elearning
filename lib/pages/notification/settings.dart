@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/switch.dart';
 
@@ -29,12 +30,55 @@ class NotificationSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     final Controller c = Get.put(Controller());
 
+    Future dialogSuccess() {
+      return Get.defaultDialog(
+          title: '',
+          backgroundColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+          content: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  'https://picsum.photos/300/300',
+                  fit: BoxFit.cover,
+                  width: 180,
+                  height: 180,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Edit Akun Berhasil",
+                style: GoogleFonts.jost(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: RoundedButton(
+                    text: "Tutup",
+                    onPressed: () {
+                      Get.back();
+                    }),
+              )
+            ],
+          ));
+    }
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              dialogSuccess();
+              // Navigator.pop(context);
             },
           ),
           title: Text('Notifikasi',
@@ -47,11 +91,11 @@ class NotificationSetting extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: CustomCard(
                     // label with icon and arrow right icon
                     child: Padding(
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       child: Obx(() => ListBody(
                             children: [
                               ListTile(

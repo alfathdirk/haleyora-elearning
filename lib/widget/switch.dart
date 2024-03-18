@@ -14,7 +14,7 @@ class SwitchCustom extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.fill,
         child: Switch(
-          trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
+          trackOutlineColor: MaterialStateProperty.all(Colors.grey[200]),
           // trackColor: MaterialStateProperty.all(Colors.grey[200]),
           // activeTrackColor: primaryColor,
           thumbColor: MaterialStateProperty.all(Colors.white),

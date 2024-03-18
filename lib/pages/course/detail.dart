@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 
 class CourseDetail extends StatelessWidget {
+  const CourseDetail({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,7 +34,7 @@ class CourseDetail extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                           color: Colors.white,
                         ),
                       ),
@@ -64,14 +65,14 @@ class CourseDetail extends StatelessWidget {
                                         color: Colors.black,
                                         decoration: TextDecoration.none),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.star,
                                             color: greyText,
                                             size: 10,
@@ -89,7 +90,7 @@ class CourseDetail extends StatelessWidget {
                                       ),
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.access_time,
                                             color: greyText,
                                             size: 10,
@@ -107,12 +108,12 @@ class CourseDetail extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Container(
                                     height: 2,
                                     color: Colors.grey[100],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -125,7 +126,7 @@ class CourseDetail extends StatelessWidget {
                                             color: greyText,
                                             decoration: TextDecoration.none),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       Text(
                                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus.',
                                         style: GoogleFonts.mulish(
@@ -154,7 +155,7 @@ class CourseDetail extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => print('Mulai Ujian'),
                             child: Container(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(14),
@@ -168,7 +169,7 @@ class CourseDetail extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.pencil_ellipsis_rectangle,
                                     color: greyText,
                                     size: 40,
@@ -186,12 +187,12 @@ class CourseDetail extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Expanded(
                           child: GestureDetector(
                             onTap: () => print('Tugas'),
                             child: Container(
-                              padding: EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(14),
@@ -205,7 +206,7 @@ class CourseDetail extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.note_alt_outlined,
                                     color: greyText,
                                     size: 40,
@@ -237,7 +238,7 @@ class CourseDetail extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.picture_as_pdf_outlined,
                               size: 30,
                               color: greyText,
@@ -245,8 +246,8 @@ class CourseDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 10),
-                      Container(
+                      const SizedBox(width: 10),
+                      SizedBox(
                           width: MediaQuery.of(context).size.width - 100,
                           child: RoundedButton(
                               text: 'Mulai Video', onPressed: () {}))

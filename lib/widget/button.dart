@@ -28,7 +28,7 @@ class RoundedButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: GoogleFonts.mulish(
+          style: GoogleFonts.jost(
               fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
         ));
   }

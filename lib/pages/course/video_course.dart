@@ -13,7 +13,7 @@ class VideoPlayerApp extends StatelessWidget {
         color: Colors.black,
         child: Stack(
           children: [
-            VideoPlayerWidget(
+            const VideoPlayerWidget(
               videoUrl:
                   'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),

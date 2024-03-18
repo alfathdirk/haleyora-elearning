@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
-import 'package:haleyora/widget/card.dart';
 import 'dart:async';
 
 class QuizPage extends StatefulWidget {
@@ -49,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Timer? _timer;
   int _start = 70;
-  List<String> _selectedAnswer = [];
+  final List<String> _selectedAnswer = [];
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -94,7 +92,7 @@ class _QuizPageState extends State<QuizPage> {
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width - 130,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),

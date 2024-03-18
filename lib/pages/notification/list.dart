@@ -10,9 +10,9 @@ class NotificationList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifikasi'),
+        title: const Text('Notifikasi'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -22,7 +22,7 @@ class NotificationList extends StatelessWidget {
         itemCount: 20, // Replace with the actual number of notifications
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 5),
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 5),
             child: CustomCard(
               child: ListTile(
                 title: Text('Notification $index',

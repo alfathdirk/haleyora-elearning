@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
-  VideoPlayerWidget({required this.videoUrl});
+  const VideoPlayerWidget({super.key, required this.videoUrl});
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -63,7 +61,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         });
                       },
                     ),
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width - 70,
                       height: 7,
                       child: ClipRRect(

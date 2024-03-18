@@ -38,7 +38,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.courseDetail,
-    page: () => CourseDetail(),
+    page: () => const CourseDetail(),
   ),
   GetPage(
     name: Routes.videoPlayer,
@@ -66,6 +66,6 @@ final pages = [
   ),
   GetPage(
     name: Routes.formProfile,
-    page: () => EditProfileForm(),
+    page: () => const EditProfileForm(),
   ),
 ];

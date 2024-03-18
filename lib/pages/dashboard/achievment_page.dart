@@ -177,7 +177,7 @@ class AchievmentPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width - 136,
                                   child: Row(

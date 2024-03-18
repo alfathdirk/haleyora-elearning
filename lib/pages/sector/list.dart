@@ -11,7 +11,7 @@ class ListSector extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -22,11 +22,11 @@ class ListSector extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: CustomCard(
                   // label with icon and arrow right icon
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: ListBody(
                       children: [
                         ListTile(
@@ -38,25 +38,25 @@ class ListSector extends StatelessWidget {
                                   fontSize: 11,
                                   fontWeight: FontWeight.normal,
                                   color: greyText)),
-                          trailing: Icon(Icons.chevron_right),
+                          trailing: const Icon(Icons.chevron_right),
                         ),
                         ListTile(
                           title: Text('Keamanan',
                               style: GoogleFonts.mulish(
                                   fontSize: 14, fontWeight: FontWeight.bold)),
-                          trailing: Icon(Icons.chevron_right),
+                          trailing: const Icon(Icons.chevron_right),
                         ),
                         ListTile(
                           title: Text('Syarat dan Ketentuan',
                               style: GoogleFonts.mulish(
                                   fontSize: 14, fontWeight: FontWeight.bold)),
-                          trailing: Icon(Icons.chevron_right),
+                          trailing: const Icon(Icons.chevron_right),
                         ),
                         ListTile(
                           title: Text('Keluar',
                               style: GoogleFonts.mulish(
                                   fontSize: 14, fontWeight: FontWeight.bold)),
-                          trailing: Icon(Icons.chevron_right),
+                          trailing: const Icon(Icons.chevron_right),
                         ),
                       ],
                     ),

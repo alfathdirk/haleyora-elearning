@@ -1,23 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/dropdown.dart';
 import 'package:haleyora/widget/text_input.dart';
 
 class EditProfileForm extends StatefulWidget {
+  const EditProfileForm({super.key});
+
   @override
   _EditProfileFormState createState() => _EditProfileFormState();
 }
 
 class _EditProfileFormState extends State<EditProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nickNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _dobController = TextEditingController();
-  TextEditingController _genderController = TextEditingController();
+  final TextEditingController _nickNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
 
   final List<Map<String, dynamic>> options = [
     {'key': 'M', 'label': 'Male'},
@@ -39,7 +39,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -68,13 +68,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                 child: RawMaterialButton(
                                   onPressed: () {},
                                   elevation: 2.0,
-                                  fillColor: Color(0xFFF5F6F9),
-                                  child: Icon(
+                                  fillColor: const Color(0xFFF5F6F9),
+                                  padding: const EdgeInsets.all(2.0),
+                                  shape: const CircleBorder(),
+                                  child: const Icon(
                                     Icons.edit,
                                     color: Colors.blue,
                                   ),
-                                  padding: EdgeInsets.all(2.0),
-                                  shape: CircleBorder(),
                                 )),
                           ],
                         ),
@@ -134,7 +134,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: RoundedButton(
                   text: 'Simpan',
