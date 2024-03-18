@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/widget/card.dart';
 
@@ -9,6 +10,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Profile',
               style:
                   GoogleFonts.jost(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -61,6 +63,10 @@ class ProfilePage extends StatelessWidget {
                                 style: GoogleFonts.mulish(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             trailing: Icon(Icons.chevron_right),
+                            onTap: () {
+                              // navigate to edit profile page
+                              Get.toNamed("/form-profile");
+                            },
                           ),
                           ListTile(
                             leading: Icon(Icons.shield_moon_outlined),

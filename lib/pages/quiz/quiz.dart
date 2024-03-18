@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
@@ -22,33 +23,33 @@ class _QuizPageState extends State<QuizPage> {
       question: "Apa warna langit?",
       file: "https://picsum.photos/200/300?random=1",
       answer: [
-        "Biru",
-        "Merah",
-        "Kuning",
-        "Hijau",
-        "Putih",
-        "Hitam",
-        "Ungu",
-        "Pink"
+        {'key': "A", 'value': 'Biru'},
+        {'key': "B", 'value': 'Merah'},
+        {'key': "C", 'value': 'Hijau'},
       ],
-      correctAnswer: "Biru",
+      correctAnswer: "A",
     ),
     Question(
       question: "Apa warna rumput?",
       file: "https://picsum.photos/200/300?random=1",
-      answer: ["Biru", "Merah", "Kuning", "Hijau"],
+      answer: [
+        {'key': 'B', 'value': 'Biru'}
+      ],
       correctAnswer: "Hijau",
     ),
     Question(
       question: "Apa warna matahari?",
       file: "https://picsum.photos/200/300?random=1",
-      answer: ["Biru", "Merah", "Kuning", "Hijau"],
-      correctAnswer: "Kuning",
+      answer: [
+        {'key': "C", 'value': 'Biru'}
+      ],
+      correctAnswer: "C",
     ),
   ];
 
   Timer? _timer;
   int _start = 70;
+  List<String> _selectedAnswer = [];
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -169,33 +170,58 @@ class _QuizPageState extends State<QuizPage> {
                             ),
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: questions[_currentStep]
-                              .answer
-                              .map((e) => GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: double.infinity,
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
-                                        e,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black,
-                                          decoration: TextDecoration.none,
+                        // animated when change question
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          child: Column(
+                            key: ValueKey<int>(_currentStep),
+                            children: questions[_currentStep]
+                                .answer
+                                .map((e) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RoundedCard(
+                                        color: _selectedAnswer.contains(e)
+                                            ? Colors.blue
+                                            : Colors.white,
+                                        child: ListTile(
+                                          onTap: () {
+                                            setState(() {
+                                              if (_selectedAnswer.contains(
+                                                  questions[_currentStep]
+                                                      .correctAnswer)) {
+                                                _selectedAnswer.remove(
+                                                    questions[_currentStep]
+                                                        .correctAnswer);
+                                              }
+                                              if (_selectedAnswer.contains(e)) {
+                                                _selectedAnswer.remove(e);
+                                              } else {
+                                                _selectedAnswer.add(e['key']!);
+                                              }
+                                            });
+                                          },
+                                          title: Text(
+                                            e['key']!,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: _selectedAnswer.contains(e)
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              decoration: TextDecoration.none,
+                                            ),
+                                          ),
+                                          trailing: _selectedAnswer.contains(e)
+                                              ? const Icon(
+                                                  Icons.check,
+                                                  color: Colors.white,
+                                                )
+                                              : null,
                                         ),
                                       ),
-                                    ),
-                                  ))
-                              .toList(),
+                                    ))
+                                .toList(),
+                          ),
                         ),
                       ],
                     ),
@@ -312,11 +338,18 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 
+class Answer {
+  final String key;
+  final String value;
+
+  Answer({required this.key, required this.value});
+}
+
 class Question {
   final String question;
-  final List<String> answer;
   final String correctAnswer;
   final String? file;
+  final List<Map<String, String>> answer;
 
   Question({
     required this.question,
@@ -324,4 +357,26 @@ class Question {
     required this.correctAnswer,
     this.file,
   });
+}
+
+class RoundedCard extends StatelessWidget {
+  final Widget child;
+  final Color color;
+
+  const RoundedCard({
+    Key? key,
+    required this.child,
+    this.color = Colors.white,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: child,
+    );
+  }
 }

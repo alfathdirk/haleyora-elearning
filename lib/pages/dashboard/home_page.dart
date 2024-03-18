@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                           iconSize: 24,
                           icon: const Icon(Icons.notifications_active_outlined),
                           onPressed: () {
-                            Get.snackbar("Hello", "This is a message");
+                            Get.toNamed("/notification");
                           },
                         ),
                       ],

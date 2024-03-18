@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: Routes.loginPage,
+      defaultTransition: Transition.rightToLeft,
       getPages: pages,
       debugShowCheckedModeBanner: false,
     );

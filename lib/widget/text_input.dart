@@ -23,6 +23,7 @@ class TextFieldWithBoxShadow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 48,
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(

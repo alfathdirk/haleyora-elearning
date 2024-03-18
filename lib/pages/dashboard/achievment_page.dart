@@ -21,6 +21,7 @@ class AchievmentPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
@@ -36,6 +37,14 @@ class AchievmentPage extends StatelessWidget {
                           height: 150,
                           child: Stack(
                             children: [
+                              Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Icon(
+                                    Icons.emoji_events_outlined,
+                                    color: Colors.grey[100],
+                                    size: 100,
+                                  )),
                               Row(
                                 children: [
                                   const SizedBox(
@@ -83,14 +92,6 @@ class AchievmentPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Positioned(
-                                  right: 0,
-                                  bottom: 0,
-                                  child: Icon(
-                                    Icons.emoji_events_outlined,
-                                    color: Colors.grey[100],
-                                    size: 100,
-                                  )),
                             ],
                           ),
                         ),

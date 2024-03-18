@@ -5,9 +5,15 @@ class CustomCard extends StatelessWidget {
   final double? width;
   final double? height;
   final double? radius;
+  final Color? color;
 
   const CustomCard(
-      {Key? key, required this.child, this.height, this.width, this.radius})
+      {Key? key,
+      required this.child,
+      this.height,
+      this.width,
+      this.radius,
+      this.color})
       : super(key: key);
 
   @override
@@ -16,7 +22,7 @@ class CustomCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color ?? Colors.white,
         borderRadius: BorderRadius.circular(radius ?? 14),
         boxShadow: const [
           BoxShadow(
