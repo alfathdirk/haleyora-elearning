@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haleyora/constants.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   final Function(int) onTabTapped;
@@ -12,9 +13,9 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      backgroundColor: const Color.fromARGB(96, 236, 236, 236),
+      backgroundColor: Color.fromRGBO(6, 163, 218, 0.3),
       color: Colors.white,
-      buttonBackgroundColor: const Color.fromARGB(96, 236, 236, 236),
+      buttonBackgroundColor: Colors.transparent,
       height: 65,
       items: [
         SizedBox(
@@ -102,7 +103,9 @@ class CustomNavigationBar extends StatelessWidget {
       ],
       animationDuration: const Duration(milliseconds: 200),
       animationCurve: Curves.easeInOut,
-      onTap: onTabTapped,
+      onTap: (int idx) {
+        onTabTapped(idx);
+      },
     );
   }
 }

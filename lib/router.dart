@@ -46,7 +46,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.quizPage,
-    page: () => const QuizPage(),
+    page: () => QuizPage(),
   ),
   GetPage(
     name: Routes.listSector,

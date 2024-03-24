@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         ),
         body: PageView(
           controller: _pageController,
-          children: const <Widget>[
+          children: [
             HomePage(),
             CoursePage(),
             AchievmentPage(),

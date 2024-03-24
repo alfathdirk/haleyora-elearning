@@ -45,9 +45,9 @@ dependencies:
   video_player: ^2.8.3
   dio: ^5.4.1
   file_picker: ^6.2.0
-  shared_preferences: ^2.2.2
   syncfusion_flutter_datepicker: ^25.1.35
   local_auth: ^2.2.0
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

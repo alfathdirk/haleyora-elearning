@@ -6,10 +6,9 @@ import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/switch.dart';
 
 class Controller extends GetxController {
-  var emailValue = false.obs;
-  var newCourseValue = false.obs;
-  var soundValue = false.obs;
-
+  final RxBool emailValue = false.obs;
+  final RxBool newCourseValue = false.obs;
+  final RxBool soundValue = false.obs;
   void changeEmailValue(bool value) {
     emailValue.value = value;
   }

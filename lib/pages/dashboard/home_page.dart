@@ -1,15 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
+import 'package:haleyora/pages/quiz/controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+
+  final List<Sectors> sectors = [
+    Sectors(title: "Distribusi", imageUrl: "/images/distribusi.png"),
+    Sectors(title: "Transmisi", imageUrl: "/images/transmisi.png"),
+    Sectors(title: "Pembangkit", imageUrl: "/images/pembangkit.png"),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    QuizController quizController = Get.put(QuizController());
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -44,14 +54,14 @@ class HomePage extends StatelessWidget {
                               children: [
                                 Text(
                                   "Selamat datang",
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.mulish(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                       color: darkText),
                                 ),
                                 Text(
                                   "John Doe",
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.mulish(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: darkText),
@@ -80,7 +90,7 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
                   child: Text(
                     "Apa yang mau kamu pelajari hari ini ?\nSilahkan masukan kata kunci nya dibawah ini ya",
-                    style: GoogleFonts.poppins(fontSize: 10, color: darkText),
+                    style: GoogleFonts.mulish(fontSize: 10, color: darkText),
                   ),
                 ),
               ],
@@ -107,8 +117,8 @@ class HomePage extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: "Cari Kursus",
                           border: InputBorder.none,
-                          hintStyle: GoogleFonts.poppins(
-                              fontSize: 12, color: greyText),
+                          hintStyle:
+                              GoogleFonts.mulish(fontSize: 12, color: greyText),
                         ),
                       ),
                     ),
@@ -121,15 +131,99 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(20),
+              child: CustomCard(
+                color: primaryColor,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Icon(
+                          CupertinoIcons.pencil_ellipsis_rectangle,
+                          color: Colors.white.withOpacity(0.1),
+                          size: 100,
+                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (quizController.isStart.value == false) {
+                                  quizController.startQuiz();
+                                }
+                                Get.toNamed("/quiz");
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 20,
+                                  bottom: 10,
+                                ),
+                                width: MediaQuery.of(context).size.width - 150,
+                                child: Text(
+                                  "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
+                                  style: GoogleFonts.mulish(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: 20,
+                                right: 20,
+                                bottom: 20,
+                              ),
+                              width: MediaQuery.of(context).size.width - 150,
+                              child: Text(
+                                "Selamat, Selesaikan pencapaianmu sekarang.",
+                                style: GoogleFonts.mulish(
+                                  color: greyText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            right: 20,
+                          ),
+                          child: Obx(() => Text(
+                                "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
+                                style: GoogleFonts.mulish(
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
               padding: const EdgeInsets.all(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     "Bidang Pekerjaan",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.mulish(
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                         color: darkText),
                   ),
                 ],
@@ -144,23 +238,26 @@ class HomePage extends StatelessWidget {
                 ),
                 shrinkWrap: true,
                 children: [
-                  for (var i = 0; i < 3; i++)
+                  for (var i = 0; i < sectors.length; i++)
                     CustomCard(
                       child: InkWell(
                         onTap: () {
                           Get.toNamed("/detail");
                         },
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.book,
-                              size: 30,
-                              color: primaryColor,
+                            Image.asset(
+                              sectors[i].imageUrl,
+                              width: double.infinity,
+                              height: 50,
+                            ),
+                            const SizedBox(
+                              height: 5,
                             ),
                             Text(
-                              "Kursus",
-                              style: TextStyle(
+                              sectors[i].title,
+                              style: GoogleFonts.mulish(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                   color: darkText),
@@ -179,14 +276,14 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text(
                     "Rekomendasi Pembelajaran",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.mulish(
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                         color: darkText),
                   ),
                   Text(
                     "Lihat Semua",
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.mulish(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: primaryColor),
@@ -202,13 +299,19 @@ class HomePage extends StatelessWidget {
                     for (var i = 0; i < 5; i++)
                       Container(
                         width: 300,
-                        padding: const EdgeInsets.only(left: 20, bottom: 20),
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          bottom: 20,
+                        ),
                         child: CourseCard(
                           title: "Kursus",
                           imageUrl: "https://picsum.photos/200/300?random=$i",
                           description: "Kursus ini akan membantu anda",
                         ),
-                      )
+                      ),
+                    const SizedBox(
+                      width: 20,
+                    )
                   ],
                 ))
           ],
@@ -216,4 +319,11 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class Sectors {
+  final String title;
+  final String imageUrl;
+
+  Sectors({required this.title, required this.imageUrl});
 }

@@ -85,29 +85,9 @@ class _loginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'images/logo.png',
-                      height: 80,
-                      width: 80,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'PLN',
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.poppins(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600,
-                              color: darkText),
-                        ),
-                        Text(
-                          'Haleyora Power',
-                          style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: darkText),
-                        ),
-                      ],
+                      'images/logo-elearning.png',
+                      height: 180,
+                      width: MediaQuery.of(context).size.width - 100,
                     ),
                   ],
                 ),
@@ -207,7 +187,7 @@ class _loginScreenState extends State<LoginScreen> {
                   child: RoundedButton(
                     text: "Masuk",
                     onPressed: () {
-                      Get.toNamed("/dashboard");
+                      Get.offNamed('/home');
                     },
                   ),
                 ),
