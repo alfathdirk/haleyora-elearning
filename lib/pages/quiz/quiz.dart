@@ -177,8 +177,9 @@ class QuizPage extends StatelessWidget {
                                   (e) => Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: CustomCard(
-                                      color: controller
-                                                  .selectedValue.isNotEmpty &&
+                                      color: controller.selectedValue
+                                                  .asMap()
+                                                  .containsKey(e.key) &&
                                               controller.selectedValue[
                                                       controller.questionIndex
                                                           .toInt()] ==
@@ -192,7 +193,8 @@ class QuizPage extends StatelessWidget {
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                             color: controller.selectedValue
-                                                        .isNotEmpty &&
+                                                        .asMap()
+                                                        .containsKey(e.key) &&
                                                     controller.selectedValue[
                                                             controller
                                                                 .questionIndex
@@ -223,8 +225,16 @@ class QuizPage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   width: double.infinity,
                   child: RoundedButton(
-                    text: "Next",
+                    text: controller.questionIndex.toInt() ==
+                            controller.questionList.length - 1
+                        ? "Finish"
+                        : "Next",
                     onPressed: () {
+                      if (controller.questionIndex.toInt() ==
+                          controller.questionList.length - 1) {
+                        Get.toNamed("/home");
+                        return;
+                      }
                       controller.nextQuestion();
                     },
                   ),

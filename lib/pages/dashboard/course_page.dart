@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
@@ -83,6 +84,9 @@ class _coursePageState extends State<CoursePage> {
                 padding: const EdgeInsets.only(bottom: 12),
                 itemBuilder: (context, index) {
                   return CourseCard(
+                    onTap: () {
+                      Get.toNamed("/course-detail");
+                    },
                     title:
                         "Belajar Flutter $index with long description here and there and everywhere $index here long text",
                     description:

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizController extends GetxController {
-  var totalQuestion = 10.obs;
   var complete = false;
   var questionIndex = 0.obs;
   var score = 0.obs;
@@ -16,9 +15,6 @@ class QuizController extends GetxController {
 
   void answerQuestion(int questionIndex, String answer) {
     selectedValue.insert(questionIndex, answer);
-    if (questionIndex + 1 == totalQuestion.value) {
-      complete = true;
-    }
   }
 
   void reset() {

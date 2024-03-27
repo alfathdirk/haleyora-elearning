@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
@@ -11,9 +12,18 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final List<Sectors> sectors = [
-    Sectors(title: "Distribusi", imageUrl: "/images/distribusi.png"),
-    Sectors(title: "Transmisi", imageUrl: "/images/transmisi.png"),
-    Sectors(title: "Pembangkit", imageUrl: "/images/pembangkit.png"),
+    Sectors(
+        title: "Distribusi",
+        imageUrl: "/images/distribusi.png",
+        url: '/category-list/distribusi'),
+    Sectors(
+        title: "Transmisi",
+        imageUrl: "/images/transmisi.png",
+        url: '/category-list/transmisi'),
+    Sectors(
+        title: "Pembangkit",
+        imageUrl: "/images/pembangkit.png",
+        url: '/category-list/pembangkit'),
   ];
 
   @override
@@ -130,36 +140,36 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
-              child: CustomCard(
-                color: primaryColor,
-                child: Stack(
-                  children: [
-                    Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: Icon(
-                          CupertinoIcons.pencil_ellipsis_rectangle,
-                          color: Colors.white.withOpacity(0.1),
-                          size: 100,
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (quizController.isStart.value == false) {
-                                  quizController.startQuiz();
-                                }
-                                Get.toNamed("/quiz");
-                              },
-                              child: Container(
+            GestureDetector(
+              onTap: () {
+                if (quizController.isStart.value == false) {
+                  quizController.startQuiz();
+                }
+                Get.toNamed("/quiz");
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(20),
+                child: CustomCard(
+                  color: primaryColor,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Icon(
+                            CupertinoIcons.pencil_ellipsis_rectangle,
+                            color: Colors.white.withOpacity(0.1),
+                            size: 100,
+                          )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
                                 padding: const EdgeInsets.only(
                                   left: 20,
                                   right: 20,
@@ -176,41 +186,41 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                                right: 20,
-                                bottom: 20,
-                              ),
-                              width: MediaQuery.of(context).size.width - 150,
-                              child: Text(
-                                "Selamat, Selesaikan pencapaianmu sekarang.",
-                                style: GoogleFonts.mulish(
-                                  color: greyText,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 10,
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  bottom: 20,
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                            right: 20,
+                                width: MediaQuery.of(context).size.width - 150,
+                                child: Text(
+                                  "Selamat, Selesaikan pencapaianmu sekarang.",
+                                  style: GoogleFonts.mulish(
+                                    color: greyText,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                          child: Obx(() => Text(
-                                "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
-                                style: GoogleFonts.mulish(
-                                  color: Colors.yellow,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Container(
+                            padding: const EdgeInsets.only(
+                              right: 20,
+                            ),
+                            child: Obx(() => Text(
+                                  "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
+                                  style: GoogleFonts.mulish(
+                                    color: Colors.yellow,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -242,7 +252,7 @@ class HomePage extends StatelessWidget {
                     CustomCard(
                       child: InkWell(
                         onTap: () {
-                          Get.toNamed("/detail");
+                          Get.toNamed("/category-list/${sectors[i].title}");
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -304,6 +314,9 @@ class HomePage extends StatelessWidget {
                           bottom: 20,
                         ),
                         child: CourseCard(
+                          onTap: () {
+                            Get.toNamed("/course-detail");
+                          },
                           title: "Kursus",
                           imageUrl: "https://picsum.photos/200/300?random=$i",
                           description: "Kursus ini akan membantu anda",
@@ -324,6 +337,7 @@ class HomePage extends StatelessWidget {
 class Sectors {
   final String title;
   final String imageUrl;
+  final String url;
 
-  Sectors({required this.title, required this.imageUrl});
+  Sectors({required this.title, required this.imageUrl, this.url = ""});
 }

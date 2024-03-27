@@ -1,111 +1,147 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 
-class CustomNavigationBar extends StatelessWidget {
-  final Function(int) onTabTapped;
+class NavigationController extends GetxController {
+  var currentIndex = 0.obs;
+  final PageController pageController = PageController();
 
-  const CustomNavigationBar({required this.onTabTapped, Key? key})
-      : super(key: key);
+  void onTabTapped(int index) {
+    currentIndex.value = index;
+    pageController.jumpToPage(index);
+  }
+}
+
+class CustomNavigationBar extends StatelessWidget {
+  const CustomNavigationBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CurvedNavigationBar(
-      backgroundColor: Color.fromRGBO(6, 163, 218, 0.3),
-      color: Colors.white,
-      buttonBackgroundColor: Colors.transparent,
-      height: 65,
-      items: [
-        SizedBox(
-          height: 45,
-          child: Column(
-            children: [
-              const Icon(CupertinoIcons.house_alt,
-                  size: 30, color: Colors.black),
-              Text(
-                "BERANDA",
-                style: GoogleFonts.mulish(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+    final NavigationController navigationController =
+        Get.put(NavigationController());
+
+    return Obx(() => CurvedNavigationBar(
+          backgroundColor: Color.fromRGBO(0, 187, 255, 1),
+          color: Colors.white,
+          buttonBackgroundColor: Color.fromRGBO(0, 187, 255, 1),
+          height: 65,
+          items: [
+            SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  Icon(CupertinoIcons.house_alt,
+                      size: 30,
+                      color: navigationController.currentIndex.value == 0
+                          ? Colors.white
+                          : Colors.black),
+                  Text(
+                    "BERANDA",
+                    style: GoogleFonts.mulish(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: navigationController.currentIndex.value == 0
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 45,
-          child: Column(
-            children: [
-              const Icon(CupertinoIcons.square_list,
-                  size: 30, color: Colors.black),
-              Text(
-                "KURSUS",
-                style: GoogleFonts.mulish(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+            ),
+            SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  Icon(CupertinoIcons.square_list,
+                      size: 30,
+                      color: navigationController.currentIndex.value == 1
+                          ? Colors.white
+                          : Colors.black),
+                  Text(
+                    "KURSUS",
+                    style: GoogleFonts.mulish(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: navigationController.currentIndex.value == 1
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 45,
-          child: Column(
-            children: [
-              const Icon(Icons.emoji_events_outlined,
-                  size: 30, color: Colors.black),
-              Text("PENCAPAIAN",
-                  style: GoogleFonts.mulish(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 45,
-          child: Column(
-            children: [
-              const Icon(CupertinoIcons.book, size: 30, color: Colors.black),
-              Text(
-                "KURSUSKU",
-                style: GoogleFonts.mulish(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+            ),
+            SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  Icon(Icons.emoji_events_outlined,
+                      size: 30,
+                      color: navigationController.currentIndex.value == 2
+                          ? Colors.white
+                          : Colors.black),
+                  Text("PENCAPAIAN",
+                      style: GoogleFonts.mulish(
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                        color: navigationController.currentIndex.value == 2
+                            ? Colors.white
+                            : Colors.black,
+                      )),
+                ],
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 45,
-          child: Column(
-            children: [
-              const Icon(Icons.person_2_outlined,
-                  size: 30, color: Colors.black),
-              Text(
-                "AKUN",
-                style: GoogleFonts.mulish(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+            ),
+            SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  Icon(CupertinoIcons.book,
+                      size: 30,
+                      color: navigationController.currentIndex.value == 3
+                          ? Colors.white
+                          : Colors.black),
+                  Text(
+                    "KURSUSKU",
+                    style: GoogleFonts.mulish(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: navigationController.currentIndex.value == 3
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
-      animationDuration: const Duration(milliseconds: 200),
-      animationCurve: Curves.easeInOut,
-      onTap: (int idx) {
-        onTabTapped(idx);
-      },
-    );
+            ),
+            SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  Icon(Icons.person_2_outlined,
+                      size: 30,
+                      color: navigationController.currentIndex.value == 4
+                          ? Colors.white
+                          : Colors.black),
+                  Text(
+                    "AKUN",
+                    style: GoogleFonts.mulish(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: navigationController.currentIndex.value == 4
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          animationDuration: const Duration(milliseconds: 220),
+          onTap: (int idx) {
+            navigationController.onTabTapped(idx);
+          },
+        ));
   }
 }

@@ -1,5 +1,6 @@
 // create home.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haleyora/pages/dashboard/achievment_page.dart';
 import 'package:haleyora/pages/dashboard/course_page.dart';
 import 'package:haleyora/pages/dashboard/home_page.dart';
@@ -8,19 +9,15 @@ import 'package:haleyora/widget/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+    NavigationController navigationController = Get.put(NavigationController());
     return Scaffold(
         // body
-        bottomNavigationBar: CustomNavigationBar(
-          onTabTapped: (index) {
-            _pageController.jumpToPage(index);
-          },
-        ),
+        bottomNavigationBar: CustomNavigationBar(),
         body: PageView(
-          controller: _pageController,
+          controller: navigationController.pageController,
           children: [
             HomePage(),
             CoursePage(),
