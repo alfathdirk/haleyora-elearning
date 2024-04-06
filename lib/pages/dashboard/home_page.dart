@@ -132,9 +132,21 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.filter_alt_outlined,
-                      color: greyText,
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed("/filter");
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: primaryColor,
+                        ),
+                        child: Icon(
+                          CupertinoIcons.square_list,
+                          color: Colors.white,
+                        ),
+                      ),
                     )
                   ],
                 ),

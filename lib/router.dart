@@ -1,6 +1,7 @@
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/video_course.dart';
+import 'package:haleyora/pages/filter/filter.dart';
 import 'package:haleyora/pages/home.dart';
 import 'package:haleyora/pages/notification/detail.dart';
 import 'package:haleyora/pages/notification/list.dart';
@@ -25,6 +26,7 @@ class Routes {
   static String formProfile = "/form-profile";
   static String notificationSetting = "/notification-setting";
   static String categoryList = "/category-list/:name";
+  static String filterPage = "/filter";
 }
 
 /// assign this list variable into your GetMaterialApp as the value of getPages parameter.
@@ -73,5 +75,9 @@ final pages = [
   GetPage(
     name: Routes.categoryList,
     page: () => CategoryListPage(),
+  ),
+  GetPage(
+    name: Routes.filterPage,
+    page: () => const FilterPage(),
   ),
 ];
