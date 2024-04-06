@@ -8,7 +8,7 @@ import 'package:haleyora/pages/dashboard/profile.dart';
 import 'package:haleyora/widget/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
