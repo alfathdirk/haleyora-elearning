@@ -40,7 +40,7 @@ class _loginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                'images/logo.png',
+                'assets/images/logo.png',
                 height: 30,
                 width: 30,
               ),
@@ -85,7 +85,7 @@ class _loginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'images/logo-elearning.png',
+                      'assets/images/logo-elearning.png',
                       height: 180,
                       width: MediaQuery.of(context).size.width - 100,
                     ),

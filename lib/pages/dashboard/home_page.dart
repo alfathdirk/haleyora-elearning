@@ -14,15 +14,15 @@ class HomePage extends StatelessWidget {
   final List<Sectors> sectors = [
     Sectors(
         title: "Distribusi",
-        imageUrl: "/images/distribusi.png",
+        imageUrl: "assets/images/distribusi.png",
         url: '/category-list/distribusi'),
     Sectors(
         title: "Transmisi",
-        imageUrl: "/images/transmisi.png",
+        imageUrl: "assets/images/transmisi.png",
         url: '/category-list/transmisi'),
     Sectors(
         title: "Pembangkit",
-        imageUrl: "/images/pembangkit.png",
+        imageUrl: "assets/images/pembangkit.png",
         url: '/category-list/pembangkit'),
   ];
 
@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100),
                           color: primaryColor,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           CupertinoIcons.square_list,
                           color: Colors.white,
                         ),
