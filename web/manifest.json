@@ -1,6 +1,6 @@
 {
-    "name": "haleyora",
-    "short_name": "haleyora",
+    "name": "E-Learning App",
+    "short_name": "E-Learning App",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

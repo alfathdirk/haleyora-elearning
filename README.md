@@ -1,4 +1,4 @@
-# haleyora
+# E-Learning App
 
 A new Flutter project.
 

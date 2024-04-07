@@ -232,7 +232,7 @@ class QuizPage extends StatelessWidget {
                     onPressed: () {
                       if (controller.questionIndex.toInt() ==
                           controller.questionList.length - 1) {
-                        Get.toNamed("/home");
+                        Get.offAllNamed("/home");
                         return;
                       }
                       controller.nextQuestion();
