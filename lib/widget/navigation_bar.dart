@@ -141,6 +141,7 @@ class CustomNavigationBar extends StatelessWidget {
           onTap: (int idx) {
             navigationController.onTabTapped(idx);
           },
+          index: navigationController.currentIndex.value,
         ));
   }
 }

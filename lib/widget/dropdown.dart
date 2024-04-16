@@ -7,7 +7,8 @@ class DropdownWidget extends StatefulWidget {
   dynamic value;
 
   DropdownWidget(
-      {super.key, required this.options,
+      {super.key,
+      required this.options,
       required this.onChanged,
       this.placeholder,
       this.value});

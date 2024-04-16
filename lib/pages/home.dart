@@ -18,6 +18,9 @@ class HomeScreen extends StatelessWidget {
         bottomNavigationBar: CustomNavigationBar(),
         body: PageView(
           controller: navigationController.pageController,
+          onPageChanged: (index) {
+            navigationController.currentIndex.value = index;
+          },
           children: [
             HomePage(),
             CoursePage(),
