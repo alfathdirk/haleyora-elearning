@@ -27,6 +27,7 @@ class Routes {
   static String notificationSetting = "/notification-setting";
   static String categoryList = "/category-list/:name";
   static String filterPage = "/filter";
+  static String pdfView = "/pdf-view/:url";
 }
 
 /// assign this list variable into your GetMaterialApp as the value of getPages parameter.
@@ -80,4 +81,8 @@ final pages = [
     name: Routes.filterPage,
     page: () => const FilterPage(),
   ),
+  // GetPage(
+  //   name: Routes.pdfView,
+  //   page: () => const PDFViewer(),
+  // ),
 ];
