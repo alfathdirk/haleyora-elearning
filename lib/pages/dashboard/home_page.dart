@@ -7,6 +7,7 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 import 'package:haleyora/pages/quiz/controller.dart';
+import 'package:haleyora/widget/navigation_bar.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);

@@ -76,6 +76,17 @@ class ProfilePage extends StatelessWidget {
                             trailing: const Icon(Icons.chevron_right),
                           ),
                           ListTile(
+                            leading: const Icon(Icons.lock_outlined),
+                            title: Text('Ubah Sandi',
+                                style: GoogleFonts.mulish(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              // navigate to edit password page
+                              Get.toNamed("/edit-password");
+                            },
+                          ),
+                          ListTile(
                             leading: const Icon(Icons.shield_outlined),
                             title: Text('Syarat dan Ketentuan',
                                 style: GoogleFonts.mulish(
@@ -83,7 +94,8 @@ class ProfilePage extends StatelessWidget {
                             trailing: const Icon(Icons.chevron_right),
                           ),
                           ListTile(
-                            leading: const Icon(Icons.power_settings_new_outlined),
+                            leading:
+                                const Icon(Icons.power_settings_new_outlined),
                             title: Text('Keluar',
                                 style: GoogleFonts.mulish(
                                     fontSize: 16, fontWeight: FontWeight.bold)),

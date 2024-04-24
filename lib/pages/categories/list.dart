@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/widget/card.dart';
+import 'package:haleyora/widget/navigation_bar.dart';
 
 class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
@@ -35,7 +36,9 @@ class CategoryListPage extends StatelessWidget {
                     subtitle: Text("(Pelayanan Teknologi)",
                         style: GoogleFonts.mulish(
                             fontSize: 12, color: Colors.grey)),
-                    onTap: () {},
+                    onTap: () {
+                      Get.offAllNamed("/home", arguments: 1);
+                    },
                   ),
                   ListTile(
                     title: const Text("P2TL"),

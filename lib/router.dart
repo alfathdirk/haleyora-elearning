@@ -6,6 +6,7 @@ import 'package:haleyora/pages/home.dart';
 import 'package:haleyora/pages/notification/detail.dart';
 import 'package:haleyora/pages/notification/list.dart';
 import 'package:haleyora/pages/notification/settings.dart';
+import 'package:haleyora/pages/profile/edit_password.dart';
 import 'package:haleyora/pages/profile/form.dart';
 import 'package:haleyora/pages/quiz/quiz.dart';
 import 'package:haleyora/pages/sector/list.dart';
@@ -28,6 +29,7 @@ class Routes {
   static String categoryList = "/category-list/:name";
   static String filterPage = "/filter";
   static String pdfView = "/pdf-view/:url";
+  static String editPassword = "/edit-password";
 }
 
 /// assign this list variable into your GetMaterialApp as the value of getPages parameter.
@@ -72,6 +74,10 @@ final pages = [
   GetPage(
     name: Routes.formProfile,
     page: () => const EditProfileForm(),
+  ),
+  GetPage(
+    name: Routes.editPassword,
+    page: () => const EditPasswordPage(),
   ),
   GetPage(
     name: Routes.categoryList,

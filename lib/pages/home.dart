@@ -10,24 +10,50 @@ import 'package:haleyora/widget/navigation_bar.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  Future<void> init() async {
+    final data = Get.arguments;
+    NavigationController navigationController = Get.put(NavigationController());
+    if (data != null) {
+      navigationController.currentIndex.value = data;
+      navigationController.onTabTapped(data);
+    }
+  }
+
+// navigationController.onTabTapped(1);
+  Scaffold dashboardView(BuildContext context) {
+    NavigationController navigationController = Get.put(NavigationController());
+    final List<Widget> _pages = [
+      HomePage(),
+      CoursePage(),
+      AchievmentPage(),
+      CoursePage(
+        title: 'Pinned',
+      ),
+      ProfilePage(),
+    ];
+    return Scaffold(
+      // body
+      bottomNavigationBar: CustomNavigationBar(),
+      body: Obx(() => Center(
+            child: _pages.elementAt(navigationController.currentIndex.value),
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    NavigationController navigationController = Get.put(NavigationController());
-    return Scaffold(
-        // body
-        bottomNavigationBar: CustomNavigationBar(),
-        body: PageView(
-          controller: navigationController.pageController,
-          onPageChanged: (index) {
-            navigationController.currentIndex.value = index;
-          },
-          children: [
-            HomePage(),
-            CoursePage(),
-            AchievmentPage(),
-            CoursePage(title: "Pinned"),
-            ProfilePage(),
-          ],
-        ));
+    return FutureBuilder(
+      future: init(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return dashboardView(context);
+        }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
   }
 }

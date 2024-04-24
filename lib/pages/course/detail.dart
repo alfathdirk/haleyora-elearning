@@ -7,13 +7,23 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class CourseDetail extends StatelessWidget {
   const CourseDetail({super.key});
+
+  Future<void> _launchInBrowserView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
+      child: Container(
+        color: Colors.white,
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
@@ -186,7 +196,9 @@ class CourseDetail extends StatelessWidget {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        Get.toNamed("/video-player");
+                        final Uri _url =
+                            Uri.parse('https://pdfobject.com/pdf/sample.pdf');
+                        _launchInBrowserView(_url);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +278,7 @@ class CourseDetail extends StatelessWidget {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        Get.toNamed("/video-player");
+                        Get.toNamed("/quiz");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

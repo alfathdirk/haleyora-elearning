@@ -6,16 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class NavigationController extends GetxController {
   var currentIndex = 0.obs;
-  final PageController pageController = PageController();
 
   void onTabTapped(int index) {
     currentIndex.value = index;
-    pageController.jumpToPage(index);
   }
 }
 
 class CustomNavigationBar extends StatelessWidget {
-  const CustomNavigationBar({Key? key}) : super(key: key);
+  const CustomNavigationBar({super.key});
 
   @override
   Widget build(BuildContext context) {
