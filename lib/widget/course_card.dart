@@ -9,6 +9,10 @@ class CourseCard extends StatelessWidget {
   final String description;
   final String imageUrl;
   final void Function() onTap;
+  final String spanText;
+  final bool isBookmarked;
+  final int duration;
+  final int totalEmployee;
 
   const CourseCard({
     super.key,
@@ -16,6 +20,10 @@ class CourseCard extends StatelessWidget {
     required this.description,
     required this.imageUrl,
     required this.onTap,
+    this.spanText = "Kursus",
+    this.isBookmarked = false,
+    this.totalEmployee = 0,
+    this.duration = 0,
   });
 
   @override
@@ -55,7 +63,7 @@ class CourseCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isBookmarked ? primaryColor : Colors.white,
                     borderRadius: BorderRadius.circular(50),
                     boxShadow: [
                       BoxShadow(
@@ -67,9 +75,9 @@ class CourseCard extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: () {},
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.bookmark,
-                      color: primaryColor,
+                      color: isBookmarked ? Colors.white : primaryColor,
                       size: 16,
                     ),
                   ),
@@ -82,7 +90,7 @@ class CourseCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    spanText,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: GoogleFonts.mulish(
@@ -112,7 +120,7 @@ class CourseCard extends StatelessWidget {
                               size: 10,
                             ),
                             Text(
-                              " 182 dipelajari",
+                              " $totalEmployee Dipelajari",
                               style: GoogleFonts.mulish(
                                 fontSize: 10,
                                 fontWeight: FontWeight.normal,
@@ -129,7 +137,7 @@ class CourseCard extends StatelessWidget {
                               size: 10,
                             ),
                             Text(
-                              " 130 Menit",
+                              " $duration Menit",
                               style: GoogleFonts.mulish(
                                 fontSize: 10,
                                 fontWeight: FontWeight.normal,

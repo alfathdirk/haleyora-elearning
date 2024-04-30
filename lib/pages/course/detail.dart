@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
-import 'package:haleyora/widget/button.dart';
+import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/model/model.dart';
+import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/widget/card.dart';
 
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetail extends StatelessWidget {
-  const CourseDetail({super.key});
+  CourseDetail({super.key});
+  final id = Get.parameters['id'];
+  final courseController = Get.put(CourseController());
+  final box = GetStorage();
 
   Future<void> _launchInBrowserView(Uri url) async {
     if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
@@ -21,6 +25,23 @@ class CourseDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: courseController.fetchCourseById(id!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return buildScafold(context);
+        }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildScafold(BuildContext context) {
+    CourseData course = courseController.courseDetail.value;
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -37,13 +58,14 @@ class CourseDetail extends StatelessWidget {
                         children: [
                           Image.network(
                             loadingBuilder: (context, child, progress) {
-                              return progress == null
+                              return progress == null &&
+                                      course.image?.id != null
                                   ? child
                                   : const Center(
                                       child: CircularProgressIndicator(),
                                     );
                             },
-                            'https://picsum.photos/450?image=9',
+                            "${imageBaseUrl}${course.image?.id}?access_token=${box.read('accessToken')}",
                             width: double.infinity,
                             height: 300,
                             fit: BoxFit.cover,
@@ -72,7 +94,7 @@ class CourseDetail extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Yantek | Operasi Sistem',
+                                        course.activities?.title ?? '',
                                         style: GoogleFonts.mulish(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
@@ -80,7 +102,7 @@ class CourseDetail extends StatelessWidget {
                                             decoration: TextDecoration.none),
                                       ),
                                       Text(
-                                        'Penanganan gangguan kabel incoming (Trafo - PHB TR )/outgoing TR',
+                                        course.title ?? '',
                                         style: GoogleFonts.mulish(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -95,12 +117,15 @@ class CourseDetail extends StatelessWidget {
                                           Row(
                                             children: [
                                               const Icon(
-                                                Icons.star,
+                                                Icons.remove_red_eye_outlined,
                                                 color: greyText,
-                                                size: 10,
+                                                size: 12,
                                               ),
                                               Text(
-                                                '4.5',
+                                                (course.employeeCourse?.length
+                                                            .toString() ??
+                                                        '0') +
+                                                    ' Dipelajari',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -119,7 +144,9 @@ class CourseDetail extends StatelessWidget {
                                                 size: 10,
                                               ),
                                               Text(
-                                                '2h 30m',
+                                                (course.duration.toString() ??
+                                                        '0') +
+                                                    ' Menit',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -153,7 +180,7 @@ class CourseDetail extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
-                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus.',
+                                            course.description ?? '',
                                             style: GoogleFonts.mulish(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.normal,

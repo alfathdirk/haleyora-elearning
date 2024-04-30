@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+const imageBaseUrl = 'http://localhost:8055/assets/';
+
 const primaryColor = Color.fromRGBO(6, 163, 218, 1);
 const darkText = Color.fromARGB(255, 43, 42, 42);
 const greyText = Color.fromRGBO(160, 164, 171, 1);

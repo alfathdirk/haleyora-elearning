@@ -7,6 +7,8 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
   final Color textColor;
+  final bool isDisabled;
+  final bool isLoading;
 
   const RoundedButton({
     super.key,
@@ -14,6 +16,8 @@ class RoundedButton extends StatelessWidget {
     required this.onPressed,
     this.color = primaryColor,
     this.textColor = Colors.white,
+    this.isDisabled = false,
+    this.isLoading = false,
   });
 
   @override
@@ -22,14 +26,28 @@ class RoundedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100.0)),
-          backgroundColor: color,
+          backgroundColor: isDisabled ? Colors.grey : color,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: GoogleFonts.jost(
-              fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
+        onPressed: isDisabled || isLoading ? null : onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isLoading)
+              const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+            SizedBox(width: isLoading ? 10 : 0),
+            Text(
+              text,
+              style: GoogleFonts.jost(
+                  fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
+            ),
+          ],
         ));
   }
 }

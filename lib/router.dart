@@ -1,3 +1,4 @@
+import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/video_course.dart';
@@ -17,7 +18,7 @@ import 'package:get/get.dart';
 class Routes {
   static String homePage = "/home";
   static String loginPage = "/login";
-  static String courseDetail = "/course-detail";
+  static String courseDetail = "/course-detail/:id";
   static String videoPlayer = "/video-player";
   static String quizPage = "/quiz";
   static String listSector = "/list-sector";
@@ -33,16 +34,16 @@ class Routes {
 
 final pages = [
   GetPage(
-    name: Routes.homePage,
-    page: () => HomeScreen(),
-  ),
+      name: Routes.homePage,
+      page: () => HomeScreen(),
+      middlewares: [AuthMiddleware()]),
   GetPage(
     name: Routes.loginPage,
     page: () => const LoginScreen(),
   ),
   GetPage(
     name: Routes.courseDetail,
-    page: () => const CourseDetail(),
+    page: () => CourseDetail(),
   ),
   GetPage(
     name: Routes.videoPlayer,

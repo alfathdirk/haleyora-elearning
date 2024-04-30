@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/widget/card.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,6 +9,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthService authService = Get.find<AuthService>();
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -107,6 +110,29 @@ class ProfilePage extends StatelessWidget {
                                 style: GoogleFonts.mulish(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
+                            onTap: () => {
+                              // show dialog confirmation
+                              Get.defaultDialog(
+                                title: "Konfirmasi",
+                                backgroundColor: Colors.white,
+                                middleText: "Apakah Anda yakin ingin keluar?",
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      authService.logout();
+                                      Get.offAllNamed("/login");
+                                    },
+                                    child: const Text('Keluar'),
+                                  ),
+                                ],
+                              )
+                            },
                           ),
                         ],
                       ),

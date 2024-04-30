@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/pages/auth/model.dart';
+import 'package:haleyora/services/auth_service.dart';
+import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/button.dart';
-import 'package:haleyora/widget/pdf.dart';
 import 'package:haleyora/widget/text_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,18 +17,39 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  AuthService authService = Get.find<AuthService>();
+  final box = GetStorage();
 
   @override
   void dispose() {
-    _emailController.clear();
+    _usernameController.clear();
+    _passwordController.clear();
     super.dispose();
   }
 
   bool isEmailCorrect = false;
   bool rememberMe = false;
   final _formKey = GlobalKey<FormState>();
+
+  Future<void> _login() async {
+    // if (_formKey.currentState!.validate()) {
+    final response = await dio.post('/api/login', data: {
+      'username': '7921203BDG',
+      'password': '07071979',
+      // 'username': _usernameController.text,
+      // 'password': _passwordController.text,
+    });
+    LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+    box.write('accessToken', loginResponse.accessToken);
+    box.write('refreshToken', loginResponse.refreshToken);
+    authService.setisLoggedIn(true);
+    Get.offNamed('/home');
+    return;
+    // }
+    // Get.snackbar('Error', 'Invalid username or password');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +120,6 @@ class _loginScreenState extends State<LoginScreen> {
                   height: 40,
                 ),
                 Container(
-                  // _formKey!.currentState!.validate() ? 200 : 600,
-                  // height: isEmailCorrect ? 260 : 182,
                   width: MediaQuery.of(context).size.width / 1.1,
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.3),
@@ -109,34 +131,44 @@ class _loginScreenState extends State<LoginScreen> {
                       Padding(
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: TextFieldWithBoxShadow(
-                            placeholder: 'Email',
-                            controller: _emailController,
+                            placeholder: 'Username',
+                            controller: _usernameController,
                             icon: const Icon(
                               Icons.email_outlined,
                               color: greyText,
                             ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Enter a valid username';
+                              }
+                              return null;
+                            },
                           )),
                       const SizedBox(
                         height: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 0, right: 0),
-                        child: Form(
-                          child: TextFieldWithBoxShadow(
-                            isPassword: true,
-                            placeholder: 'Password',
-                            controller: _passwordController,
-                            icon: const Icon(
-                              Icons.lock_outline,
-                              color: greyText,
+                        child: Column(
+                          children: [
+                            Form(
+                              child: TextFieldWithBoxShadow(
+                                isPassword: true,
+                                placeholder: 'Password',
+                                controller: _passwordController,
+                                icon: const Icon(
+                                  Icons.lock_outline,
+                                  color: greyText,
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty && value.length < 5) {
+                                    return 'Enter a valid password';
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty && value.length < 5) {
-                                return 'Enter a valid password';
-                              }
-                              return null;
-                            },
-                          ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -176,9 +208,10 @@ class _loginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width / 1.1,
                   height: 50,
                   child: RoundedButton(
-                    text: "Generate PDF",
+                    text: "Login",
                     onPressed: () async {
-                      Get.offNamed('/home');
+                      await _login();
+                      // Get.offNamed('/home');
                       // await PDF.generate();
                     },
                   ),

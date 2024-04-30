@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 import 'package:haleyora/pages/quiz/controller.dart';
-import 'package:haleyora/widget/navigation_bar.dart';
 import 'package:haleyora/widget/popup.dart';
 
 class HomePage extends StatelessWidget {
@@ -55,7 +53,7 @@ class HomePage extends StatelessWidget {
                             const CircleAvatar(
                               radius: 30,
                               backgroundImage:
-                                  NetworkImage("https://picsum.photos/200/300"),
+                                  AssetImage("assets/images/distribusi.png"),
                             ),
                             const SizedBox(
                               width: 10,
@@ -349,7 +347,7 @@ class HomePage extends StatelessWidget {
                             Get.toNamed("/course-detail");
                           },
                           title: "Kursus",
-                          imageUrl: "https://picsum.photos/200/300?random=$i",
+                          imageUrl: 'assets/images/distribusi.png',
                           description: "Kursus ini akan membantu anda",
                         ),
                       ),

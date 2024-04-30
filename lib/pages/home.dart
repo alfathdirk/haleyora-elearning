@@ -26,9 +26,7 @@ class HomeScreen extends StatelessWidget {
       HomePage(),
       CoursePage(),
       AchievmentPage(),
-      CoursePage(
-        title: 'Pinned',
-      ),
+      CoursePage(),
       ProfilePage(),
     ];
     return Scaffold(
