@@ -8,6 +8,7 @@ import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 import 'package:haleyora/pages/quiz/controller.dart';
 import 'package:haleyora/widget/navigation_bar.dart';
+import 'package:haleyora/widget/popup.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -84,8 +85,25 @@ class HomePage extends StatelessWidget {
                         IconButton(
                           iconSize: 24,
                           icon: const Icon(Icons.notifications_active_outlined),
-                          onPressed: () {
-                            Get.toNamed("/notification");
+                          onPressed: () async {
+                            // await showDialog(
+                            //     context: context,
+                            //     builder: (_) => ImageDialog(
+                            //           buttonText: "OK",
+                            //           onPressed: () {
+                            //             Get.back();
+                            //           },
+                            //           image: "assets/images/distribusi.png",
+                            //           title: "Anda mempunyai 1 notifikasi baru",
+                            //         ));
+                            Get.dialog(ImageDialog(
+                                buttonText: "OK",
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                image: "assets/images/distribusi.png",
+                                title: "Anda mempunyai 1 notifikasi baru"));
+                            // Get.toNamed("/notification");
                           },
                         ),
                       ],

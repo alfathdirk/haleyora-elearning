@@ -26,6 +26,13 @@ class ProfilePage extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image.network(
+                    loadingBuilder: (context, child, progress) {
+                      return progress == null
+                          ? child
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    },
                     'https://picsum.photos/300/300',
                     fit: BoxFit.cover,
                     width: 180,

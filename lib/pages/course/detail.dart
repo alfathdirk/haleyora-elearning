@@ -36,6 +36,13 @@ class CourseDetail extends StatelessWidget {
                       child: Stack(
                         children: [
                           Image.network(
+                            loadingBuilder: (context, child, progress) {
+                              return progress == null
+                                  ? child
+                                  : const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                            },
                             'https://picsum.photos/450?image=9',
                             width: double.infinity,
                             height: 300,

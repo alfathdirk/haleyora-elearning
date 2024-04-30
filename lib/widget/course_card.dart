@@ -35,6 +35,13 @@ class CourseCard extends StatelessWidget {
                     topRight: Radius.circular(14),
                   ),
                   child: Image.network(
+                    loadingBuilder: (context, child, progress) {
+                      return progress == null
+                          ? child
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    },
                     imageUrl,
                     fit: BoxFit.cover,
                     width: double.infinity,

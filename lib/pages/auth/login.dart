@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
+import 'package:haleyora/widget/pdf.dart';
 import 'package:haleyora/widget/text_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -164,16 +165,6 @@ class _loginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Lupa sandi?',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: greyText),
-                              ),
-                            ),
                           ]),
                     ],
                   ),
@@ -185,9 +176,10 @@ class _loginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width / 1.1,
                   height: 50,
                   child: RoundedButton(
-                    text: "Masuk",
-                    onPressed: () {
+                    text: "Generate PDF",
+                    onPressed: () async {
                       Get.offNamed('/home');
+                      // await PDF.generate();
                     },
                   ),
                 ),
