@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
-import 'package:haleyora/pages/auth/model.dart';
+import 'package:haleyora/model/auth.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/button.dart';

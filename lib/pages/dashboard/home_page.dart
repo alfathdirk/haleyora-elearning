@@ -63,8 +63,8 @@ class HomePage extends StatelessWidget {
                                       color: darkText),
                                 ),
                                 Obx(() => Text(
-                                      authController
-                                              .currentUser.value.firstName ??
+                                      authController.currentUser.value
+                                              .employeeData?.fullName ??
                                           '',
                                       style: GoogleFonts.mulish(
                                           fontSize: 16,
@@ -353,6 +353,13 @@ class HomePage extends StatelessWidget {
                             bottom: 20,
                           ),
                           child: CourseCard(
+                            onTapBookmark: () async {
+                              await courseController.bookmarkCourse(
+                                  courseData.id!,
+                                  authController
+                                      .currentUser.value.employeeData!.id
+                                      .toString());
+                            },
                             onTap: () {
                               Get.toNamed("/course-detail");
                             },

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/chart.dart';
+import 'package:haleyora/widget/pdf.dart';
 
 class AchievmentPage extends StatelessWidget {
   const AchievmentPage({super.key});
@@ -208,22 +210,27 @@ class AchievmentPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "LIHAT SERTIFIKAT",
-                                            style: GoogleFonts.mulish(
-                                              color: primaryColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await PDF.generate();
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "LIHAT SERTIFIKAT",
+                                              style: GoogleFonts.mulish(
+                                                color: primaryColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10,
+                                              ),
                                             ),
-                                          ),
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: primaryColor,
-                                            size: 10,
-                                          )
-                                        ],
+                                            const Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: primaryColor,
+                                              size: 10,
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),

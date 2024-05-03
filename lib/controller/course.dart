@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
@@ -18,27 +17,49 @@ class CourseController extends GetxController {
     super.onInit();
   }
 
-
   Future<void> getCourseByEmployeeId(String empId) async {
-    loading.value = true;
-    isAllCourse.value = false;
-    final result = await dio.get(
-        '/items/course?fields[]=*,image.*,activities.title,activities.id&filter[employee_course][employee][_eq]=4d738816-62bc-43db-bdf2-de28782f1872');
-    CourseResponse courseResponse = CourseResponse.fromJson(result.data);
-    print('by id');
-    courseList.value = courseResponse.data!.toList();
-    loading.value = false;
+    try {
+      loading.value = true;
+      isAllCourse.value = false;
+      final result = await dio.get(
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*&filter[employee_course][employee][_eq]=$empId');
+      CourseResponse courseResponse = CourseResponse.fromJson(result.data);
+      print('by id');
+      courseList.value = courseResponse.data!.toList();
+      loading.value = false;
+    } catch (e) {
+      print('error getCourseByEmployeeId: $e');
+    }
+  }
+
+  Future<void> bookmarkCourse(String courseId, String empId) async {
+    try {
+      final result = await dio.post('/items/employee_course', data: {
+        'employee': empId,
+        'course': courseId,
+      });
+      await getCourseByEmployeeId(empId);
+      print('bookmark success');
+    } catch (e) {
+      print('error bookmarkCourse: $e');
+    }
   }
 
   Future<void> fetchAllCourses() async {
-    loading.value = true;
-    isAllCourse.value = true;
-    final result = await dio
-        .get('/items/course?fields[]=*,image.*,activities.title,activities.id');
-    CourseResponse courseResponse = CourseResponse.fromJson(result.data);
-    print('by all');
-    courseList.value = courseResponse.data!.toList();
-    loading.value = false;
+    try {
+      loading.value = true;
+      isAllCourse.value = true;
+      final result = await dio.get(
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*');
+      // print(json.encode(result.data));
+      CourseResponse courseResponse = CourseResponse.fromJson(result.data);
+      courseList.value = courseResponse.data!.toList();
+      // courseList.value = courseResponse.data!.toList();
+      // loading.value = false;
+      print('by all');
+    } catch (e) {
+      print('error fetchAllCourses: $e');
+    }
   }
 
   Future<void> fetchCourseById(String id) async {

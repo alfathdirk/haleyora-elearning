@@ -1,3 +1,5 @@
+import 'package:haleyora/model/me.dart';
+
 class CourseData {
   String? id;
   String? status;
@@ -14,7 +16,7 @@ class CourseData {
   bool? isOpenTask;
   String? minScore;
   dynamic examQuiz;
-  List<String>? employeeCourse;
+  List<EmployeeCourseData>? employeeCourse;
   ImageData? image;
   String? description;
   String? taskDescription;
@@ -60,7 +62,9 @@ class CourseData {
     minScore = json['min_score'];
     examQuiz = json['exam_quiz'];
     employeeCourse = json['employee_course'] != null
-        ? List<String>.from(json['employee_course'])
+        ? (json['employee_course'] as List)
+            .map((e) => EmployeeCourseData.fromJson(e))
+            .toList()
         : null;
     image = json['image'] != null ? ImageData.fromJson(json['image']) : null;
     description = json['description'];
@@ -106,13 +110,6 @@ class ActivitiesData {
   ActivitiesData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    return data;
   }
 }
 
@@ -265,5 +262,59 @@ class CategoryData {
       'name': name,
       'image': image,
     };
+  }
+}
+
+class EmployeeCourseData {
+  final String? id;
+  final String? userCreated;
+  final DateTime? dateCreated;
+  final String? userUpdated;
+  final DateTime? dateUpdated;
+  final String? course;
+  final bool? completed;
+  final String? employee;
+  final dynamic? examScore;
+  final dynamic? tasksScore;
+  final dynamic? lastVideoDuration;
+  final dynamic? videoDuration;
+  final List<dynamic>? tasks;
+
+  EmployeeCourseData({
+    this.id,
+    this.userCreated,
+    this.dateCreated,
+    this.userUpdated,
+    this.dateUpdated,
+    this.course,
+    this.completed,
+    this.employee,
+    this.examScore,
+    this.tasksScore,
+    this.lastVideoDuration,
+    this.videoDuration,
+    this.tasks,
+  });
+
+  factory EmployeeCourseData.fromJson(Map<String, dynamic> json) {
+    return EmployeeCourseData(
+      id: json['id'],
+      userCreated: json['user_created'],
+      dateCreated: json['date_created'] != null
+          ? DateTime.parse(json['date_created'])
+          : null,
+      userUpdated: json['user_updated'],
+      dateUpdated: json['date_updated'] != null
+          ? DateTime.parse(json['date_updated'])
+          : null,
+      course: json['course'] ?? '',
+      completed: json['completed'],
+      employee: json['employee'],
+      examScore: json['exam_score'],
+      tasksScore: json['tasks_score'],
+      lastVideoDuration: json['last_video_duration'],
+      videoDuration: json['video_duration'],
+      tasks: json['tasks'] ?? [],
+    );
   }
 }

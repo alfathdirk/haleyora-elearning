@@ -52,9 +52,9 @@ class CoursePage extends GetView<CourseController> {
                   child: Obx(() => RoundedButton(
                         text: "Ditandai",
                         onPressed: () async {
-                          print(authController.currentUser.value.id.toString());
                           await courseController.getCourseByEmployeeId(
-                              authController.currentUser.value.id.toString());
+                              authController.currentUser.value.employeeData!.id
+                                  .toString());
                         },
                         color: courseController.isAllCourse.isTrue
                             ? Colors.white
@@ -82,7 +82,16 @@ class CoursePage extends GetView<CourseController> {
                     itemBuilder: (context, index) {
                       CourseData course = courseController.courseList[index];
                       var imgId = course.image?.id;
+                      final courseIds = course.employeeCourse
+                          ?.map((element) => element.employee)
+                          .toList();
                       return CourseCard(
+                        onTapBookmark: () async {
+                          await courseController.bookmarkCourse(
+                              course.id.toString(),
+                              authController.currentUser.value.employeeData!.id
+                                  .toString());
+                        },
                         onTap: () {
                           Get.toNamed("/course-detail/${course.id}");
                         },
@@ -92,8 +101,8 @@ class CoursePage extends GetView<CourseController> {
                         imageUrl:
                             "$imageBaseUrl$imgId?access_token=${box.read('accessToken')}",
                         totalEmployee: course.employeeCourse?.length ?? 0,
-                        // TODO: check if course is bookmarked
-                        isBookmarked: true,
+                        isBookmarked: courseIds!.contains(
+                            authController.currentUser.value.employeeData!.id),
                         duration: course.duration ?? 0,
                       );
                     },

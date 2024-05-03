@@ -13,6 +13,7 @@ class CourseCard extends StatelessWidget {
   final bool isBookmarked;
   final int duration;
   final int totalEmployee;
+  final void Function() onTapBookmark;
 
   const CourseCard({
     super.key,
@@ -24,6 +25,7 @@ class CourseCard extends StatelessWidget {
     this.isBookmarked = false,
     this.totalEmployee = 0,
     this.duration = 0,
+    required this.onTapBookmark,
   });
 
   @override
@@ -74,7 +76,7 @@ class CourseCard extends StatelessWidget {
                     ],
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: onTapBookmark,
                     child: Icon(
                       CupertinoIcons.bookmark,
                       color: isBookmarked ? Colors.white : primaryColor,
