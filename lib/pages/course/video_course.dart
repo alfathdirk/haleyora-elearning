@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/video_player.dart';
 
 class VideoPlayerApp extends StatelessWidget {
-  const VideoPlayerApp({super.key});
+  VideoPlayerApp({super.key});
+  String dataUrl = Get.parameters['url']!;
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +18,9 @@ class VideoPlayerApp extends StatelessWidget {
         color: Colors.black,
         child: Stack(
           children: [
-            const VideoPlayerWidget(
+            VideoPlayerWidget(
               videoUrl:
-                  'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+                  '${imageBaseUrl}${dataUrl}?access_token=${box.read('accessToken')}',
             ),
             Positioned(
               top: 20,

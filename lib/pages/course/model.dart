@@ -23,6 +23,25 @@ class CourseResponse {
   }
 }
 
+class CourseResponseByEmployee {
+  CourseData? course;
+
+  CourseResponseByEmployee({this.course});
+
+  CourseResponseByEmployee.fromJson(Map<String, dynamic> json) {
+    course =
+        json['course'] != null ? CourseData.fromJson(json['course']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (course != null) {
+      data['course'] = course!.toJson();
+    }
+    return data;
+  }
+}
+
 class CourseDetailResponse {
   CourseData? data;
 
@@ -30,5 +49,28 @@ class CourseDetailResponse {
 
   CourseDetailResponse.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? CourseData.fromJson(json['data']) : null;
+  }
+}
+
+class CategoryResponse {
+  List<CategoryData>? data;
+
+  CategoryResponse({this.data});
+
+  CategoryResponse.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <CategoryData>[];
+      json['data'].forEach((v) {
+        data!.add(CategoryData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }

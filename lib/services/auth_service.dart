@@ -8,9 +8,8 @@ class AuthService extends GetxService {
     final box = GetStorage();
     final accessToken = box.read('accessToken');
     final refreshToken = box.read('refreshToken');
-
     if (accessToken != null && refreshToken != null) {
-      isLoggedIn.value = true;
+      setisLoggedIn(true);
     }
     return this;
   }
@@ -22,7 +21,7 @@ class AuthService extends GetxService {
     isLoggedIn.value = false;
   }
 
-  void setisLoggedIn(bool newValue) {
+  Future<void> setisLoggedIn(bool newValue) async {
     isLoggedIn.value = newValue;
   }
 }

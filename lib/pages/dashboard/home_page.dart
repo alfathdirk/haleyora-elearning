@@ -1,39 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
-import 'package:haleyora/pages/quiz/controller.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/popup.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-
-  final List<Sectors> sectors = [
-    Sectors(
-        title: "Distribusi",
-        imageUrl: "assets/images/distribusi.png",
-        url: '/category-list/distribusi'),
-    Sectors(
-        title: "Transmisi",
-        imageUrl: "assets/images/transmisi.png",
-        url: '/category-list/transmisi'),
-    Sectors(
-        title: "Pembangkit",
-        imageUrl: "assets/images/pembangkit.png",
-        url: '/category-list/pembangkit'),
-  ];
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     QuizController quizController = Get.put(QuizController());
+    AuthController authController = Get.put(AuthController());
+    CourseController courseController = Get.put(CourseController());
 
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           children: [
+            // Obx(() => Text(courseController.categoryList.length.toString())),
             Container(
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -69,13 +62,15 @@ class HomePage extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: darkText),
                                 ),
-                                Text(
-                                  "John Doe",
-                                  style: GoogleFonts.mulish(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: darkText),
-                                ),
+                                Obx(() => Text(
+                                      authController
+                                              .currentUser.value.firstName ??
+                                          '',
+                                      style: GoogleFonts.mulish(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: darkText),
+                                    )),
                               ],
                             ),
                           ],
@@ -169,90 +164,90 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                if (quizController.isStart.value == false) {
-                  quizController.startQuiz();
-                }
-                Get.toNamed("/quiz");
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(20),
-                child: CustomCard(
-                  color: primaryColor,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Icon(
-                            CupertinoIcons.pencil_ellipsis_rectangle,
-                            color: Colors.white.withOpacity(0.1),
-                            size: 100,
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                  top: 20,
-                                  bottom: 10,
-                                ),
-                                width: MediaQuery.of(context).size.width - 150,
-                                child: Text(
-                                  "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
-                                  style: GoogleFonts.mulish(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                  bottom: 20,
-                                ),
-                                width: MediaQuery.of(context).size.width - 150,
-                                child: Text(
-                                  "Selamat, Selesaikan pencapaianmu sekarang.",
-                                  style: GoogleFonts.mulish(
-                                    color: greyText,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                              right: 20,
-                            ),
-                            child: Obx(() => Text(
-                                  "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
-                                  style: GoogleFonts.mulish(
-                                    color: Colors.yellow,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     if (quizController.isStart.value == false) {
+            //       quizController.startQuiz();
+            //     }
+            //     Get.toNamed("/quiz");
+            //   },
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     padding: const EdgeInsets.all(20),
+            //     child: CustomCard(
+            //       color: primaryColor,
+            //       child: Stack(
+            //         children: [
+            //           Positioned(
+            //               right: 0,
+            //               bottom: 0,
+            //               child: Icon(
+            //                 CupertinoIcons.pencil_ellipsis_rectangle,
+            //                 color: Colors.white.withOpacity(0.1),
+            //                 size: 100,
+            //               )),
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               Column(
+            //                 crossAxisAlignment: CrossAxisAlignment.start,
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Container(
+            //                     padding: const EdgeInsets.only(
+            //                       left: 20,
+            //                       right: 20,
+            //                       top: 20,
+            //                       bottom: 10,
+            //                     ),
+            //                     width: MediaQuery.of(context).size.width - 150,
+            //                     child: Text(
+            //                       "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
+            //                       style: GoogleFonts.mulish(
+            //                         color: Colors.white,
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 14,
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   Container(
+            //                     padding: const EdgeInsets.only(
+            //                       left: 20,
+            //                       right: 20,
+            //                       bottom: 20,
+            //                     ),
+            //                     width: MediaQuery.of(context).size.width - 150,
+            //                     child: Text(
+            //                       "Selamat, Selesaikan pencapaianmu sekarang.",
+            //                       style: GoogleFonts.mulish(
+            //                         color: greyText,
+            //                         fontWeight: FontWeight.normal,
+            //                         fontSize: 10,
+            //                       ),
+            //                     ),
+            //                   )
+            //                 ],
+            //               ),
+            //               Container(
+            //                 padding: const EdgeInsets.only(
+            //                   right: 20,
+            //                 ),
+            //                 child: Obx(() => Text(
+            //                       "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
+            //                       style: GoogleFonts.mulish(
+            //                         color: Colors.yellow,
+            //                         fontWeight: FontWeight.bold,
+            //                         fontSize: 30,
+            //                       ),
+            //                     )),
+            //               ),
+            //             ],
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Container(
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -270,32 +265,44 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              child: GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 20,
-                ),
-                shrinkWrap: true,
-                children: [
-                  for (var i = 0; i < sectors.length; i++)
-                    CustomCard(
-                      child: InkWell(
+              child: Obx(() => GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 20,
+                    ),
+                    shrinkWrap: true,
+                    itemCount: courseController.categoryList.length,
+                    itemBuilder: (context, index) {
+                      CategoryData categoryList =
+                          courseController.categoryList[index];
+
+                      return CustomCard(
+                          child: InkWell(
                         onTap: () {
-                          Get.toNamed("/category-list/${sectors[i].title}");
+                          // Get.toNamed("/category-list/${sectors[i].title}");
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              sectors[i].imageUrl,
-                              width: double.infinity,
+                            Image.network(
+                              loadingBuilder: (context, child, progress) {
+                                return progress == null
+                                    ? child
+                                    : const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                              },
+                              '${imageBaseUrl}${categoryList.image}?access_token=${box.read('accessToken')}',
+                              width: 50,
                               height: 50,
+                              fit: BoxFit.cover,
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              sectors[i].title,
+                              categoryList.name ?? "",
                               style: GoogleFonts.mulish(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -303,10 +310,9 @@ class HomePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                ],
-              ),
+                      ));
+                    },
+                  )),
             ),
             Container(
               padding: const EdgeInsets.all(20),
@@ -332,30 +338,32 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(
                 height: MediaQuery.of(context).size.height * 0.3,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    for (var i = 0; i < 5; i++)
-                      Container(
-                        width: 300,
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          bottom: 20,
-                        ),
-                        child: CourseCard(
-                          onTap: () {
-                            Get.toNamed("/course-detail");
-                          },
-                          title: "Kursus",
-                          imageUrl: 'assets/images/distribusi.png',
-                          description: "Kursus ini akan membantu anda",
-                        ),
-                      ),
-                    const SizedBox(
-                      width: 20,
-                    )
-                  ],
-                ))
+                child: Obx(() => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: courseController.courseList.length < 5
+                          ? courseController.courseList.length
+                          : 5,
+                      itemBuilder: (context, index) {
+                        CourseData courseData =
+                            courseController.courseList[index];
+                        return Container(
+                          width: 300,
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            bottom: 20,
+                          ),
+                          child: CourseCard(
+                            onTap: () {
+                              Get.toNamed("/course-detail");
+                            },
+                            title: courseData.title ?? "sdf",
+                            imageUrl:
+                                '${imageBaseUrl}${courseData.image!.filenameDisk}?access_token=${box.read('accessToken')}',
+                            description: "Kursus ini akan membantu anda",
+                          ),
+                        );
+                      },
+                    )))
           ],
         ),
       ),

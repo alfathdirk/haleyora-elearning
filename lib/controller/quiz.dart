@@ -13,6 +13,11 @@ class QuizController extends GetxController {
 
   List<Question> questionList = <Question>[];
 
+  void onInit() {
+    print('init quiz');
+    super.onInit();
+  }
+
   void answerQuestion(int questionIndex, String answer) {
     selectedValue.insert(questionIndex, answer);
   }

@@ -1,7 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -17,7 +18,6 @@ void initServices() async {
 }
 
 void main(List<String> args) async {
-  dio.interceptors.add(LogInterceptor());
   setPathUrlStrategy();
   initServices();
   configureDio();
@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.rightToLeft,
       getPages: pages,
       debugShowCheckedModeBanner: false,
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut<AuthController>(() => AuthController());
+        Get.lazyPut<QuizController>(() => QuizController());
+      }),
     );
   }
 }

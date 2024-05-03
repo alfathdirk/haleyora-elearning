@@ -19,7 +19,7 @@ class Routes {
   static String homePage = "/home";
   static String loginPage = "/login";
   static String courseDetail = "/course-detail/:id";
-  static String videoPlayer = "/video-player";
+  static String videoPlayer = "/video-player/:url";
   static String quizPage = "/quiz";
   static String listSector = "/list-sector";
   static String notificationList = "/notification";
@@ -47,7 +47,7 @@ final pages = [
   ),
   GetPage(
     name: Routes.videoPlayer,
-    page: () => const VideoPlayerApp(),
+    page: () => VideoPlayerApp(),
   ),
   GetPage(
     name: Routes.quizPage,
@@ -55,27 +55,27 @@ final pages = [
   ),
   GetPage(
     name: Routes.listSector,
-    page: () => const ListSector(),
+    page: () => ListSector(),
   ),
   GetPage(
     name: Routes.notificationList,
-    page: () => const NotificationList(),
+    page: () => NotificationList(),
   ),
   GetPage(
     name: Routes.notificationSetting,
-    page: () => const NotificationSetting(),
+    page: () => NotificationSetting(),
   ),
   GetPage(
     name: Routes.notificationDetail,
-    page: () => const DetailPage(),
+    page: () => DetailPage(),
   ),
   GetPage(
     name: Routes.formProfile,
-    page: () => const EditProfileForm(),
+    page: () => EditProfileForm(),
   ),
   GetPage(
     name: Routes.editPassword,
-    page: () => const EditPasswordPage(),
+    page: () => EditPasswordPage(),
   ),
   GetPage(
     name: Routes.categoryList,
@@ -87,6 +87,6 @@ final pages = [
   ),
   GetPage(
     name: Routes.taskDetail,
-    page: () => const TaskAssignment(),
+    page: () => TaskAssignment(),
   ),
 ];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:haleyora/services/dio_client.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:developer';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
@@ -17,12 +19,22 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+    // _controller.seekTo(
     _initializeVideoPlayerFuture = _controller.initialize();
-    _controller.setLooping(true);
+    _controller.setLooping(false);
   }
 
   @override
   void dispose() {
+    _controller.position.then((value) {
+      dio.post(
+        '/api/v1/activities/progress',
+        data: {
+          'activity_id': 100,
+          'progress': value!.inSeconds,
+        },
+      );
+    });
     _controller.dispose();
     super.dispose();
   }
@@ -35,6 +47,21 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         if (snapshot.connectionState == ConnectionState.done) {
           return Stack(
             children: [
+              ValueListenableBuilder(
+                valueListenable: _controller,
+                builder: (context, VideoPlayerValue value, child) {
+                  print(value.position);
+                  return Container(
+                    color: const Color.fromARGB(255, 240, 240, 240),
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      ),
+                    ),
+                  );
+                },
+              ),
               Center(
                 child: AspectRatio(
                   aspectRatio: _controller.value.aspectRatio,

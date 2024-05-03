@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/pages/auth/model.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -44,7 +45,7 @@ class _loginScreenState extends State<LoginScreen> {
     LoginResponse loginResponse = LoginResponse.fromJson(response.data);
     box.write('accessToken', loginResponse.accessToken);
     box.write('refreshToken', loginResponse.refreshToken);
-    authService.setisLoggedIn(true);
+    await authService.setisLoggedIn(true);
     Get.offNamed('/home');
     return;
     // }

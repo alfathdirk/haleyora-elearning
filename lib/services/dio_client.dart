@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:haleyora/services/auth_service.dart';
 
 final dio = Dio(
   BaseOptions(
@@ -25,6 +26,11 @@ void configureDio() {
       return handler.next(options);
     },
     onError: (DioError e, handler) {
+      if (e.response?.statusCode == 401) {
+        final authService = Get.find<AuthService>();
+        authService.logout();
+        Get.offAllNamed('/login');
+      }
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Error',
@@ -34,6 +40,7 @@ void configureDio() {
           backgroundColor: Colors.red,
         ),
       );
+      // return handler.next(e);
     },
   ));
 }

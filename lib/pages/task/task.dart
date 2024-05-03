@@ -1,20 +1,61 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/model/model.dart';
+import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/card.dart';
-import 'package:haleyora/widget/popup.dart';
 
-class UploadController extends GetxController {
-  var file = ''.obs;
+class TaskController extends GetxController {
+  var taskList = ''.obs;
+  var isLoading = true.obs;
+
+  @override
+  void onInit() {
+    final id = Get.parameters['id'];
+    print(id);
+    // fetchTask(id!);
+    super.onInit();
+  }
+
+  void fetchTask(String id) async {
+    try {
+      isLoading(true);
+      // CourseData task = await dio.get('/items/course/${id}');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> onUploadTask() async {
+    List<String> filePaths = [];
+
+    // Select multiple files
+    FilePickerResult? results = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'jpg', 'png', 'mp4'],
+    );
+
+    if (results != null) {
+      List<File> files = results.paths.map((path) => File(path!)).toList();
+      print(files);
+    }
+  }
 }
 
 class TaskAssignment extends StatelessWidget {
-  const TaskAssignment({Key? key}) : super(key: key);
-
+  TaskAssignment({super.key});
+  String taskDescription = '';
   @override
   Widget build(BuildContext context) {
+    print(taskDescription);
+
+    final TaskController taskController = Get.put(TaskController());
     return Scaffold(
         appBar: AppBar(
           title: Text("Tugas",
@@ -32,7 +73,9 @@ class TaskAssignment extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                  'Jelaskan bagaimana cara penanganan kabel incoming (Trafo - PHB TR )/outgoing TR yang benar with long text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+                  taskDescription.isEmpty
+                      ? 'Tidak ada deskripsi tugas.'
+                      : taskDescription,
                   style: GoogleFonts.mulish(
                       fontSize: 16,
                       color: darkText,
@@ -58,11 +101,7 @@ class TaskAssignment extends StatelessWidget {
               SizedBox(height: 20),
               InkWell(
                 onTap: () async {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['jpg', 'pdf', 'doc', 'png', 'mp4'],
-                  );
+                  await taskController.onUploadTask();
                 },
                 child: CustomCard(
                     child: Container(

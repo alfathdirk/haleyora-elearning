@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
-import 'package:haleyora/pages/quiz/controller.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/card.dart';
 
 class QuizPage extends StatelessWidget {

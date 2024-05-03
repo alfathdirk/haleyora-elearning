@@ -17,6 +17,7 @@ class CourseData {
   List<String>? employeeCourse;
   ImageData? image;
   String? description;
+  String? taskDescription;
 
   CourseData({
     this.id,
@@ -37,6 +38,7 @@ class CourseData {
     this.employeeCourse,
     this.image,
     this.description,
+    this.taskDescription,
   });
 
   CourseData.fromJson(Map<String, dynamic> json) {
@@ -62,6 +64,7 @@ class CourseData {
         : null;
     image = json['image'] != null ? ImageData.fromJson(json['image']) : null;
     description = json['description'];
+    taskDescription = json['task_description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,6 +89,7 @@ class CourseData {
       data['image'] = image!.toJson();
     }
     data['description'] = description;
+    data['task_description'] = taskDescription;
     return data;
   }
 }
@@ -215,5 +219,51 @@ class ImageData {
     data['focal_point_x'] = focalPointX;
     data['focal_point_y'] = focalPointY;
     return data;
+  }
+}
+
+class CategoryData {
+  final String? id;
+  final String? createdBy;
+  final DateTime? dateCreated;
+  final String? updatedBy;
+  final DateTime? dateUpdated;
+  final String? name;
+  final String? image;
+
+  CategoryData({
+    this.id,
+    this.createdBy,
+    this.dateCreated,
+    this.updatedBy,
+    this.dateUpdated,
+    this.name,
+    this.image,
+  });
+
+  factory CategoryData.fromJson(Map<String, dynamic> json) {
+    return CategoryData(
+      id: json['id'],
+      createdBy: json['created_by'],
+      dateCreated: DateTime.parse(json['date_created']),
+      updatedBy: json['updated_by'],
+      dateUpdated: json['date_updated'] != null
+          ? DateTime.parse(json['date_updated'])
+          : null,
+      name: json['name'],
+      image: json['image'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'created_by': createdBy,
+      'date_created': dateCreated,
+      'updated_by': updatedBy,
+      'date_updated': dateUpdated,
+      'name': name,
+      'image': image,
+    };
   }
 }

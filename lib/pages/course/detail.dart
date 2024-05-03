@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -213,27 +214,29 @@ class CourseDetail extends StatelessWidget {
                     childAspectRatio: 3.5),
                 shrinkWrap: true,
                 children: [
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 119, 119, 119)
-                              .withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        final Uri _url =
-                            Uri.parse('https://pdfobject.com/pdf/sample.pdf');
-                        _launchInBrowserView(_url);
-                      },
+                  GestureDetector(
+                    onTap: () {
+                      print(
+                          '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
+                      // final Uri _url = Uri.parse(
+                      //     '${imageBaseUrl}/${course.videoContent}?access_token=${box.read('accessToken')}');
+                      // _launchInBrowserView(_url);
+                    },
+                    child: Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 119, 119, 119)
+                                .withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -255,25 +258,25 @@ class CourseDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 119, 119, 119)
-                              .withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed("/video-player");
-                      },
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/video-player/${course.videoContent}');
+                    },
+                    child: Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 119, 119, 119)
+                                .withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -295,25 +298,22 @@ class CourseDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 119, 119, 119)
-                              .withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed("/quiz");
-                      },
+                  GestureDetector(
+                    child: Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 119, 119, 119)
+                                .withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -335,25 +335,26 @@ class CourseDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 119, 119, 119)
-                              .withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed("/video-player");
-                      },
+                  GestureDetector(
+                    onTap: () =>
+                        Get.toNamed('/task-detail/${course.id}', arguments: {
+                      'description': course.taskDescription ?? '',
+                    }),
+                    child: Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(255, 119, 119, 119)
+                                .withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

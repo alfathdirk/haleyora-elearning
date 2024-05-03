@@ -3,19 +3,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
-
-// class CoursePage extends StatefulWidget {
-//   final String? title;
-//   const CoursePage({Key? key, this.title}) : super(key: key);
-
-//   @override
-//   State<CoursePage> createState() => _coursePageState();
-// }
 
 class CoursePage extends GetView<CourseController> {
   CoursePage({Key? key}) : super(key: key);
@@ -24,6 +17,7 @@ class CoursePage extends GetView<CourseController> {
   @override
   Widget build(BuildContext context) {
     final courseController = Get.put(CourseController());
+    AuthController authController = Get.put(AuthController());
 
     return SafeArea(
         child: SingleChildScrollView(
@@ -38,35 +32,38 @@ class CoursePage extends GetView<CourseController> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  child: RoundedButton(
+                    child: Obx(
+                  () => RoundedButton(
                     text: "Semua",
                     onPressed: () {
-                      // setState(() {
-                      //   if (title != "All") {
-                      //     title = "All";
-                      //   }
-                      // });
+                      courseController.fetchAllCourses();
                     },
-                    // color: title == 'All' ? primaryColor : Colors.white,
-                    // textColor: title == 'All' ? Colors.white : primaryColor,
+                    color: courseController.isAllCourse.isTrue
+                        ? primaryColor
+                        : Colors.white,
+                    textColor: courseController.isAllCourse.isTrue
+                        ? Colors.white
+                        : primaryColor,
                   ),
-                ),
+                )),
                 const SizedBox(
                   width: 10,
                 ),
                 Expanded(
-                  child: RoundedButton(
-                    text: "Ditandai",
-                    onPressed: () {
-                      // setState(() {
-                      //   if (title != "Ditandai") {
-                      //     title = "Ditandai";
-                      //   }
-                      // });
-                    },
-                    // color: title != 'All' ? primaryColor : Colors.white,
-                    // textColor: title != 'All' ? Colors.white : primaryColor,
-                  ),
+                  child: Obx(() => RoundedButton(
+                        text: "Ditandai",
+                        onPressed: () async {
+                          print(authController.currentUser.value.id.toString());
+                          await courseController.getCourseByEmployeeId(
+                              authController.currentUser.value.id.toString());
+                        },
+                        color: courseController.isAllCourse.isTrue
+                            ? Colors.white
+                            : primaryColor,
+                        textColor: courseController.isAllCourse.isTrue
+                            ? primaryColor
+                            : Colors.white,
+                      )),
                 ),
               ],
             ),
@@ -86,8 +83,6 @@ class CoursePage extends GetView<CourseController> {
                     itemBuilder: (context, index) {
                       CourseData course = courseController.courseList[index];
                       var imgId = course.image?.id;
-                      // course.image?.id + '/' + course.image?.filenameDisk ??
-                      //     '' + '.png';
                       return CourseCard(
                         onTap: () {
                           Get.toNamed("/course-detail/${course.id}");
