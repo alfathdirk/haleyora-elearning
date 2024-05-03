@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
-import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/widget/card.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -66,7 +64,7 @@ class CourseDetail extends StatelessWidget {
                                       child: CircularProgressIndicator(),
                                     );
                             },
-                            "${imageBaseUrl}${course.image?.id}?access_token=${box.read('accessToken')}",
+                            "$imageBaseUrl${course.image?.id}?access_token=${box.read('accessToken')}",
                             width: double.infinity,
                             height: 300,
                             fit: BoxFit.cover,
@@ -123,10 +121,9 @@ class CourseDetail extends StatelessWidget {
                                                 size: 12,
                                               ),
                                               Text(
-                                                (course.employeeCourse?.length
+                                                '${course.employeeCourse?.length
                                                             .toString() ??
-                                                        '0') +
-                                                    ' Dipelajari',
+                                                        '0'} Dipelajari',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -145,9 +142,8 @@ class CourseDetail extends StatelessWidget {
                                                 size: 10,
                                               ),
                                               Text(
-                                                (course.duration.toString() ??
-                                                        '0') +
-                                                    ' Menit',
+                                                '${course.duration.toString() ??
+                                                        '0'} Menit',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -216,11 +212,11 @@ class CourseDetail extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print(
-                          '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
-                      // final Uri _url = Uri.parse(
-                      //     '${imageBaseUrl}/${course.videoContent}?access_token=${box.read('accessToken')}');
-                      // _launchInBrowserView(_url);
+                      // print(
+                      //     '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
+                      final Uri url = Uri.parse(
+                          '$imageBaseUrl${course.materialContent}?access_token=${box.read('accessToken')}');
+                      _launchInBrowserView(url);
                     },
                     child: Container(
                       height: 55,

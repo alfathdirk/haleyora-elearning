@@ -10,7 +10,7 @@ class TextFieldWithBoxShadow extends StatelessWidget {
   final String? placeholder;
 
   const TextFieldWithBoxShadow({
-    Key? key,
+    super.key,
     this.errorText,
     this.labelText,
     this.controller,
@@ -18,7 +18,7 @@ class TextFieldWithBoxShadow extends StatelessWidget {
     this.isPassword,
     this.validator,
     this.placeholder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,12 +6,11 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
-import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
 
 class CoursePage extends GetView<CourseController> {
-  CoursePage({Key? key}) : super(key: key);
+  CoursePage({super.key});
   final box = GetStorage();
 
   @override
@@ -91,7 +90,7 @@ class CoursePage extends GetView<CourseController> {
                         title: course.title ?? "",
                         description: course.activities?.title ?? "",
                         imageUrl:
-                            "${imageBaseUrl}${imgId}?access_token=${box.read('accessToken')}",
+                            "$imageBaseUrl$imgId?access_token=${box.read('accessToken')}",
                         totalEmployee: course.employeeCourse?.length ?? 0,
                         // TODO: check if course is bookmarked
                         isBookmarked: true,

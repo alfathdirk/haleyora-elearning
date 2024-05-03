@@ -13,7 +13,7 @@ import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/popup.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
   final box = GetStorage();
 
   @override
@@ -293,7 +293,7 @@ class HomePage extends StatelessWidget {
                                         child: CircularProgressIndicator(),
                                       );
                               },
-                              '${imageBaseUrl}${categoryList.image}?access_token=${box.read('accessToken')}',
+                              '$imageBaseUrl${categoryList.image}?access_token=${box.read('accessToken')}',
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
@@ -358,7 +358,7 @@ class HomePage extends StatelessWidget {
                             },
                             title: courseData.title ?? "sdf",
                             imageUrl:
-                                '${imageBaseUrl}${courseData.image!.filenameDisk}?access_token=${box.read('accessToken')}',
+                                '$imageBaseUrl${courseData.image!.filenameDisk}?access_token=${box.read('accessToken')}',
                             description: "Kursus ini akan membantu anda",
                           ),
                         );

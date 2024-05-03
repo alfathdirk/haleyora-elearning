@@ -4,7 +4,7 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 
 class ListSector extends StatelessWidget {
-  const ListSector({Key? key}) : super(key: key);
+  const ListSector({super.key});
 
   @override
   Widget build(BuildContext context) {

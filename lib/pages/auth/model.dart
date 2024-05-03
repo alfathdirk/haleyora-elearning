@@ -21,11 +21,11 @@ class LoginResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accessToken'] = this.accessToken;
-    data['refreshToken'] = this.refreshToken;
-    data['expires'] = this.expires;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['accessToken'] = accessToken;
+    data['refreshToken'] = refreshToken;
+    data['expires'] = expires;
+    data['id'] = id;
     return data;
   }
 }
@@ -52,11 +52,11 @@ class UserData {
   final String? externalIdentifier;
   final String? authData;
   final bool? emailNotifications;
-  final dynamic? appearance;
-  final dynamic? themeDark;
-  final dynamic? themeLight;
-  final dynamic? themeLightOverrides;
-  final dynamic? themeDarkOverrides;
+  final dynamic appearance;
+  final dynamic themeDark;
+  final dynamic themeLight;
+  final dynamic themeLightOverrides;
+  final dynamic themeDarkOverrides;
 
   UserData({
     this.id,

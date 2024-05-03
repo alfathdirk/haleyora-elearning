@@ -3,11 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
-import 'package:haleyora/model/model.dart';
-import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/card.dart';
 
 class TaskController extends GetxController {
@@ -69,7 +66,7 @@ class TaskAssignment extends StatelessWidget {
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               Text(
@@ -80,7 +77,7 @@ class TaskAssignment extends StatelessWidget {
                       fontSize: 16,
                       color: darkText,
                       fontWeight: FontWeight.w700)),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               RichText(
                   text: TextSpan(
                       text:
@@ -98,21 +95,21 @@ class TaskAssignment extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     )
                   ])),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               InkWell(
                 onTap: () async {
                   await taskController.onUploadTask();
                 },
                 child: CustomCard(
                     child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.cloud_upload, color: primaryColor),
-                        SizedBox(height: 10),
+                        const Icon(Icons.cloud_upload, color: primaryColor),
+                        const SizedBox(height: 10),
                         Text('Ketuk disini untuk mengupload tugas.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.mulish(

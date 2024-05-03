@@ -23,7 +23,7 @@ class Controller extends GetxController {
 }
 
 class NotificationSetting extends StatelessWidget {
-  const NotificationSetting({Key? key}) : super(key: key);
+  const NotificationSetting({super.key});
 
   @override
   Widget build(BuildContext context) {

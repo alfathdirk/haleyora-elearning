@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
-import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/pages/auth/model.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -11,7 +10,7 @@ import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/text_input.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _loginScreenState();

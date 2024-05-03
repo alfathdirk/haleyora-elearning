@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:haleyora/pages/auth/model.dart';
 import 'package:haleyora/services/dio_client.dart';
 
@@ -14,10 +13,6 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   Future<void> getMe() async {
     try {

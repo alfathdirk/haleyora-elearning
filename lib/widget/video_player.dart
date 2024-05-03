@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:developer';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;

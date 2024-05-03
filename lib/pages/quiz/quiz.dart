@@ -7,7 +7,7 @@ import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/card.dart';
 
 class QuizPage extends StatelessWidget {
-  QuizPage({Key? key}) : super(key: key);
+  QuizPage({super.key});
   final QuizController controller = Get.put(QuizController());
 
   // initialize question

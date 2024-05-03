@@ -5,7 +5,7 @@ import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/chart.dart';
 
 class AchievmentPage extends StatelessWidget {
-  const AchievmentPage({Key? key}) : super(key: key);
+  const AchievmentPage({super.key});
 
   @override
   Widget build(BuildContext context) {

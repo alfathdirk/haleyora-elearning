@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
@@ -31,7 +30,7 @@ class ImageDialog extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Image.asset(image, width: 200, height: 200),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 SizedBox(
                   width: 200,
                   child: Text(
@@ -43,7 +42,7 @@ class ImageDialog extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 RoundedButton(text: buttonText, onPressed: onPressed)
               ],
             )));

@@ -4,7 +4,7 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
 
 class NotificationList extends StatelessWidget {
-  const NotificationList({Key? key}) : super(key: key);
+  const NotificationList({super.key});
 
   @override
   Widget build(BuildContext context) {

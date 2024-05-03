@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/text_input.dart';
 
@@ -71,7 +70,7 @@ class EditPasswordPage extends StatelessWidget {
                   color: Colors.black,
                   decoration: TextDecoration.none),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFieldWithBoxShadow(
@@ -90,7 +89,7 @@ class EditPasswordPage extends StatelessWidget {
                   color: Colors.black,
                   decoration: TextDecoration.none),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFieldWithBoxShadow(
@@ -106,7 +105,7 @@ class EditPasswordPage extends StatelessWidget {
               labelText: 'Konfirmasi Sandi Baru',
               isPassword: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             SizedBox(

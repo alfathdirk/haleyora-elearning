@@ -4,8 +4,7 @@ import 'package:haleyora/constants.dart';
 class SwitchCustom extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
-  const SwitchCustom({Key? key, required this.value, required this.onChanged})
-      : super(key: key);
+  const SwitchCustom({super.key, required this.value, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

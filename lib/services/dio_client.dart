@@ -6,7 +6,7 @@ import 'package:haleyora/services/auth_service.dart';
 
 final dio = Dio(
   BaseOptions(
-    baseUrl: 'http://localhost:8055',
+    baseUrl: 'http://192.168.196.227:8055',
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
     headers: {

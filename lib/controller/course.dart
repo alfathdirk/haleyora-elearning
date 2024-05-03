@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:haleyora/model/model.dart';
@@ -19,10 +18,6 @@ class CourseController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   Future<void> getCourseByEmployeeId(String empId) async {
     loading.value = true;
@@ -49,7 +44,7 @@ class CourseController extends GetxController {
   Future<void> fetchCourseById(String id) async {
     loading.value = true;
     final result = await dio.get(
-        '/items/course/${id}?fields[]=*,image.*,activities.title,activities.id');
+        '/items/course/$id?fields[]=*,image.*,activities.title,activities.id');
     loading.value = false;
     courseDetail.value = CourseDetailResponse.fromJson(result.data).data!;
     return result.data;

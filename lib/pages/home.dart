@@ -22,18 +22,18 @@ class HomeScreen extends StatelessWidget {
 // navigationController.onTabTapped(1);
   Scaffold dashboardView(BuildContext context) {
     NavigationController navigationController = Get.put(NavigationController());
-    final List<Widget> _pages = [
+    final List<Widget> pages = [
       HomePage(),
       CoursePage(),
-      AchievmentPage(),
+      const AchievmentPage(),
       CoursePage(),
-      ProfilePage(),
+      const ProfilePage(),
     ];
     return Scaffold(
       // body
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: const CustomNavigationBar(),
       body: Obx(() => Center(
-            child: _pages.elementAt(navigationController.currentIndex.value),
+            child: pages.elementAt(navigationController.currentIndex.value),
           )),
     );
   }

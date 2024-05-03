@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/widget/card.dart';
-import 'package:haleyora/widget/navigation_bar.dart';
 
 class CategoryListPage extends StatelessWidget {
-  const CategoryListPage({Key? key}) : super(key: key);
+  const CategoryListPage({super.key});
 
   Future<void> initState() async {
     // fetch data from api

@@ -35,7 +35,7 @@ class Routes {
 final pages = [
   GetPage(
       name: Routes.homePage,
-      page: () => HomeScreen(),
+      page: () => const HomeScreen(),
       middlewares: [AuthMiddleware()]),
   GetPage(
     name: Routes.loginPage,
@@ -55,31 +55,31 @@ final pages = [
   ),
   GetPage(
     name: Routes.listSector,
-    page: () => ListSector(),
+    page: () => const ListSector(),
   ),
   GetPage(
     name: Routes.notificationList,
-    page: () => NotificationList(),
+    page: () => const NotificationList(),
   ),
   GetPage(
     name: Routes.notificationSetting,
-    page: () => NotificationSetting(),
+    page: () => const NotificationSetting(),
   ),
   GetPage(
     name: Routes.notificationDetail,
-    page: () => DetailPage(),
+    page: () => const DetailPage(),
   ),
   GetPage(
     name: Routes.formProfile,
-    page: () => EditProfileForm(),
+    page: () => const EditProfileForm(),
   ),
   GetPage(
     name: Routes.editPassword,
-    page: () => EditPasswordPage(),
+    page: () => const EditPasswordPage(),
   ),
   GetPage(
     name: Routes.categoryList,
-    page: () => CategoryListPage(),
+    page: () => const CategoryListPage(),
   ),
   GetPage(
     name: Routes.filterPage,

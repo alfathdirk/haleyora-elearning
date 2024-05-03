@@ -21,9 +21,9 @@ class CustomNavigationBar extends StatelessWidget {
         Get.put(NavigationController());
 
     return Obx(() => CurvedNavigationBar(
-          backgroundColor: Color.fromRGBO(0, 187, 255, 1),
+          backgroundColor: const Color.fromRGBO(0, 187, 255, 1),
           color: Colors.white,
-          buttonBackgroundColor: Color.fromRGBO(0, 187, 255, 1),
+          buttonBackgroundColor: const Color.fromRGBO(0, 187, 255, 1),
           height: 65,
           items: [
             SizedBox(

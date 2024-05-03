@@ -13,6 +13,7 @@ class QuizController extends GetxController {
 
   List<Question> questionList = <Question>[];
 
+  @override
   void onInit() {
     print('init quiz');
     super.onInit();
@@ -82,10 +83,10 @@ class RoundedCard extends StatelessWidget {
   final Color color;
 
   const RoundedCard({
-    Key? key,
+    super.key,
     required this.child,
     this.color = Colors.white,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
