@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 
 class PDF {
   static Future<void> generate() async {
@@ -23,13 +22,13 @@ class PDF {
         },
       ),
     );
-    var savedFile = await pdf.save();
-    List<int> fileInts = List.from(savedFile);
-    html.AnchorElement(
-        href:
-            "data:application/octet-stream;charset=utf-16le;base64,${base64.encode(fileInts)}")
-      ..setAttribute("download", "${DateTime.now().millisecondsSinceEpoch}.pdf")
-      ..click();
+    // var savedFile = await pdf.save();
+    // List<int> fileInts = List.from(savedFile);
+    // html.AnchorElement(
+    //     href:
+    //         "data:application/octet-stream;charset=utf-16le;base64,${base64.encode(fileInts)}")
+    //   ..setAttribute("download", "${DateTime.now().millisecondsSinceEpoch}.pdf")
+    //   ..click();
     // final file = File('example.pdf');
     // await file.writeAsBytes(await pdf.save());
   }

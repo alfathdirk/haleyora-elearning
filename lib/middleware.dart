@@ -4,7 +4,7 @@ import 'package:haleyora/router.dart';
 import 'package:haleyora/services/auth_service.dart';
 
 class AuthMiddleware extends GetMiddleware {
-  final authService = Get.find<AuthService>();
+  final authService = Get.put(AuthService());
 
   @override
   RouteSettings? redirect(String? route) {

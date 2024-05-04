@@ -9,7 +9,7 @@ import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
 
-class CoursePage extends GetView<CourseController> {
+class CoursePage extends StatelessWidget {
   CoursePage({super.key});
   final box = GetStorage();
 

@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuizController quizController = Get.put(QuizController());
+    // QuizController quizController = Get.put(QuizController());
     AuthController authController = Get.put(AuthController());
     CourseController courseController = Get.put(CourseController());
 
@@ -272,6 +272,7 @@ class HomePage extends StatelessWidget {
                       crossAxisSpacing: 20,
                     ),
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: courseController.categoryList.length,
                     itemBuilder: (context, index) {
                       CategoryData categoryList =
@@ -338,39 +339,64 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(
                 height: MediaQuery.of(context).size.height * 0.3,
-                child: Obx(() => ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: courseController.courseList.length < 5
-                          ? courseController.courseList.length
-                          : 5,
-                      itemBuilder: (context, index) {
-                        CourseData courseData =
-                            courseController.courseList[index];
-                        return Container(
-                          width: 300,
-                          padding: const EdgeInsets.only(
-                            left: 20,
-                            bottom: 20,
-                          ),
-                          child: CourseCard(
-                            onTapBookmark: () async {
-                              // await courseController.bookmarkCourse(
-                              //     courseData.id!,
-                              //     authController
-                              //         .currentUser.value.employeeData!.id
-                              //         .toString());
-                            },
-                            onTap: () {
-                              Get.toNamed("/course-detail");
-                            },
-                            title: courseData.title ?? "sdf",
-                            imageUrl:
-                                '$imageBaseUrl${courseData.image!.filenameDisk}?access_token=${box.read('accessToken')}',
-                            description: "Kursus ini akan membantu anda",
-                          ),
-                        );
-                      },
-                    )))
+                child: Obx(() => !courseController.loading.value &&
+                        courseController.courseList.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: courseController.courseList.length < 5
+                            ? courseController.courseList.length
+                            : 5,
+                        itemBuilder: (context, index) {
+                          CourseData course =
+                              courseController.courseList[index];
+                          var imgId = course.image?.id;
+                          bool isBookmarked = course.employeeBookmark!
+                              .map((e) => e.employee)
+                              .contains(authController
+                                  .currentUser.value.employeeData!.id);
+                          return Container(
+                            width: 300,
+                            padding: const EdgeInsets.only(
+                              left: 20,
+                              bottom: 20,
+                            ),
+                            child: CourseCard(
+                              onTapBookmark: () async {
+                                if (!isBookmarked) {
+                                  await courseController.bookmarkCourse(
+                                      course.id.toString(),
+                                      authController
+                                          .currentUser.value.employeeData!.id
+                                          .toString());
+                                } else {
+                                  await courseController.unBookmarkCourse(
+                                      course.id.toString(),
+                                      authController
+                                          .currentUser.value.employeeData!.id
+                                          .toString());
+                                }
+                                // unbookmark
+                                if (courseController.isAllCourse.isTrue) {
+                                  courseController.fetchAllCourses();
+                                } else {
+                                  courseController.getBookmarkByEmployee(
+                                      authController
+                                          .currentUser.value.employeeData!.id
+                                          .toString());
+                                }
+                              },
+                              onTap: () {
+                                Get.toNamed("/course-detail");
+                              },
+                              title: course.title ?? "sdf",
+                              imageUrl:
+                                  '$imageBaseUrl${course.image!.filenameDisk}?access_token=${box.read('accessToken')}',
+                              description: "Kursus ini akan membantu anda",
+                            ),
+                          );
+                        },
+                      )
+                    : const Center(child: CircularProgressIndicator()))),
           ],
         ),
       ),

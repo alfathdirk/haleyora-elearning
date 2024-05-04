@@ -40,6 +40,9 @@ class TaskController extends GetxController {
 
     if (results != null) {
       List<File> files = results.paths.map((path) => File(path!)).toList();
+      files.forEach((file) {
+        filePaths.add(file.path);
+      });
       print(files);
     }
   }

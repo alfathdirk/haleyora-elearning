@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:haleyora/pages/dashboard/achievment_page.dart';
 import 'package:haleyora/pages/dashboard/course_page.dart';
 import 'package:haleyora/pages/dashboard/home_page.dart';
+import 'package:haleyora/pages/dashboard/my_course.dart';
 import 'package:haleyora/pages/dashboard/profile.dart';
 import 'package:haleyora/widget/navigation_bar.dart';
 
@@ -25,9 +26,9 @@ class HomeScreen extends StatelessWidget {
     final List<Widget> pages = [
       HomePage(),
       CoursePage(),
-      const AchievmentPage(),
-      CoursePage(),
-      const ProfilePage(),
+      AchievmentPage(),
+      MyCoursePage(),
+      ProfilePage(),
     ];
     return Scaffold(
       // body

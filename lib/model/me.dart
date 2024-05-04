@@ -110,7 +110,9 @@ class ResponseData {
       ongoingCourses: json['employeeCourseData']['ongoing']
           .map((courseJson) => OngoingCourseData.fromJson(courseJson))
           .toList(),
-      completedCourses: json['employeeCourseData']['completed'] ?? [],
+      completedCourses: json['employeeCourseData']['completed']
+          .map((courseJson) => OngoingCourseData.fromJson(courseJson))
+          .toList(),
       recommendationCourses: json['employeeCourseData']['recommendation'] ?? [],
       ongoingQuizDataMessage: json['ongoingQuizData']['message'],
       searchHistoryData: json['searchHistoryData'] ?? [],
@@ -118,32 +120,6 @@ class ResponseData {
         'unread': json['notificationData']['unread'] ?? [],
         'read': json['notificationData']['read'] ?? [],
       },
-    );
-  }
-}
-
-class Employee {
-  final String id;
-  final String employeeId;
-  final String fullName;
-  final String status;
-  final String username;
-
-  Employee({
-    required this.id,
-    required this.employeeId,
-    required this.fullName,
-    required this.status,
-    required this.username,
-  });
-
-  factory Employee.fromJson(Map<String, dynamic> json) {
-    return Employee(
-      id: json['id'],
-      employeeId: json['employee_id'],
-      fullName: json['full_name'],
-      status: json['status'],
-      username: json['username'],
     );
   }
 }

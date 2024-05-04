@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:haleyora/model/me.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -11,6 +12,11 @@ class CourseController extends GetxController {
   final isAllCourse = true.obs;
   final loading = false.obs;
   final categoryList = [].obs;
+  final isTaken = false.obs;
+  final isCompleted = false.obs;
+  final tabOngoing = false.obs;
+
+  final myCourseList = [].obs;
 
   @override
   void onInit() {
@@ -32,10 +38,6 @@ class CourseController extends GetxController {
     } catch (e) {
       print('error getCourseByEmployeeId: $e');
     }
-
-    // await courseController.getCourseByEmployeeId(
-    //     authController.currentUser.value.employeeData!.id
-    //         .toString());
   }
 
   Future<void> takeCourse(String courseId, String empId) async {
@@ -44,8 +46,9 @@ class CourseController extends GetxController {
         'employee': empId,
         'course': courseId,
       });
-      print('bookmark success');
+      isTaken.value = true;
     } catch (e) {
+      isTaken.value = false;
       print('error bookmarkCourse: $e');
     }
   }
@@ -114,14 +117,42 @@ class CourseController extends GetxController {
     }
   }
 
+  Future<void> fetchCourseCompleted(String empId) async {
+    try {
+      loading.value = true;
+      final result = await dio.get(
+          '/items/employee_course?filter[employee][_eq]=$empId&filter[status][_eq]=completed');
+      print(result);
+      // CourseResponse courseResponse = CourseResponse.fromJson(result.data);
+      // courseList.value = courseResponse.data!.toList();
+      // loading.value = false;
+    } catch (e) {
+      print('error fetchCourseCompleted: $e');
+    }
+  }
+
+  Future<bool> checkCourseIsTaken(String courseId, String empId) async {
+    try {
+      final result = await dio.get(
+          '/items/employee_course?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId');
+      if (result.data['data'].length > 0) {
+        isTaken.value = true;
+        return true;
+      }
+      print('checkCourseIsTaken: ${result.data}');
+      isTaken.value = false;
+      return false;
+    } catch (e) {
+      print('error checkCourseIsTaken: $e');
+      isTaken.value = false;
+      return false;
+    }
+  }
+
   Future<void> getCategory() async {
     final result = await dio.get('/items/category');
     CategoryResponse categoryResponse = CategoryResponse.fromJson(result.data);
     categoryList.value = categoryResponse.data!.toList();
-    // categoryList.value = courseResponse.data!.toList();
-    // courseList.value = courseResponse
-    // final List<dynamic> modelsJson = parsedJson['data'];
-    // categoryList.value = data;
   }
 
   Future<void> bookmarkCourse(String courseId, String empId) async {
@@ -150,5 +181,14 @@ class CourseController extends GetxController {
     } catch (e) {
       print('error unBookmarkCourse: $e');
     }
+  }
+
+  Future<void> setTabOngoing(bool value) async {
+    tabOngoing.value = value;
+  }
+
+  void setMyCourseList(List<dynamic> courseList, bool tabOnGoing) {
+    myCourseList.value = courseList;
+    setTabOngoing(tabOnGoing);
   }
 }

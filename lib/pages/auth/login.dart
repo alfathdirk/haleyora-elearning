@@ -31,9 +31,16 @@ class _loginScreenState extends State<LoginScreen> {
 
   bool isEmailCorrect = false;
   bool rememberMe = false;
+  bool isLoading = false;
+  bool isDisabled = false;
+
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _login() async {
+    setState(() {
+      isLoading = true;
+      isDisabled = true;
+    });
     // if (_formKey.currentState!.validate()) {
     final response = await dio.post('/api/login', data: {
       'username': '7921203BDG',
@@ -45,6 +52,10 @@ class _loginScreenState extends State<LoginScreen> {
     box.write('accessToken', loginResponse.accessToken);
     box.write('refreshToken', loginResponse.refreshToken);
     await authService.setisLoggedIn(true);
+    setState(() {
+      isLoading = false;
+      isDisabled = false;
+    });
     Get.offNamed('/home');
     return;
     // }
@@ -131,7 +142,7 @@ class _loginScreenState extends State<LoginScreen> {
                       Padding(
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: TextFieldWithBoxShadow(
-                            placeholder: 'Username',
+                            placeholder: 'User Name',
                             controller: _usernameController,
                             icon: const Icon(
                               Icons.email_outlined,
@@ -209,6 +220,8 @@ class _loginScreenState extends State<LoginScreen> {
                   height: 50,
                   child: RoundedButton(
                     text: "Login",
+                    isDisabled: isDisabled,
+                    isLoading: isLoading,
                     onPressed: () async {
                       await _login();
                       // Get.offNamed('/home');

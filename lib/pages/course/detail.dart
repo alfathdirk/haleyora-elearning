@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
+import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +16,7 @@ class CourseDetail extends StatelessWidget {
   CourseDetail({super.key});
   final id = Get.parameters['id'];
   final courseController = Get.put(CourseController());
+  final AuthController authController = Get.put(AuthController());
   final box = GetStorage();
 
   Future<void> _launchInBrowserView(Uri url) async {
@@ -22,13 +25,21 @@ class CourseDetail extends StatelessWidget {
     }
   }
 
+  Future<void> initData() async {
+    try {
+      await courseController.fetchCourseById(id!);
+    } catch (e) {
+      print('error initData: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: courseController.fetchCourseById(id!),
+      future: initData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return buildScafold(context);
+          return Obx(() => buildScafold(context));
         }
         return const Scaffold(
           body: Center(
@@ -41,6 +52,10 @@ class CourseDetail extends StatelessWidget {
 
   Widget buildScafold(BuildContext context) {
     CourseData course = courseController.courseDetail.value;
+    courseController.checkCourseIsTaken(
+        id!, authController.currentUser.value.employeeData!.id.toString());
+    final isTaken = courseController.isTaken.value;
+    final isCompleted = courseController.isCompleted.value;
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -121,9 +136,7 @@ class CourseDetail extends StatelessWidget {
                                                 size: 12,
                                               ),
                                               Text(
-                                                '${course.employeeCourse?.length
-                                                            .toString() ??
-                                                        '0'} Dipelajari',
+                                                '${course.employeeCourse?.length.toString() ?? '0'} Dipelajari',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -142,8 +155,7 @@ class CourseDetail extends StatelessWidget {
                                                 size: 10,
                                               ),
                                               Text(
-                                                '${course.duration.toString() ??
-                                                        '0'} Menit',
+                                                '${course.duration.toString() ?? '0'} Menit',
                                                 style: GoogleFonts.mulish(
                                                     fontSize: 10,
                                                     fontWeight:
@@ -185,6 +197,32 @@ class CourseDetail extends StatelessWidget {
                                                 decoration:
                                                     TextDecoration.none),
                                           ),
+                                          !isTaken && !isCompleted
+                                              ? Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  padding:
+                                                      const EdgeInsets.all(16),
+                                                  child: RoundedButton(
+                                                    text: 'Ikuti Kursus',
+                                                    onPressed: () async {
+                                                      await courseController
+                                                          .takeCourse(
+                                                              course.id
+                                                                  .toString(),
+                                                              authController
+                                                                  .currentUser
+                                                                  .value
+                                                                  .employeeData!
+                                                                  .id
+                                                                  .toString());
+                                                    },
+                                                    color: primaryColor,
+                                                    textColor: Colors.white,
+                                                  ),
+                                                )
+                                              : const SizedBox(),
                                         ],
                                       )
                                     ],
@@ -200,181 +238,188 @@ class CourseDetail extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 3.5),
-                shrinkWrap: true,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // print(
-                      //     '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
-                      final Uri url = Uri.parse(
-                          '$imageBaseUrl${course.materialContent}?access_token=${box.read('accessToken')}');
-                      _launchInBrowserView(url);
-                    },
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 119, 119, 119)
-                                .withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1),
+            isTaken && !isCompleted
+                ? Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: GridView(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 3.5),
+                      shrinkWrap: true,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            // print(
+                            //     '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
+                            final Uri url = Uri.parse(
+                                '$imageBaseUrl${course.materialContent}?access_token=${box.read('accessToken')}');
+                            _launchInBrowserView(url);
+                          },
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 119, 119, 119)
+                                          .withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.picture_as_pdf_outlined,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  'Baca Materi',
+                                  style: GoogleFonts.mulish(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.picture_as_pdf_outlined,
-                            color: Colors.black,
-                            size: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/video-player/${course.videoContent}');
+                          },
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 119, 119, 119)
+                                          .withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.play_circle_outlined,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  'Tonton Video',
+                                  style: GoogleFonts.mulish(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Baca Materi',
-                            style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 119, 119, 119)
+                                          .withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  CupertinoIcons.pencil_ellipsis_rectangle,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  'Mulai Ujian',
+                                  style: GoogleFonts.mulish(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Get.toNamed('/task-detail/${course.id}',
+                              arguments: {
+                                'description': course.taskDescription ?? '',
+                              }),
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 119, 119, 119)
+                                          .withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  CupertinoIcons.news,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  'Tugas',
+                                  style: GoogleFonts.mulish(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed('/video-player/${course.videoContent}');
-                    },
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 119, 119, 119)
-                                .withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.play_circle_outlined,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Tonton Video',
-                            style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 119, 119, 119)
-                                .withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.pencil_ellipsis_rectangle,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Mulai Ujian',
-                            style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Get.toNamed('/task-detail/${course.id}', arguments: {
-                      'description': course.taskDescription ?? '',
-                    }),
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 119, 119, 119)
-                                .withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.news,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Tugas',
-                            style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
