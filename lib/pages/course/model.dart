@@ -74,3 +74,18 @@ class CategoryResponse {
     return data;
   }
 }
+
+class BookmarkResponse {
+  List<CourseBookmarkByEmployee>? data;
+
+  BookmarkResponse({this.data});
+
+  BookmarkResponse.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <CourseBookmarkByEmployee>[];
+      json['data'].forEach((v) {
+        data!.add(CourseBookmarkByEmployee.fromJson(v));
+      });
+    }
+  }
+}

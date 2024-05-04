@@ -354,11 +354,11 @@ class HomePage extends StatelessWidget {
                           ),
                           child: CourseCard(
                             onTapBookmark: () async {
-                              await courseController.bookmarkCourse(
-                                  courseData.id!,
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                              // await courseController.bookmarkCourse(
+                              //     courseData.id!,
+                              //     authController
+                              //         .currentUser.value.employeeData!.id
+                              //         .toString());
                             },
                             onTap: () {
                               Get.toNamed("/course-detail");

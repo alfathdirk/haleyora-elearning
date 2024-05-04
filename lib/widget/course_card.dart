@@ -104,6 +104,8 @@ class CourseCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     style: GoogleFonts.mulish(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

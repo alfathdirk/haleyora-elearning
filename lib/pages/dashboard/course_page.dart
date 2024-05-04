@@ -52,7 +52,7 @@ class CoursePage extends GetView<CourseController> {
                   child: Obx(() => RoundedButton(
                         text: "Ditandai",
                         onPressed: () async {
-                          await courseController.getCourseByEmployeeId(
+                          await courseController.getBookmarkByEmployee(
                               authController.currentUser.value.employeeData!.id
                                   .toString());
                         },
@@ -82,15 +82,34 @@ class CoursePage extends GetView<CourseController> {
                     itemBuilder: (context, index) {
                       CourseData course = courseController.courseList[index];
                       var imgId = course.image?.id;
-                      final courseIds = course.employeeCourse
-                          ?.map((element) => element.employee)
-                          .toList();
+                      bool isBookmarked = course.employeeBookmark!
+                          .map((e) => e.employee)
+                          .contains(authController
+                              .currentUser.value.employeeData!.id);
                       return CourseCard(
                         onTapBookmark: () async {
-                          await courseController.bookmarkCourse(
-                              course.id.toString(),
-                              authController.currentUser.value.employeeData!.id
-                                  .toString());
+                          if (!isBookmarked) {
+                            await courseController.bookmarkCourse(
+                                course.id.toString(),
+                                authController
+                                    .currentUser.value.employeeData!.id
+                                    .toString());
+                          } else {
+                            await courseController.unBookmarkCourse(
+                                course.id.toString(),
+                                authController
+                                    .currentUser.value.employeeData!.id
+                                    .toString());
+                          }
+                          // unbookmark
+                          if (courseController.isAllCourse.isTrue) {
+                            courseController.fetchAllCourses();
+                          } else {
+                            courseController.getBookmarkByEmployee(
+                                authController
+                                    .currentUser.value.employeeData!.id
+                                    .toString());
+                          }
                         },
                         onTap: () {
                           Get.toNamed("/course-detail/${course.id}");
@@ -101,8 +120,7 @@ class CoursePage extends GetView<CourseController> {
                         imageUrl:
                             "$imageBaseUrl$imgId?access_token=${box.read('accessToken')}",
                         totalEmployee: course.employeeCourse?.length ?? 0,
-                        isBookmarked: courseIds!.contains(
-                            authController.currentUser.value.employeeData!.id),
+                        isBookmarked: isBookmarked,
                         duration: course.duration ?? 0,
                       );
                     },

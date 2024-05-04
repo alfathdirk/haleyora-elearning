@@ -17,6 +17,7 @@ class CourseData {
   String? minScore;
   dynamic examQuiz;
   List<EmployeeCourseData>? employeeCourse;
+  List<CourseBookmarkByEmployee>? employeeBookmark;
   ImageData? image;
   String? description;
   String? taskDescription;
@@ -38,6 +39,7 @@ class CourseData {
     this.minScore,
     this.examQuiz,
     this.employeeCourse,
+    this.employeeBookmark,
     this.image,
     this.description,
     this.taskDescription,
@@ -64,6 +66,11 @@ class CourseData {
     employeeCourse = json['employee_course'] != null
         ? (json['employee_course'] as List)
             .map((e) => EmployeeCourseData.fromJson(e))
+            .toList()
+        : null;
+    employeeBookmark = json['employee_bookmark'] != null
+        ? (json['employee_bookmark'] as List)
+            .map((e) => CourseBookmarkByEmployee.fromJson(e))
             .toList()
         : null;
     image = json['image'] != null ? ImageData.fromJson(json['image']) : null;
@@ -262,6 +269,42 @@ class CategoryData {
       'name': name,
       'image': image,
     };
+  }
+}
+
+class CourseBookmarkByEmployee {
+  final String? id;
+  final String? userCreated;
+  final DateTime? dateCreated;
+  final String? userUpdated;
+  final DateTime? dateUpdated;
+  final String? course;
+  final String? employee;
+
+  CourseBookmarkByEmployee({
+    this.id,
+    this.userCreated,
+    this.dateCreated,
+    this.userUpdated,
+    this.dateUpdated,
+    this.course,
+    this.employee,
+  });
+
+  factory CourseBookmarkByEmployee.fromJson(Map<String, dynamic> json) {
+    return CourseBookmarkByEmployee(
+      id: json['id'],
+      userCreated: json['user_created'],
+      dateCreated: json['date_created'] != null
+          ? DateTime.parse(json['date_created'])
+          : null,
+      userUpdated: json['user_updated'],
+      dateUpdated: json['date_updated'] != null
+          ? DateTime.parse(json['date_updated'])
+          : null,
+      course: json['course'],
+      employee: json['employee_id'],
+    );
   }
 }
 
