@@ -37,22 +37,22 @@ class NotificationSetting extends StatelessWidget {
               const EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
           content: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  loadingBuilder: (context, child, progress) {
-                    return progress == null
-                        ? child
-                        : const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                  },
-                  'https://picsum.photos/300/300',
-                  fit: BoxFit.cover,
-                  width: 180,
-                  height: 180,
-                ),
-              ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(8),
+              //   child: Image.network(
+              //     loadingBuilder: (context, child, progress) {
+              //       return progress == null
+              //           ? child
+              //           : const Center(
+              //               child: CircularProgressIndicator(),
+              //             );
+              //     },
+              //     'https://picsum.photos/300/300',
+              //     fit: BoxFit.cover,
+              //     width: 180,
+              //     height: 180,
+              //   ),
+              // ),
               const SizedBox(
                 height: 20,
               ),

@@ -39,7 +39,7 @@ class Routes {
 final pages = [
   GetPage(
       name: Routes.homePage,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       binding: HomeBinding(),
       middlewares: [AuthMiddleware()]),
   GetPage(
@@ -57,7 +57,6 @@ final pages = [
   GetPage(
     name: Routes.quizPage,
     page: () => QuizPage(),
-    binding: HomeBinding(),
   ),
   GetPage(
     name: Routes.listSector,

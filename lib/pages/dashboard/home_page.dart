@@ -18,10 +18,18 @@ class HomePage extends StatelessWidget {
   AuthController authController = Get.find<AuthController>();
   CourseController courseController = Get.find<CourseController>();
 
+  Future<void> init() async {
+    if (authController.currentUser.value.employeeData == null) {
+      await authController.getMe();
+    }
+    await courseController.fetchAllCourses();
+    await courseController.getCategory();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: courseController.fetchAllCourses(),
+      future: init(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx(() => buildWidget(context));
@@ -75,9 +83,9 @@ class HomePage extends StatelessWidget {
                                       color: darkText),
                                 ),
                                 Text(
-                                  authController.currentUser.value.employeeData
-                                          ?.fullName ??
-                                      '',
+                                  authController.currentUser.value.employeeData!
+                                          .fullName ??
+                                      "",
                                   style: GoogleFonts.mulish(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -341,10 +349,7 @@ class HomePage extends StatelessWidget {
                           : 5,
                       itemBuilder: (context, index) {
                         CourseData course = courseController.courseList[index];
-                        bool isBookmarked = course.employeeBookmark!
-                            .map((e) => e.employee)
-                            .contains(authController
-                                .currentUser.value.employeeData!.id);
+
                         return Container(
                           width: 300,
                           padding: const EdgeInsets.only(
@@ -353,6 +358,10 @@ class HomePage extends StatelessWidget {
                           ),
                           child: CourseCard(
                             onTapBookmark: () async {
+                              bool isBookmarked = course.employeeBookmark!
+                                  .map((e) => e.employee)
+                                  .contains(authController
+                                      .currentUser.value.employeeData!.id);
                               if (!isBookmarked) {
                                 await courseController.bookmarkCourse(
                                     course.id.toString(),
@@ -379,6 +388,10 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               Get.toNamed("/course-detail/${course.id}");
                             },
+                            isBookmarked: course.employeeBookmark!
+                                .map((e) => e.employee)
+                                .contains(authController
+                                    .currentUser.value.employeeData!.id),
                             title: course.title ?? "sdf",
                             imageUrl:
                                 '$imageBaseUrl${course.image!.filenameDisk}?access_token=${box.read('accessToken')}',

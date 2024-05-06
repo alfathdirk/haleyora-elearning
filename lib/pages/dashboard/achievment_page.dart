@@ -128,18 +128,18 @@ class AchievmentPage extends StatelessWidget {
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
                           children: [
-                            Image.network(
-                              loadingBuilder: (context, child, progress) {
-                                return progress == null
-                                    ? child
-                                    : const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                              },
-                              'https://picsum.photos/50/50?random=$i',
-                              width: 50,
-                              height: 50,
-                            ),
+                            // Image.network(
+                            //   loadingBuilder: (context, child, progress) {
+                            //     return progress == null
+                            //         ? child
+                            //         : const Center(
+                            //             child: CircularProgressIndicator(),
+                            //           );
+                            //   },
+                            //   'https://picsum.photos/50/50?random=$i',
+                            //   width: 50,
+                            //   height: 50,
+                            // ),
                             const SizedBox(
                               width: 20,
                             ),

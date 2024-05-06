@@ -15,13 +15,6 @@ class CourseController extends GetxController {
 
   final myCourseList = [].obs;
 
-  @override
-  void onInit() async {
-    await fetchAllCourses();
-    await getCategory();
-    super.onInit();
-  }
-
   Future<void> isCourseCompleted(String courseId, String empId) async {
     try {
       final result = await dio.get(
@@ -90,7 +83,6 @@ class CourseController extends GetxController {
 
   Future<void> fetchAllCourses() async {
     try {
-      loading.value = true;
       isAllCourse.value = true;
       final result = await dio.get(
           '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
@@ -108,8 +100,6 @@ class CourseController extends GetxController {
 
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       courseList.value = courseResponse.data!.toList();
-      loading.value = false;
-      print('by all');
     } catch (e) {
       print('error fetchAllCourses: $e');
     }
@@ -162,9 +152,17 @@ class CourseController extends GetxController {
   }
 
   Future<void> getCategory() async {
-    final result = await dio.get('/items/category');
-    CategoryResponse categoryResponse = CategoryResponse.fromJson(result.data);
-    categoryList.value = categoryResponse.data!.toList();
+    try {
+      final result = await dio.get('/items/category');
+      CategoryResponse categoryResponse =
+          CategoryResponse.fromJson(result.data);
+      categoryList.value = categoryResponse.data!.toList();
+    } catch (e) {
+      print('error getCategory: $e');
+    }
+    // final result = await dio.get('/items/category');
+    // CategoryResponse categoryResponse = CategoryResponse.fromJson(result.data);
+    // categoryList.value = categoryResponse.data!.toList();
   }
 
   Future<void> bookmarkCourse(String courseId, String empId) async {
