@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:haleyora/model/me.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -19,10 +16,24 @@ class CourseController extends GetxController {
   final myCourseList = [].obs;
 
   @override
-  void onInit() {
-    fetchAllCourses();
-    getCategory();
+  void onInit() async {
+    await fetchAllCourses();
+    await getCategory();
     super.onInit();
+  }
+
+  Future<void> isCourseCompleted(String courseId, String empId) async {
+    try {
+      final result = await dio.get(
+          '/items/employee_course?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId&filter[completed][_eq]=true');
+      if (result.data['data'].length > 0) {
+        isCompleted.value = true;
+        return;
+      }
+      isCompleted.value = false;
+    } catch (e) {
+      print('error isCourseCompleted: $e');
+    }
   }
 
   Future<void> getCourseByEmployeeId(String empId) async {
@@ -107,6 +118,7 @@ class CourseController extends GetxController {
   Future<void> fetchCourseById(String id) async {
     try {
       loading.value = true;
+      isCompleted.value = false;
       final result = await dio.get(
           '/items/course/$id?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
       loading.value = false;

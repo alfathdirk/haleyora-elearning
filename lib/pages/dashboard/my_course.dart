@@ -6,7 +6,6 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/me.dart';
-import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
 
@@ -15,8 +14,8 @@ class MyCoursePage extends StatelessWidget {
   final box = GetStorage();
 
   Future<void> init() async {
-    final courseController = Get.put(CourseController());
-    AuthController authController = Get.put(AuthController());
+    CourseController courseController = Get.find<CourseController>();
+    AuthController authController = Get.find<AuthController>();
     courseController.setMyCourseList(
         authController.currentUser.value.completedCourses!.toList(), false);
   }
@@ -116,13 +115,13 @@ class MyCoursePage extends StatelessWidget {
                         onTap: () {
                           Get.toNamed("/course-detail/${course.course!.id}");
                         },
-                        spanText: course.course?.title ?? "",
+                        spanText: course.course?.activities ?? '',
                         title: course.course?.title ?? "",
                         description: course.course?.title ?? "",
                         imageUrl:
                             "$imageBaseUrl${course.course?.image}?access_token=${box.read('accessToken')}",
-                        totalEmployee: 0,
                         duration: course.course?.duration ?? 0,
+                        iconBookmark: false,
                       );
                     },
                   )),

@@ -9,6 +9,7 @@ class RoundedButton extends StatelessWidget {
   final Color textColor;
   final bool isDisabled;
   final bool isLoading;
+  final MainAxisAlignment align;
 
   const RoundedButton({
     super.key,
@@ -18,6 +19,7 @@ class RoundedButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.isDisabled = false,
     this.isLoading = false,
+    this.align = MainAxisAlignment.center,
   });
 
   @override
@@ -31,7 +33,7 @@ class RoundedButton extends StatelessWidget {
         ),
         onPressed: isDisabled || isLoading ? null : onPressed,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: align,
           children: [
             if (isLoading)
               const SizedBox(

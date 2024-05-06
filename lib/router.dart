@@ -1,3 +1,7 @@
+import 'package:haleyora/bindings.dart';
+import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/course/detail.dart';
@@ -20,7 +24,7 @@ class Routes {
   static String loginPage = "/login";
   static String courseDetail = "/course-detail/:id";
   static String videoPlayer = "/video-player/:url";
-  static String quizPage = "/quiz";
+  static String quizPage = "/quiz/:quizId/:id";
   static String listSector = "/list-sector";
   static String notificationList = "/notification";
   static String notificationDetail = "/notification-detail";
@@ -36,6 +40,7 @@ final pages = [
   GetPage(
       name: Routes.homePage,
       page: () => const HomeScreen(),
+      binding: HomeBinding(),
       middlewares: [AuthMiddleware()]),
   GetPage(
     name: Routes.loginPage,
@@ -52,6 +57,7 @@ final pages = [
   GetPage(
     name: Routes.quizPage,
     page: () => QuizPage(),
+    binding: HomeBinding(),
   ),
   GetPage(
     name: Routes.listSector,

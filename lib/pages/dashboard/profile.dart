@@ -126,7 +126,7 @@ class ProfilePage extends StatelessWidget {
                                   TextButton(
                                     onPressed: () {
                                       authService.logout();
-                                      Get.offAllNamed("/login");
+                                      Get.offAllNamed('/login');
                                     },
                                     child: const Text('Keluar'),
                                   ),

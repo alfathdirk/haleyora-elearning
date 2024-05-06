@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -39,8 +40,7 @@ class MyApp extends StatelessWidget {
       getPages: pages,
       debugShowCheckedModeBanner: false,
       initialBinding: BindingsBuilder(() {
-        Get.lazyPut<AuthController>(() => AuthController());
-        Get.lazyPut<QuizController>(() => QuizController());
+        Get.put(AuthController());
       }),
     );
   }

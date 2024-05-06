@@ -13,11 +13,11 @@ class CoursePage extends StatelessWidget {
   CoursePage({super.key});
   final box = GetStorage();
 
+  final courseController = Get.put(CourseController());
+  AuthController authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
-    final courseController = Get.put(CourseController());
-    AuthController authController = Get.put(AuthController());
-
     return SafeArea(
         child: SingleChildScrollView(
       child: Column(

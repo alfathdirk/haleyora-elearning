@@ -39,6 +39,7 @@ class CourseMe {
   final String? title;
   final String? image;
   final int? duration;
+  final String? activities;
 
   CourseMe({
     this.id,
@@ -46,6 +47,7 @@ class CourseMe {
     this.title,
     this.image,
     this.duration,
+    this.activities,
   });
 
   factory CourseMe.fromJson(Map<String, dynamic> json) {
@@ -55,6 +57,7 @@ class CourseMe {
       title: json['title'],
       image: json['image'],
       duration: json['duration'],
+      activities: json['activities'],
     );
   }
 }

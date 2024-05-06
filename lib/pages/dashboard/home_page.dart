@@ -15,18 +15,30 @@ import 'package:haleyora/widget/popup.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final box = GetStorage();
+  AuthController authController = Get.find<AuthController>();
+  CourseController courseController = Get.find<CourseController>();
 
   @override
   Widget build(BuildContext context) {
-    // QuizController quizController = Get.put(QuizController());
-    AuthController authController = Get.put(AuthController());
-    CourseController courseController = Get.put(CourseController());
+    return FutureBuilder(
+      future: courseController.fetchAllCourses(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Obx(() => buildWidget(context));
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
 
+  Widget buildWidget(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           children: [
-            // Obx(() => Text(courseController.categoryList.length.toString())),
             Container(
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -62,15 +74,15 @@ class HomePage extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: darkText),
                                 ),
-                                Obx(() => Text(
-                                      authController.currentUser.value
-                                              .employeeData?.fullName ??
-                                          '',
-                                      style: GoogleFonts.mulish(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: darkText),
-                                    )),
+                                Text(
+                                  authController.currentUser.value.employeeData
+                                          ?.fullName ??
+                                      '',
+                                  style: GoogleFonts.mulish(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: darkText),
+                                ),
                               ],
                             ),
                           ],
@@ -79,24 +91,7 @@ class HomePage extends StatelessWidget {
                           iconSize: 24,
                           icon: const Icon(Icons.notifications_active_outlined),
                           onPressed: () async {
-                            // await showDialog(
-                            //     context: context,
-                            //     builder: (_) => ImageDialog(
-                            //           buttonText: "OK",
-                            //           onPressed: () {
-                            //             Get.back();
-                            //           },
-                            //           image: "assets/images/distribusi.png",
-                            //           title: "Anda mempunyai 1 notifikasi baru",
-                            //         ));
-                            Get.dialog(ImageDialog(
-                                buttonText: "OK",
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                image: "assets/images/distribusi.png",
-                                title: "Anda mempunyai 1 notifikasi baru"));
-                            // Get.toNamed("/notification");
+                            Get.toNamed("/notification");
                           },
                         ),
                       ],
@@ -265,55 +260,54 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              child: Obx(() => GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 20,
-                    ),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: courseController.categoryList.length,
-                    itemBuilder: (context, index) {
-                      CategoryData categoryList =
-                          courseController.categoryList[index];
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 20,
+                ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: courseController.categoryList.length,
+                itemBuilder: (context, index) {
+                  CategoryData categoryList =
+                      courseController.categoryList[index];
 
-                      return CustomCard(
-                          child: InkWell(
-                        onTap: () {
-                          // Get.toNamed("/category-list/${sectors[i].title}");
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.network(
-                              loadingBuilder: (context, child, progress) {
-                                return progress == null
-                                    ? child
-                                    : const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                              },
-                              '$imageBaseUrl${categoryList.image}?access_token=${box.read('accessToken')}',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              categoryList.name ?? "",
-                              style: GoogleFonts.mulish(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: darkText),
-                            ),
-                          ],
-                        ),
-                      ));
+                  return CustomCard(
+                      child: InkWell(
+                    onTap: () {
+                      // Get.toNamed("/category-list/${sectors[i].title}");
                     },
-                  )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(
+                          loadingBuilder: (context, child, progress) {
+                            return progress == null
+                                ? child
+                                : const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                          },
+                          '$imageBaseUrl${categoryList.image}?access_token=${box.read('accessToken')}',
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          categoryList.name ?? "",
+                          style: GoogleFonts.mulish(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: darkText),
+                        ),
+                      ],
+                    ),
+                  ));
+                },
+              ),
             ),
             Container(
               padding: const EdgeInsets.all(20),
@@ -337,66 +331,63 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Obx(() => !courseController.loading.value &&
-                        courseController.courseList.isNotEmpty
-                    ? ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: courseController.courseList.length < 5
-                            ? courseController.courseList.length
-                            : 5,
-                        itemBuilder: (context, index) {
-                          CourseData course =
-                              courseController.courseList[index];
-                          var imgId = course.image?.id;
-                          bool isBookmarked = course.employeeBookmark!
-                              .map((e) => e.employee)
-                              .contains(authController
-                                  .currentUser.value.employeeData!.id);
-                          return Container(
-                            width: 300,
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              bottom: 20,
-                            ),
-                            child: CourseCard(
-                              onTapBookmark: () async {
-                                if (!isBookmarked) {
-                                  await courseController.bookmarkCourse(
-                                      course.id.toString(),
-                                      authController
-                                          .currentUser.value.employeeData!.id
-                                          .toString());
-                                } else {
-                                  await courseController.unBookmarkCourse(
-                                      course.id.toString(),
-                                      authController
-                                          .currentUser.value.employeeData!.id
-                                          .toString());
-                                }
-                                // unbookmark
-                                if (courseController.isAllCourse.isTrue) {
-                                  courseController.fetchAllCourses();
-                                } else {
-                                  courseController.getBookmarkByEmployee(
-                                      authController
-                                          .currentUser.value.employeeData!.id
-                                          .toString());
-                                }
-                              },
-                              onTap: () {
-                                Get.toNamed("/course-detail");
-                              },
-                              title: course.title ?? "sdf",
-                              imageUrl:
-                                  '$imageBaseUrl${course.image!.filenameDisk}?access_token=${box.read('accessToken')}',
-                              description: "Kursus ini akan membantu anda",
-                            ),
-                          );
-                        },
-                      )
-                    : const Center(child: CircularProgressIndicator()))),
+            courseController.courseList.isNotEmpty
+                ? SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: courseController.courseList.length < 5
+                          ? courseController.courseList.length
+                          : 5,
+                      itemBuilder: (context, index) {
+                        CourseData course = courseController.courseList[index];
+                        bool isBookmarked = course.employeeBookmark!
+                            .map((e) => e.employee)
+                            .contains(authController
+                                .currentUser.value.employeeData!.id);
+                        return Container(
+                          width: 300,
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            bottom: 20,
+                          ),
+                          child: CourseCard(
+                            onTapBookmark: () async {
+                              if (!isBookmarked) {
+                                await courseController.bookmarkCourse(
+                                    course.id.toString(),
+                                    authController
+                                        .currentUser.value.employeeData!.id
+                                        .toString());
+                              } else {
+                                await courseController.unBookmarkCourse(
+                                    course.id.toString(),
+                                    authController
+                                        .currentUser.value.employeeData!.id
+                                        .toString());
+                              }
+                              // unbookmark
+                              if (courseController.isAllCourse.isTrue) {
+                                courseController.fetchAllCourses();
+                              } else {
+                                courseController.getBookmarkByEmployee(
+                                    authController
+                                        .currentUser.value.employeeData!.id
+                                        .toString());
+                              }
+                            },
+                            onTap: () {
+                              Get.toNamed("/course-detail/${course.id}");
+                            },
+                            title: course.title ?? "sdf",
+                            imageUrl:
+                                '$imageBaseUrl${course.image!.filenameDisk}?access_token=${box.read('accessToken')}',
+                            description: "Kursus ini akan membantu anda",
+                          ),
+                        );
+                      },
+                    ))
+                : const Center(child: CircularProgressIndicator()),
           ],
         ),
       ),

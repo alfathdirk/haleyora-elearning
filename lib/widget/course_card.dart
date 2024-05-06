@@ -12,8 +12,9 @@ class CourseCard extends StatelessWidget {
   final String spanText;
   final bool isBookmarked;
   final int duration;
-  final int totalEmployee;
+  final int? totalEmployee;
   final void Function()? onTapBookmark;
+  final bool? iconBookmark;
 
   const CourseCard({
     super.key,
@@ -26,6 +27,7 @@ class CourseCard extends StatelessWidget {
     this.totalEmployee = 0,
     this.duration = 0,
     this.onTapBookmark,
+    this.iconBookmark = true,
   });
 
   @override
@@ -59,32 +61,34 @@ class CourseCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                right: 12,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: isBookmarked ? primaryColor : Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 1,
+              iconBookmark!
+                  ? Positioned(
+                      bottom: 0,
+                      right: 12,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: isBookmarked ? primaryColor : Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: InkWell(
+                          onTap: onTapBookmark,
+                          child: Icon(
+                            CupertinoIcons.bookmark,
+                            color: isBookmarked ? Colors.white : primaryColor,
+                            size: 16,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: InkWell(
-                    onTap: onTapBookmark,
-                    child: Icon(
-                      CupertinoIcons.bookmark,
-                      color: isBookmarked ? Colors.white : primaryColor,
-                      size: 16,
-                    ),
-                  ),
-                ),
-              ),
+                    )
+                  : SizedBox(),
             ]),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -116,23 +120,25 @@ class CourseCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.eye,
-                              color: lightGrey,
-                              size: 10,
-                            ),
-                            Text(
-                              " $totalEmployee Dipelajari",
-                              style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.normal,
-                                color: lightGrey,
-                              ),
-                            ),
-                          ],
-                        ),
+                        totalEmployee != 0
+                            ? Row(
+                                children: [
+                                  const Icon(
+                                    CupertinoIcons.eye,
+                                    color: lightGrey,
+                                    size: 10,
+                                  ),
+                                  Text(
+                                    " $totalEmployee Dipelajari",
+                                    style: GoogleFonts.mulish(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.normal,
+                                      color: lightGrey,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         Row(
                           children: [
                             const Icon(

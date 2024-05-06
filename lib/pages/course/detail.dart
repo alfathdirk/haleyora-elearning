@@ -25,18 +25,10 @@ class CourseDetail extends StatelessWidget {
     }
   }
 
-  Future<void> initData() async {
-    try {
-      await courseController.fetchCourseById(id!);
-    } catch (e) {
-      print('error initData: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: initData(),
+      future: courseController.fetchCourseById(id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx(() => buildScafold(context));
@@ -54,8 +46,13 @@ class CourseDetail extends StatelessWidget {
     CourseData course = courseController.courseDetail.value;
     courseController.checkCourseIsTaken(
         id!, authController.currentUser.value.employeeData!.id.toString());
+
+    courseController.isCourseCompleted(
+        id!, authController.currentUser.value.employeeData!.id.toString());
+
     final isTaken = courseController.isTaken.value;
     final isCompleted = courseController.isCompleted.value;
+
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -337,10 +334,20 @@ class CourseDetail extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
+                          onTap: () {
+                            if (courseController.isCompleted.value) {
+                              return;
+                            }
+                            Get.toNamed('/quiz/${course.examQuiz}/$id');
+                          },
                           child: Container(
                             height: 55,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              // opacity: 0.3
+                              color: course.isOpenExam! &&
+                                      !courseController.isCompleted.value
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
