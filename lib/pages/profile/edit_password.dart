@@ -38,7 +38,9 @@ class EditPasswordController extends GetxController {
 }
 
 class EditPasswordPage extends StatelessWidget {
-  const EditPasswordPage({super.key});
+  EditPasswordPage({super.key});
+
+  EditPasswordController controller = Get.put(EditPasswordController());
 
   void save() {
     // save to api
@@ -46,7 +48,6 @@ class EditPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EditPasswordController controller = Get.put(EditPasswordController());
     return Scaffold(
       appBar: AppBar(
           title: const Text('Ubah Sandi'),

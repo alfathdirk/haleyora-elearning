@@ -23,12 +23,11 @@ class Controller extends GetxController {
 }
 
 class NotificationSetting extends StatelessWidget {
-  const NotificationSetting({super.key});
+  NotificationSetting({super.key});
+  final Controller c = Get.find<Controller>();
 
   @override
   Widget build(BuildContext context) {
-    final Controller c = Get.put(Controller());
-
     Future dialogSuccess() {
       return Get.defaultDialog(
           title: '',

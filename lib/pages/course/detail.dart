@@ -15,8 +15,8 @@ import 'package:url_launcher/url_launcher.dart';
 class CourseDetail extends StatelessWidget {
   CourseDetail({super.key});
   final id = Get.parameters['id'];
-  final courseController = Get.put(CourseController());
-  final AuthController authController = Get.put(AuthController());
+  CourseController courseController = Get.find<CourseController>();
+  AuthController authController = Get.find<AuthController>();
   final box = GetStorage();
 
   Future<void> _launchInBrowserView(Uri url) async {

@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/pages/task/upload.dart';
+import 'package:haleyora/services/dio_client.dart';
+import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 
 class TaskController extends GetxController {
   var taskList = ''.obs;
   var isLoading = true.obs;
+  var filePaths = [].obs;
+  var fileUploadProgress = [].obs;
 
   @override
   void onInit() {
@@ -29,8 +34,6 @@ class TaskController extends GetxController {
   }
 
   Future<void> onUploadTask() async {
-    List<String> filePaths = [];
-
     // Select multiple files
     FilePickerResult? results = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -43,19 +46,38 @@ class TaskController extends GetxController {
       files.forEach((file) {
         filePaths.add(file.path);
       });
-      print(files);
     }
+  }
+
+  Future<void> uploadFiles() async {
+    try {
+      filePaths.forEach((file) async {
+        final formData = await uploadImage(File(file));
+        await dio.post('/files', data: formData,
+            onSendProgress: (int sent, int total) {
+          final progress = sent / total;
+          fileUploadProgress.add(progress);
+        });
+      });
+    } catch (e) {
+      print("error upload > $e");
+    }
+  }
+
+  void removeImage(int index) {
+    filePaths.removeAt(index);
   }
 }
 
 class TaskAssignment extends StatelessWidget {
   TaskAssignment({super.key});
+  final TaskController taskController = Get.find<TaskController>();
+
   String taskDescription = '';
   @override
   Widget build(BuildContext context) {
     print(taskDescription);
 
-    final TaskController taskController = Get.put(TaskController());
     return Scaffold(
         appBar: AppBar(
           title: Text("Tugas",
@@ -63,9 +85,6 @@ class TaskAssignment extends StatelessWidget {
                   fontSize: 24, fontWeight: FontWeight.bold, color: darkText)),
           centerTitle: false,
           titleSpacing: 20,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
-          ],
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -124,6 +143,44 @@ class TaskAssignment extends StatelessWidget {
                   ),
                 )),
               ),
+              Obx(() => ListView.builder(
+                  itemCount: taskController.filePaths.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                          taskController.filePaths[index].split('/').last,
+                          style: GoogleFonts.mulish(
+                              fontSize: 14,
+                              color: darkText,
+                              fontWeight: FontWeight.w700)),
+                      subtitle: Text(
+                          taskController.fileUploadProgress.isEmpty
+                              ? 'Belum diupload'
+                              : '${(taskController.fileUploadProgress[index] * 100).toStringAsFixed(0)}%',
+                          style: GoogleFonts.mulish(
+                              fontSize: 12,
+                              color: darkText,
+                              fontWeight: FontWeight.w400)),
+                      trailing: IconButton(
+                          onPressed: () {
+                            taskController.removeImage(index);
+                          },
+                          icon: const Icon(Icons.remove_circle_outline,
+                              color: Colors.red)),
+                    );
+                  })),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RoundedButton(
+                    text: 'Kirim Tugas',
+                    onPressed: () async {
+                      await taskController.uploadFiles();
+                    },
+                  ),
+                ),
+              )
             ],
           ),
         ));

@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/widget/card.dart';
+import 'package:intl/intl.dart';
 
 class NotificationList extends StatelessWidget {
-  const NotificationList({super.key});
+  NotificationList({super.key});
+  NotificationController notificationController =
+      Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: notificationController.getListNotification(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Obx(() => buildWidget(context));
+        }
+      },
+    );
+  }
+
+  Widget buildWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifikasi'),
@@ -19,19 +39,31 @@ class NotificationList extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 20, // Replace with the actual number of notifications
+        itemCount: notificationController.listNotification
+            .length, // Replace with the actual number of notifications
         itemBuilder: (context, index) {
+          final notif = notificationController.listNotification[index];
+          final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
+          final String formatted = formatter.format(notif.time);
+
           return Container(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 5),
+            padding: const EdgeInsets.all(20),
             child: CustomCard(
+              color: !notif.isRead! ? Colors.white : Colors.blue[200],
               child: ListTile(
-                title: Text('Notification $index',
+                title: Text(notif.title,
                     style: GoogleFonts.mulish(fontWeight: FontWeight.bold)),
-                subtitle: Text('This is notification $index',
-                    style: GoogleFonts.mulish(fontSize: 12, color: greyText)),
+                subtitle: Text(notif.description,
+                    style:
+                        GoogleFonts.mulish(fontSize: 12, color: Colors.black)),
                 // trailing time
-                trailing: Text('10:00', style: GoogleFonts.mulish(fontSize: 9)),
+                trailing:
+                    Text(formatted, style: GoogleFonts.mulish(fontSize: 9)),
                 onTap: () {
+                  if (!notif.isRead!) {
+                    notificationController.readNotification(notif.id);
+                  }
+                  Get.toNamed('/notification-detail', arguments: notif);
                   // Handle notification tap
                 },
               ),

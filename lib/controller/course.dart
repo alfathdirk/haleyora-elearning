@@ -5,6 +5,7 @@ import 'package:haleyora/services/dio_client.dart';
 
 class CourseController extends GetxController {
   final courseList = [].obs;
+  final searchResults = [].obs;
   final courseDetail = CourseData().obs;
   final isAllCourse = true.obs;
   final loading = false.obs;
@@ -190,6 +191,17 @@ class CourseController extends GetxController {
       print('unbookmark success');
     } catch (e) {
       print('error unBookmarkCourse: $e');
+    }
+  }
+
+  Future<void> searchCourse(String query) async {
+    try {
+      final result = await dio.get(
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id&filter[title][_contains]=$query');
+      CourseResponse courseResponse = CourseResponse.fromJson(result.data);
+      searchResults.value = courseResponse.data!.toList();
+    } catch (e) {
+      print('error searchCourse: $e');
     }
   }
 

@@ -50,6 +50,8 @@ dependencies:
   get_storage: ^2.1.1
   url_launcher: ^6.2.6
   pdf: ^3.10.8
+  awesome_dio_interceptor: ^1.2.0
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:

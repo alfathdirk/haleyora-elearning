@@ -1,12 +1,11 @@
 import 'package:haleyora/bindings.dart';
-import 'package:haleyora/controller/auth.dart';
-import 'package:haleyora/controller/course.dart';
-import 'package:haleyora/controller/quiz.dart';
+import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/video_course.dart';
 import 'package:haleyora/pages/filter/filter.dart';
+import 'package:haleyora/pages/filter/result.dart';
 import 'package:haleyora/pages/home.dart';
 import 'package:haleyora/pages/notification/detail.dart';
 import 'package:haleyora/pages/notification/list.dart';
@@ -30,8 +29,9 @@ class Routes {
   static String notificationDetail = "/notification-detail";
   static String formProfile = "/form-profile";
   static String notificationSetting = "/notification-setting";
-  static String categoryList = "/category-list/:name";
+  static String categoryList = "/category-list/:categoryId";
   static String filterPage = "/filter";
+  static String searchResult = "/search-result/:query";
   static String editPassword = "/edit-password";
   static String taskDetail = "/task-detail/:id";
 }
@@ -64,15 +64,18 @@ final pages = [
   ),
   GetPage(
     name: Routes.notificationList,
-    page: () => const NotificationList(),
+    page: () => NotificationList(),
+    binding: BindingsBuilder(() {
+      Get.lazyPut(() => NotificationController());
+    }),
   ),
   GetPage(
     name: Routes.notificationSetting,
-    page: () => const NotificationSetting(),
+    page: () => NotificationSetting(),
   ),
   GetPage(
     name: Routes.notificationDetail,
-    page: () => const DetailPage(),
+    page: () => DetailPage(),
   ),
   GetPage(
     name: Routes.formProfile,
@@ -80,18 +83,25 @@ final pages = [
   ),
   GetPage(
     name: Routes.editPassword,
-    page: () => const EditPasswordPage(),
+    page: () => EditPasswordPage(),
   ),
   GetPage(
     name: Routes.categoryList,
-    page: () => const CategoryListPage(),
+    // page: () => SharedAxisTransitionDemo(),
+    page: () => CategoryListPage(),
   ),
   GetPage(
     name: Routes.filterPage,
     page: () => const FilterPage(),
   ),
   GetPage(
-    name: Routes.taskDetail,
-    page: () => TaskAssignment(),
+    name: Routes.searchResult,
+    page: () => SearchResultPage(),
   ),
+  GetPage(
+      name: Routes.taskDetail,
+      page: () => TaskAssignment(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => TaskController());
+      })),
 ];

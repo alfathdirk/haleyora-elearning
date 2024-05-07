@@ -1,12 +1,14 @@
+import 'package:awesome_dio_interceptor/awesome_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:haleyora/constants.dart';
 import 'package:haleyora/services/auth_service.dart';
 
 final dio = Dio(
   BaseOptions(
-    baseUrl: 'http://localhost:8055',
+    baseUrl: apiURL,
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
     headers: {
@@ -16,6 +18,7 @@ final dio = Dio(
 );
 
 void configureDio() {
+  // dio.interceptors.add(AwesomeDioInterceptor());
   dio.interceptors.add(InterceptorsWrapper(
     onRequest: (options, handler) {
       final box = GetStorage();
@@ -31,6 +34,7 @@ void configureDio() {
         authService.logout();
         Get.offAllNamed('/login');
       }
+      print('e >>>>>: $e');
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Error',

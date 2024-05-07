@@ -39,9 +39,6 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.rightToLeft,
       getPages: pages,
       debugShowCheckedModeBanner: false,
-      initialBinding: BindingsBuilder(() {
-        Get.put(AuthController());
-      }),
     );
   }
 }

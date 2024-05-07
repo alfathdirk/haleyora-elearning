@@ -17,8 +17,8 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigationController navigationController =
-        Get.put(NavigationController());
+    NavigationController navigationController =
+        Get.find<NavigationController>();
 
     return Obx(() => CurvedNavigationBar(
           backgroundColor: const Color.fromRGBO(0, 187, 255, 1),
