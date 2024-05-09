@@ -105,7 +105,7 @@ class MyCoursePage extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height / 1.2,
+              height: MediaQuery.of(context).size.height * 0.78,
               padding: const EdgeInsets.only(bottom: 20),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -67,31 +67,24 @@ class SearchResultPage extends StatelessWidget {
                         var imgId = course.image?.id;
                         bool isBookmarked = course.employeeBookmark!
                             .map((e) => e.employee)
-                            .contains(authController
-                                .currentUser.value.employeeData!.id);
+                            .contains(box.read('employee_id'));
                         return CourseCard(
                           onTapBookmark: () async {
                             if (!isBookmarked) {
                               await courseController.bookmarkCourse(
                                   course.id.toString(),
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             } else {
                               await courseController.unBookmarkCourse(
                                   course.id.toString(),
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             }
                             // unbookmark
                             if (courseController.isAllCourse.isTrue) {
                               courseController.fetchAllCourses();
                             } else {
                               courseController.getBookmarkByEmployee(
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             }
                           },
                           onTap: () {

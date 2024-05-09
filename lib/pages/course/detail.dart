@@ -17,6 +17,7 @@ class CourseDetail extends StatelessWidget {
   final id = Get.parameters['id'];
   CourseController courseController = Get.find<CourseController>();
   AuthController authController = Get.find<AuthController>();
+
   final box = GetStorage();
 
   Future<void> _launchInBrowserView(Uri url) async {
@@ -25,10 +26,19 @@ class CourseDetail extends StatelessWidget {
     }
   }
 
+  Future<void> initState() async {
+    try {
+      await courseController.getCourseByEmployee(box.read('employee_id'), id!);
+      await courseController.fetchCourseById(id!);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: courseController.fetchCourseById(id!),
+      future: initState(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx(() => buildScafold(context));
@@ -44,14 +54,7 @@ class CourseDetail extends StatelessWidget {
 
   Widget buildScafold(BuildContext context) {
     CourseData course = courseController.courseDetail.value;
-    courseController.checkCourseIsTaken(
-        id!, authController.currentUser.value.employeeData!.id.toString());
-
-    courseController.isCourseCompleted(
-        id!, authController.currentUser.value.employeeData!.id.toString());
-
-    final isTaken = courseController.isTaken.value;
-    final isCompleted = courseController.isCompleted.value;
+    final courseByEmployee = courseController.courseByEmployee.value.data ?? [];
 
     return SafeArea(
       child: Container(
@@ -194,8 +197,9 @@ class CourseDetail extends StatelessWidget {
                                                 decoration:
                                                     TextDecoration.none),
                                           ),
-                                          !isTaken && !isCompleted
-                                              ? Container(
+                                          courseByEmployee!.isNotEmpty
+                                              ? const SizedBox(height: 20)
+                                              : Container(
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,
@@ -208,18 +212,13 @@ class CourseDetail extends StatelessWidget {
                                                           .takeCourse(
                                                               course.id
                                                                   .toString(),
-                                                              authController
-                                                                  .currentUser
-                                                                  .value
-                                                                  .employeeData!
-                                                                  .id
-                                                                  .toString());
+                                                              box.read(
+                                                                  'employee_id'));
                                                     },
                                                     color: primaryColor,
                                                     textColor: Colors.white,
                                                   ),
-                                                )
-                                              : const SizedBox(),
+                                                ),
                                         ],
                                       )
                                     ],
@@ -235,19 +234,18 @@ class CourseDetail extends StatelessWidget {
                 ),
               ],
             ),
-            isTaken && !isCompleted
-                ? Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: GridView(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: 3.5),
-                      shrinkWrap: true,
-                      children: [
-                        GestureDetector(
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 3.5),
+                shrinkWrap: true,
+                children: [
+                  courseByEmployee.isNotEmpty
+                      ? GestureDetector(
                           onTap: () {
                             // print(
                             //     '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
@@ -291,8 +289,10 @@ class CourseDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        GestureDetector(
+                        )
+                      : SizedBox(),
+                  courseByEmployee.isNotEmpty
+                      ? GestureDetector(
                           onTap: () {
                             Get.toNamed('/video-player/${course.videoContent}');
                           },
@@ -332,8 +332,12 @@ class CourseDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        GestureDetector(
+                        )
+                      : SizedBox(),
+                  courseByEmployee.isNotEmpty &&
+                          courseByEmployee.first.examAttempt! > 0 &&
+                          course.isOpenExam!
+                      ? GestureDetector(
                           onTap: () {
                             if (courseController.isCompleted.value) {
                               return;
@@ -380,11 +384,15 @@ class CourseDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        GestureDetector(
+                        )
+                      : SizedBox(),
+                  courseByEmployee.isNotEmpty &&
+                          courseByEmployee.first.examAttempt! > 0
+                      ? GestureDetector(
                           onTap: () => Get.toNamed('/task-detail/${course.id}',
                               arguments: {
                                 'description': course.taskDescription ?? '',
+                                'courseId': course.id
                               }),
                           child: Container(
                             height: 55,
@@ -422,11 +430,21 @@ class CourseDetail extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ),
+            courseByEmployee.isNotEmpty &&
+                    courseByEmployee.first.examAttempt! > 0
+                ? Text(
+                    'Anda memiliki 3 kali kesempatan untuk mengikuti ujian ini',
+                    style: GoogleFonts.mulish(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.none))
+                : SizedBox(),
           ],
         ),
       ),

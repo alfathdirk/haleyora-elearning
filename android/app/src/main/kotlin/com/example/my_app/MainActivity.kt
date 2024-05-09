@@ -1,4 +1,4 @@
-package com.haleyora.elearning
+package com.haleyora.course
 
 import io.flutter.embedding.android.FlutterActivity
 

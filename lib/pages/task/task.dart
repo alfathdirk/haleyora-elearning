@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/task/upload.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/button.dart';
@@ -15,6 +18,7 @@ class TaskController extends GetxController {
   var isLoading = true.obs;
   var filePaths = [].obs;
   var fileUploadProgress = [].obs;
+  var loadingUpload = false.obs;
 
   @override
   void onInit() {
@@ -33,50 +37,101 @@ class TaskController extends GetxController {
     }
   }
 
-  Future<void> onUploadTask() async {
-    // Select multiple files
-    FilePickerResult? results = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'png', 'mp4'],
-    );
-
-    if (results != null) {
-      List<File> files = results.paths.map((path) => File(path!)).toList();
-      files.forEach((file) {
-        filePaths.add(file.path);
-      });
-    }
-  }
-
-  Future<void> uploadFiles() async {
+  Future<void> onUploadTask(String courseId) async {
     try {
-      filePaths.forEach((file) async {
-        final formData = await uploadImage(File(file));
-        await dio.post('/files', data: formData,
-            onSendProgress: (int sent, int total) {
-          final progress = sent / total;
-          fileUploadProgress.add(progress);
+      AuthController authController = Get.find<AuthController>();
+      CourseController courseController = Get.find<CourseController>();
+      FilePickerResult? results = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'jpg', 'png', 'mp4'],
+      );
+
+      if (results != null) {
+        loadingUpload.value = true;
+
+        List<String> ids = [];
+        List<File> files = results.paths.map((path) => File(path!)).toList();
+        await Future.forEach(files, (file) async {
+          filePaths.add(file.path);
+          fileUploadProgress.add(0.0);
+          final formData = await uploadImage(File(file.path));
+          final result = await dio.post('/files', data: formData,
+              onSendProgress: (int sent, int total) {
+            final progress = sent / total;
+            fileUploadProgress[fileUploadProgress.length - 1] = progress;
+          });
+          ids.add(result.data['data']['id']);
         });
-      });
+        await dio.patch('/items/employee_course', data: {
+          "query": {
+            "filter": {
+              "employee": {
+                "_eq": authController.currentUser.value.employeeData!.id
+              },
+              "course": {"_eq": courseId}
+            }
+          },
+          "data": {
+            "tasks": ids.map((id) => {"directus_files_id": id}).toList(),
+          }
+        });
+        courseController.getCourseByEmployee(
+            authController.currentUser.value.employeeData!.id ?? '', courseId);
+        loadingUpload.value = false;
+        Get.snackbar('Sukses', 'Tugas berhasil diupload',
+            snackPosition: SnackPosition.BOTTOM);
+      }
     } catch (e) {
-      print("error upload > $e");
+      loadingUpload.value = false;
+      print('errr $e');
     }
   }
 
-  void removeImage(int index) {
-    filePaths.removeAt(index);
+  void removeImage(CourseByEmployee data, String id, int? fileId) async {
+    loadingUpload.value = true;
+    AuthController authController = Get.find<AuthController>();
+    CourseController courseController = Get.find<CourseController>();
+    print('${id} ${fileId}');
+
+    try {
+      await dio.patch('/items/employee_course', data: {
+        "query": {
+          "filter": {
+            "employee": {
+              "_eq": authController.currentUser.value.employeeData!.id
+            },
+            "course": {"_eq": data.courseId}
+          }
+        },
+        "data": {
+          "tasks": {
+            "delete": [fileId]
+          }
+        }
+      });
+      await dio.delete('/files/$id');
+      courseController.getCourseByEmployee(
+          authController.currentUser.value.employeeData!.id ?? '',
+          data.courseId);
+      Get.snackbar('Sukses', 'Tugas berhasil dihapus',
+          snackPosition: SnackPosition.BOTTOM);
+      loadingUpload.value = false;
+    } catch (e) {
+      loadingUpload.value = false;
+      print('errr $e');
+    }
   }
 }
 
 class TaskAssignment extends StatelessWidget {
   TaskAssignment({super.key});
-  final TaskController taskController = Get.find<TaskController>();
-
-  String taskDescription = '';
+  String taskDescription = Get.arguments['description'] ?? '';
+  String courseId = Get.arguments['courseId'] ?? '';
   @override
   Widget build(BuildContext context) {
-    print(taskDescription);
+    final TaskController taskController = Get.find<TaskController>();
+    CourseController courseController = Get.find<CourseController>();
 
     return Scaffold(
         appBar: AppBar(
@@ -95,6 +150,7 @@ class TaskAssignment extends StatelessWidget {
                   taskDescription.isEmpty
                       ? 'Tidak ada deskripsi tugas.'
                       : taskDescription,
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.mulish(
                       fontSize: 16,
                       color: darkText,
@@ -120,7 +176,7 @@ class TaskAssignment extends StatelessWidget {
               const SizedBox(height: 20),
               InkWell(
                 onTap: () async {
-                  await taskController.onUploadTask();
+                  await taskController.onUploadTask(courseId);
                 },
                 child: CustomCard(
                     child: Container(
@@ -143,44 +199,55 @@ class TaskAssignment extends StatelessWidget {
                   ),
                 )),
               ),
-              Obx(() => ListView.builder(
-                  itemCount: taskController.filePaths.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                          taskController.filePaths[index].split('/').last,
-                          style: GoogleFonts.mulish(
-                              fontSize: 14,
-                              color: darkText,
-                              fontWeight: FontWeight.w700)),
-                      subtitle: Text(
-                          taskController.fileUploadProgress.isEmpty
-                              ? 'Belum diupload'
-                              : '${(taskController.fileUploadProgress[index] * 100).toStringAsFixed(0)}%',
-                          style: GoogleFonts.mulish(
-                              fontSize: 12,
-                              color: darkText,
-                              fontWeight: FontWeight.w400)),
-                      trailing: IconButton(
-                          onPressed: () {
-                            taskController.removeImage(index);
-                          },
-                          icon: const Icon(Icons.remove_circle_outline,
-                              color: Colors.red)),
-                    );
-                  })),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: RoundedButton(
-                    text: 'Kirim Tugas',
-                    onPressed: () async {
-                      await taskController.uploadFiles();
-                    },
-                  ),
-                ),
-              )
+              Obx(
+                () => taskController.loadingUpload.value
+                    ? const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: CircularProgressIndicator(),
+                      )
+                    : const SizedBox(height: 20),
+              ),
+              Obx(() => courseController
+                      .courseByEmployee.value.data!.first.tasks!.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: courseController
+                          .courseByEmployee.value.data!.first.tasks!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final task = courseController
+                            .courseByEmployee.value.data!.first.tasks![index];
+                        return ListTile(
+                          leading: const Icon(Icons.file_copy,
+                              color: primaryColor, size: 30),
+                          title: Text(task.directusFilesId!.title!,
+                              style: GoogleFonts.mulish(
+                                  fontSize: 14,
+                                  color: darkText,
+                                  fontWeight: FontWeight.w700)),
+                          trailing: IconButton(
+                              onPressed: () {
+                                taskController.removeImage(
+                                    courseController
+                                        .courseByEmployee.value.data!.first,
+                                    task.directusFilesId?.id ?? '',
+                                    task.id);
+                              },
+                              icon: const Icon(Icons.remove_circle_outline,
+                                  color: Colors.red)),
+                        );
+                      })
+                  : Container()),
+              // Expanded(
+              //   child: Align(
+              //     alignment: Alignment.bottomCenter,
+              //     child: RoundedButton(
+              //       text: 'Simpan Tugas',
+              //       onPressed: () async {
+              //         await taskController.(courseId);
+              //       },
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ));

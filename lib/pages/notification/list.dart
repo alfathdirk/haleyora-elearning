@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +48,7 @@ class NotificationList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(20),
             child: CustomCard(
-              color: !notif.isRead! ? Colors.white : Colors.blue[200],
+              color: notif.isRead! ? Colors.white : Colors.blue[200],
               child: ListTile(
                 title: Text(notif.title,
                     style: GoogleFonts.mulish(fontWeight: FontWeight.bold)),

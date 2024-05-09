@@ -77,7 +77,11 @@ class QuizController extends GetxController {
             "course": {"_eq": courseId}
           }
         },
-        "data": {"exam_score": score.value, "completed": true}
+        "data": {
+          "exam_score": score.value,
+          "completed": true,
+          "exam_attempt": 2
+        }
       });
     } catch (e) {
       print('error checkAnswer: $e');

@@ -361,3 +361,75 @@ class EmployeeCourseData {
     );
   }
 }
+
+class ResponseCourseByEmployee {
+  final List<CourseByEmployee>? data;
+
+  ResponseCourseByEmployee({
+    this.data,
+  });
+
+  factory ResponseCourseByEmployee.fromJson(Map<String, dynamic> json) {
+    return ResponseCourseByEmployee(
+      data: json['data'] != null
+          ? (json['data'] as List)
+              .map((e) => CourseByEmployee.fromJson(e))
+              .toList()
+          : null,
+    );
+  }
+}
+
+class CourseByEmployee {
+  String? id;
+  String? courseId;
+  bool? completed;
+  int? examScore;
+  int? tasksScore;
+  int? lastVideoDuration;
+  int? examAttempt;
+  List<Task>? tasks;
+
+  CourseByEmployee({
+    this.id,
+    this.courseId,
+    this.completed,
+    this.examAttempt,
+    this.tasks,
+    this.examScore,
+    this.tasksScore,
+    this.lastVideoDuration,
+  });
+
+  factory CourseByEmployee.fromJson(Map<String, dynamic> json) {
+    return CourseByEmployee(
+      id: json['id'],
+      courseId: json['course'],
+      completed: json['completed'],
+      examScore: json['exam_score'],
+      tasksScore: json['tasks_score'],
+      lastVideoDuration: json['last_video_duration'],
+      examAttempt: json['exam_attempt'],
+      tasks: List<Task>.from(json['tasks'].map((task) => Task.fromJson(task))),
+    );
+  }
+}
+
+class Task {
+  int? id;
+  ImageData? directusFilesId;
+
+  Task({
+    this.id,
+    this.directusFilesId,
+  });
+
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      id: json['id'],
+      directusFilesId: json['directus_files_id'] != null
+          ? ImageData.fromJson(json['directus_files_id'])
+          : null,
+    );
+  }
+}

@@ -365,29 +365,22 @@ class HomePage extends StatelessWidget {
                           onTapBookmark: () async {
                             bool isBookmarked = course.employeeBookmark!
                                 .map((e) => e.employee)
-                                .contains(authController
-                                    .currentUser.value.employeeData!.id);
+                                .contains(box.read('employee_id'));
                             if (!isBookmarked) {
                               await courseController.bookmarkCourse(
                                   course.id.toString(),
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             } else {
                               await courseController.unBookmarkCourse(
                                   course.id.toString(),
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             }
                             // unbookmark
                             if (courseController.isAllCourse.isTrue) {
                               courseController.fetchAllCourses();
                             } else {
                               courseController.getBookmarkByEmployee(
-                                  authController
-                                      .currentUser.value.employeeData!.id
-                                      .toString());
+                                  box.read('employee_id'));
                             }
                           },
                           onTap: () {
@@ -395,9 +388,8 @@ class HomePage extends StatelessWidget {
                           },
                           isBookmarked: course.employeeBookmark!
                               .map((e) => e.employee)
-                              .contains(authController
-                                  .currentUser.value.employeeData!.id),
-                          title: course.title ?? "sdf",
+                              .contains(box.read('employee_id')),
+                          title: course.title ?? "",
                           imageUrl:
                               '$imageBaseUrl${course.image!.filenameDisk}?access_token=${box.read('accessToken')}',
                           description: "Kursus ini akan membantu anda",

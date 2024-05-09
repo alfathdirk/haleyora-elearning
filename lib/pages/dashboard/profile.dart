@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/widget/card.dart';
 
@@ -10,6 +11,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthService authService = Get.find<AuthService>();
+    AuthController authController = Get.find<AuthController>();
 
     return Scaffold(
         appBar: AppBar(
@@ -26,38 +28,41 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(100),
-                //   child: Image.network(
-                //     loadingBuilder: (context, child, progress) {
-                //       return progress == null
-                //           ? child
-                //           : const Center(
-                //               child: CircularProgressIndicator(),
-                //             );
-                //     },
-                //     'https://picsum.photos/300/300',
-                //     fit: BoxFit.cover,
-                //     width: 180,
-                //     height: 180,
-                //   ),
-                // ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.network(
+                    loadingBuilder: (context, child, progress) {
+                      return progress == null
+                          ? child
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    },
+                    'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png',
+                    fit: BoxFit.cover,
+                    width: 120,
+                    height: 120,
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "John Doe",
+                  authController.currentUser.value.employeeData!.fullName ?? '',
                   style: GoogleFonts.mulish(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
                 Text(
-                  "John@mail.com",
+                  authController.currentUser.value.employeeData!.email ?? '',
                   style: GoogleFonts.mulish(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 50,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -67,17 +72,17 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: ListBody(
                         children: [
-                          ListTile(
-                            leading: const Icon(Icons.person),
-                            title: Text('Edit Akun',
-                                style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            trailing: const Icon(Icons.chevron_right),
-                            onTap: () {
-                              // navigate to edit profile page
-                              Get.toNamed("/form-profile");
-                            },
-                          ),
+                          // ListTile(
+                          //   leading: const Icon(Icons.person),
+                          //   title: Text('Edit Akun',
+                          //       style: GoogleFonts.mulish(
+                          //           fontSize: 16, fontWeight: FontWeight.bold)),
+                          //   trailing: const Icon(Icons.chevron_right),
+                          //   onTap: () {
+                          //     // navigate to edit profile page
+                          //     Get.toNamed("/form-profile");
+                          //   },
+                          // ),
                           ListTile(
                             leading: const Icon(Icons.shield_moon_outlined),
                             title: Text('Keamanan',
@@ -85,17 +90,17 @@ class ProfilePage extends StatelessWidget {
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
                           ),
-                          ListTile(
-                            leading: const Icon(Icons.lock_outlined),
-                            title: Text('Ubah Sandi',
-                                style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            trailing: const Icon(Icons.chevron_right),
-                            onTap: () {
-                              // navigate to edit password page
-                              Get.toNamed("/edit-password");
-                            },
-                          ),
+                          // ListTile(
+                          //   leading: const Icon(Icons.lock_outlined),
+                          //   title: Text('Ubah Sandi',
+                          //       style: GoogleFonts.mulish(
+                          //           fontSize: 16, fontWeight: FontWeight.bold)),
+                          //   trailing: const Icon(Icons.chevron_right),
+                          //   onTap: () {
+                          //     // navigate to edit password page
+                          //     Get.toNamed("/edit-password");
+                          //   },
+                          // ),
                           ListTile(
                             leading: const Icon(Icons.shield_outlined),
                             title: Text('Syarat dan Ketentuan',

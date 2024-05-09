@@ -13,6 +13,7 @@ class CourseController extends GetxController {
   final isTaken = false.obs;
   final isCompleted = false.obs;
   final tabOngoing = false.obs;
+  final courseByEmployee = ResponseCourseByEmployee().obs;
 
   final myCourseList = [].obs;
 
@@ -202,6 +203,22 @@ class CourseController extends GetxController {
       searchResults.value = courseResponse.data!.toList();
     } catch (e) {
       print('error searchCourse: $e');
+    }
+  }
+
+  Future<void> getCourseByEmployee(String empId, String? courseId) async {
+    String withCourse = '';
+    try {
+      if (courseId != null) {
+        withCourse = '&filter[course][_eq]=$courseId';
+      }
+      final result = await dio.get(
+          '/items/employee_course?fields[]=id, course, completed, exam_score, tasks_score, last_video_duration, exam_attempt,tasks.id, tasks.directus_files_id.*&filter[employee][_eq]=$empId$withCourse');
+      ResponseCourseByEmployee resultEmployee =
+          ResponseCourseByEmployee.fromJson(result.data);
+      courseByEmployee.value = resultEmployee;
+    } catch (e) {
+      print('error getTaskByEmployeeId: $e');
     }
   }
 
