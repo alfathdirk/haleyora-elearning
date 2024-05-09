@@ -10,26 +10,10 @@ class CourseController extends GetxController {
   final isAllCourse = true.obs;
   final loading = false.obs;
   final categoryList = [].obs;
-  final isTaken = false.obs;
-  final isCompleted = false.obs;
   final tabOngoing = false.obs;
   final courseByEmployee = ResponseCourseByEmployee().obs;
 
   final myCourseList = [].obs;
-
-  Future<void> isCourseCompleted(String courseId, String empId) async {
-    try {
-      final result = await dio.get(
-          '/items/employee_course?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId&filter[completed][_eq]=true');
-      if (result.data['data'].length > 0) {
-        isCompleted.value = true;
-        return;
-      }
-      isCompleted.value = false;
-    } catch (e) {
-      print('error isCourseCompleted: $e');
-    }
-  }
 
   Future<void> getCourseByEmployeeId(String empId) async {
     try {
@@ -52,9 +36,9 @@ class CourseController extends GetxController {
         'employee': empId,
         'course': courseId,
       });
-      isTaken.value = true;
+      await getCourseByEmployee(empId, courseId);
+      return result.data;
     } catch (e) {
-      isTaken.value = false;
       print('error bookmarkCourse: $e');
     }
   }
@@ -110,7 +94,6 @@ class CourseController extends GetxController {
   Future<void> fetchCourseById(String id) async {
     try {
       loading.value = true;
-      isCompleted.value = false;
       final result = await dio.get(
           '/items/course/$id?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
       loading.value = false;
@@ -132,24 +115,6 @@ class CourseController extends GetxController {
       // loading.value = false;
     } catch (e) {
       print('error fetchCourseCompleted: $e');
-    }
-  }
-
-  Future<bool> checkCourseIsTaken(String courseId, String empId) async {
-    try {
-      final result = await dio.get(
-          '/items/employee_course?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId');
-      if (result.data['data'].length > 0) {
-        isTaken.value = true;
-        return true;
-      }
-      print('checkCourseIsTaken: ${result.data}');
-      isTaken.value = false;
-      return false;
-    } catch (e) {
-      print('error checkCourseIsTaken: $e');
-      isTaken.value = false;
-      return false;
     }
   }
 

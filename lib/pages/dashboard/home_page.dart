@@ -142,7 +142,10 @@ class HomePage extends StatelessWidget {
                     child: TextField(
                       controller: searchController.searchController,
                       onSubmitted: (value) {
-                        Get.toNamed("/search-result/$value");
+                        if (value.isNotEmpty) {
+                          Get.toNamed("/search-result/$value");
+                          return;
+                        }
                       },
                       decoration: InputDecoration(
                         hintText: "Cari Kursus",

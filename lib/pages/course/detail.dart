@@ -214,6 +214,7 @@ class CourseDetail extends StatelessWidget {
                                                                   .toString(),
                                                               box.read(
                                                                   'employee_id'));
+                                                      print('kesini');
                                                     },
                                                     color: primaryColor,
                                                     textColor: Colors.white,
@@ -339,9 +340,6 @@ class CourseDetail extends StatelessWidget {
                           course.isOpenExam!
                       ? GestureDetector(
                           onTap: () {
-                            if (courseController.isCompleted.value) {
-                              return;
-                            }
                             Get.toNamed('/quiz/${course.examQuiz}/$id');
                           },
                           child: Container(
@@ -349,7 +347,7 @@ class CourseDetail extends StatelessWidget {
                             decoration: BoxDecoration(
                               // opacity: 0.3
                               color: course.isOpenExam! &&
-                                      !courseController.isCompleted.value
+                                      courseByEmployee.isNotEmpty
                                   ? Colors.white
                                   : Colors.white.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20),
