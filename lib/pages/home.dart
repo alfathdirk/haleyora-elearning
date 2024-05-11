@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       CoursePage(),
       AchievmentPage(),
       MyCoursePage(),
-      ProfilePage(),
+      const ProfilePage(),
     ];
     return Scaffold(
       // body

@@ -1,4 +1,3 @@
-import 'package:haleyora/model/me.dart';
 
 class CourseData {
   String? id;
@@ -15,7 +14,7 @@ class CourseData {
   bool? isOpenExam;
   bool? isOpenTask;
   int? minScore;
-  dynamic? examQuiz;
+  dynamic examQuiz;
   List<EmployeeCourseData>? employeeCourse;
   List<CourseBookmarkByEmployee>? employeeBookmark;
   ImageData? image;
@@ -317,10 +316,10 @@ class EmployeeCourseData {
   final String? course;
   final bool? completed;
   final String? employee;
-  final dynamic? examScore;
-  final dynamic? tasksScore;
-  final dynamic? lastVideoDuration;
-  final dynamic? videoDuration;
+  final dynamic examScore;
+  final dynamic tasksScore;
+  final dynamic lastVideoDuration;
+  final dynamic videoDuration;
   final List<dynamic>? tasks;
 
   EmployeeCourseData({

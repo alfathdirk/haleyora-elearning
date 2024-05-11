@@ -40,7 +40,7 @@ class ProgressPieChart extends StatelessWidget {
   final double? examScores;
   final double? employeeScore;
 
-  ProgressPieChart({super.key, this.examScores, this.employeeScore});
+  const ProgressPieChart({super.key, this.examScores, this.employeeScore});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class ProgressPieChart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${employeeScore.toString()}",
+                    employeeScore.toString(),
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

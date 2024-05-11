@@ -1,15 +1,12 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
-import 'package:haleyora/model/quiz.dart';
 import 'package:haleyora/pages/quiz/quiz_card.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/controller/quiz.dart';
-import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/popup.dart';
 
 class QuizPage extends StatelessWidget {
@@ -117,7 +114,7 @@ class QuizPage extends StatelessWidget {
                                 ? Column(
                                     children: [
                                       Image.network(
-                                        "${imageBaseUrl}${controller.questionList[controller.questionIndex.value].image!}?access_token=${box.read('accessToken')}",
+                                        "$imageBaseUrl${controller.questionList[controller.questionIndex.value].image!}?access_token=${box.read('accessToken')}",
                                         width: double.infinity,
                                         height: 200,
                                         fit: BoxFit.cover,

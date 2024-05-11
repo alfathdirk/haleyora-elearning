@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -173,11 +171,10 @@ class AchievmentPage extends StatelessWidget {
                       itemCount:
                           courseController.courseByEmployee.value.data!.length,
                       itemBuilder: (context, index) {
-                        ;
                         if (courseController.courseByEmployee.value.data![index]
                                 .examScore ==
                             0) {
-                          return SizedBox();
+                          return const SizedBox();
                         }
                         return Padding(
                           padding: const EdgeInsets.only(

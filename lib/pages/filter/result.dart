@@ -7,7 +7,6 @@ import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
-import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/course_card.dart';
 
 class SearchResultPage extends StatelessWidget {

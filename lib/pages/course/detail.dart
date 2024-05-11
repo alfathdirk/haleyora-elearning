@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +200,7 @@ class CourseDetail extends StatelessWidget {
                                                 decoration:
                                                     TextDecoration.none),
                                           ),
-                                          courseByEmployee!.isNotEmpty
+                                          courseByEmployee.isNotEmpty
                                               ? const SizedBox(height: 20)
                                               : Container(
                                                   width: MediaQuery.of(context)
@@ -295,7 +294,7 @@ class CourseDetail extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   courseByEmployee.isNotEmpty
                       ? GestureDetector(
                           onTap: () {
@@ -345,7 +344,7 @@ class CourseDetail extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   courseByEmployee.isNotEmpty &&
                           courseByEmployee.first.examAttempt! > 0
                       ? GestureDetector(
@@ -391,7 +390,7 @@ class CourseDetail extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),

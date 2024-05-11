@@ -88,7 +88,7 @@ final pages = [
   GetPage(
     name: Routes.categoryList,
     // page: () => SharedAxisTransitionDemo(),
-    page: () => CategoryListPage(),
+    page: () => const CategoryListPage(),
   ),
   GetPage(
     name: Routes.filterPage,

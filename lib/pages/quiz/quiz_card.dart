@@ -10,7 +10,7 @@ class QuizCard extends StatelessWidget {
   final Function(String) onSelected;
   final int? isSelectedIndex;
 
-  QuizCard({
+  const QuizCard({super.key, 
     required this.question,
     required this.choices,
     required this.onSelected,

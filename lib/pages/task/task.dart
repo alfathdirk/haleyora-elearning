@@ -10,7 +10,6 @@ import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/task/upload.dart';
 import 'package:haleyora/services/dio_client.dart';
-import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
 
 class TaskController extends GetxController {
@@ -92,7 +91,7 @@ class TaskController extends GetxController {
     loadingUpload.value = true;
     AuthController authController = Get.find<AuthController>();
     CourseController courseController = Get.find<CourseController>();
-    print('${id} ${fileId}');
+    print('$id $fileId');
 
     try {
       await dio.patch('/items/employee_course', data: {

@@ -11,7 +11,6 @@ import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 import 'package:haleyora/controller/quiz.dart';
-import 'package:haleyora/widget/popup.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

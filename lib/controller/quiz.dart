@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';

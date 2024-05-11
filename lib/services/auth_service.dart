@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:haleyora/controller/course.dart';
 
 class AuthService extends GetxService {
   final RxBool isLoggedIn = false.obs;
