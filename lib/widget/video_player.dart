@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,26 +15,43 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+  AuthController authController = Get.find<AuthController>();
+  final courseId = Get.parameters['courseId'];
+  final lastVideoDuration = Get.arguments['lastVideoDuration'];
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
-    // _controller.seekTo(
+    // _controller.setLooping(false);
+    // _controller.play();
     _initializeVideoPlayerFuture = _controller.initialize();
-    _controller.setLooping(false);
+    _initializeVideoPlayerFuture.then((value) {
+      if (lastVideoDuration != null) {
+        _controller.seekTo(Duration(seconds: lastVideoDuration));
+      }
+      _controller.play();
+    });
+    // _controller.seekTo(Duration(seconds: lastVideoDuration));
   }
 
   @override
   void dispose() {
     _controller.position.then((value) {
-      dio.post(
-        '/api/v1/activities/progress',
-        data: {
-          'activity_id': 100,
-          'progress': value!.inSeconds,
+      dio.patch('/items/employee_course', data: {
+        "query": {
+          "filter": {
+            "employee": {
+              "_eq": authController.currentUser.value.employeeData!.id
+            },
+            "course": {"_eq": courseId}
+          }
         },
-      );
+        "data": {
+          "last_video_duration": value!.inSeconds,
+          "video_duration": _controller.value.duration.inSeconds
+        }
+      });
     });
     _controller.dispose();
     super.dispose();
@@ -49,7 +68,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               ValueListenableBuilder(
                 valueListenable: _controller,
                 builder: (context, VideoPlayerValue value, child) {
-                  print(value.position);
                   return Container(
                     color: const Color.fromARGB(255, 240, 240, 240),
                     child: Center(

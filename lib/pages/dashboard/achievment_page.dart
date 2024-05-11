@@ -1,16 +1,37 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/chart.dart';
 import 'package:haleyora/widget/pdf.dart';
 
 class AchievmentPage extends StatelessWidget {
-  const AchievmentPage({super.key});
+  AchievmentPage({super.key});
+  CourseController courseController = Get.find<CourseController>();
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future:
+          courseController.getCourseByEmployee(box.read('employee_id'), null),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return buildWidget(context);
+      },
+    );
+  }
+
+  Widget buildWidget(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -53,8 +74,31 @@ class AchievmentPage extends StatelessWidget {
                                     const SizedBox(
                                       width: 20,
                                     ),
-                                    const ProgressPieChart(
-                                      0.25,
+                                    ProgressPieChart(
+                                      examScores: courseController
+                                                  .courseByEmployee
+                                                  .value
+                                                  .data !=
+                                              null
+                                          ? courseController
+                                              .courseByEmployee.value.data!
+                                              .map((e) => e.course!.minScore)
+                                              .reduce((value, element) =>
+                                                  value! + element!)
+                                              ?.toDouble()
+                                          : 0,
+                                      employeeScore: courseController
+                                                  .courseByEmployee
+                                                  .value
+                                                  .data !=
+                                              null
+                                          ? courseController
+                                              .courseByEmployee.value.data!
+                                              .map((e) => e.examScore)
+                                              .reduce((value, element) =>
+                                                  value! + element!)
+                                              ?.toDouble()
+                                          : 0,
                                     ),
                                     const SizedBox(
                                       width: 20,
@@ -74,7 +118,7 @@ class AchievmentPage extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          "25",
+                                          "${courseController.courseByEmployee.value.data!.length}",
                                           style: GoogleFonts.mulish(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -121,129 +165,154 @@ class AchievmentPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  for (var i = 0; i < 3; i++)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 12, left: 16, right: 16),
-                      child: CustomCard(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            children: [
-                              // Image.network(
-                              //   loadingBuilder: (context, child, progress) {
-                              //     return progress == null
-                              //         ? child
-                              //         : const Center(
-                              //             child: CircularProgressIndicator(),
-                              //           );
-                              //   },
-                              //   'https://picsum.photos/50/50?random=$i',
-                              //   width: 50,
-                              //   height: 50,
-                              // ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount:
+                          courseController.courseByEmployee.value.data!.length,
+                      itemBuilder: (context, index) {
+                        ;
+                        if (courseController.courseByEmployee.value.data![index]
+                                .examScore ==
+                            0) {
+                          return SizedBox();
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 12, left: 16, right: 16),
+                          child: CustomCard(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    "Yantek | Operasi Sistem",
-                                    style: GoogleFonts.mulish(
-                                      color: orangeText,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 8,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.orange[50],
+                                    ),
+                                    child: const Icon(
+                                      Icons.emoji_events_outlined,
+                                      color: Colors.orange,
+                                      size: 50,
                                     ),
                                   ),
-                                  Text(
-                                    "Flutter Fundamental",
-                                    style: GoogleFonts.mulish(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                  const SizedBox(
+                                    width: 20,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 8, top: 8),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Nilai Test:",
-                                          style: GoogleFonts.mulish(
-                                            color: greyText,
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 10,
-                                          ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${courseController.courseByEmployee.value.data![index].course!.activities?.title}",
+                                        style: GoogleFonts.mulish(
+                                          color: orangeText,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 9,
                                         ),
-                                        Text(
-                                          " 80",
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.6,
+                                        child: Text(
+                                          "${courseController.courseByEmployee.value.data![index].course!.title}",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
                                           style: GoogleFonts.mulish(
-                                            color: Colors.green,
+                                            color: Colors.black,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 10,
+                                            fontSize: 14,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width - 136,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 8, top: 8),
+                                        child: Row(
                                           children: [
                                             Text(
-                                              "ULANGI TEST",
+                                              "Nilai Test:",
                                               style: GoogleFonts.mulish(
-                                                color: primaryColor,
+                                                color: greyText,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                            Text(
+                                              " ${courseController.courseByEmployee.value.data![index].examScore}",
+                                              style: GoogleFonts.mulish(
+                                                color: Colors.green,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 10,
                                               ),
                                             ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: primaryColor,
-                                              size: 10,
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.47,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "ULANGI TEST",
+                                                  style: GoogleFonts.mulish(
+                                                    color: primaryColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: primaryColor,
+                                                  size: 10,
+                                                ),
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                await PDF.generate();
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "LIHAT SERTIFIKAT",
+                                                    style: GoogleFonts.mulish(
+                                                      color: primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 10,
+                                                    ),
+                                                  ),
+                                                  const Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: primaryColor,
+                                                    size: 10,
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await PDF.generate();
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "LIHAT SERTIFIKAT",
-                                                style: GoogleFonts.mulish(
-                                                  color: primaryColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                              const Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: primaryColor,
-                                                size: 10,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      )
+                                    ],
                                   )
                                 ],
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ],

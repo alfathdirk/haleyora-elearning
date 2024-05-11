@@ -11,11 +11,11 @@ class PieChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         child: PieChart(PieChartData(
           sections: _chartSections(sectors),
-          centerSpaceRadius: 40.0,
+          centerSpaceRadius: 50.0,
           startDegreeOffset: -90,
         )));
   }
@@ -23,7 +23,7 @@ class PieChartWidget extends StatelessWidget {
   List<PieChartSectionData> _chartSections(List<Sector> sectors) {
     final List<PieChartSectionData> list = [];
     for (var sector in sectors) {
-      const double radius = 9.0;
+      const double radius = 7.0;
       final data = PieChartSectionData(
         color: sector.color,
         value: sector.value,
@@ -37,9 +37,10 @@ class PieChartWidget extends StatelessWidget {
 }
 
 class ProgressPieChart extends StatelessWidget {
-  final double progress;
+  final double? examScores;
+  final double? employeeScore;
 
-  const ProgressPieChart(this.progress, {super.key});
+  ProgressPieChart({super.key, this.examScores, this.employeeScore});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class ProgressPieChart extends StatelessWidget {
       children: [
         Positioned(
           // center
-          top: 26,
+          top: 36,
           left: 30,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,15 +65,15 @@ class ProgressPieChart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${(progress * 100).toInt()}",
+                    "${employeeScore.toString()}",
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
                   ),
                   Text(
-                    "/ 100",
+                    "/ ${examScores.toString()}",
                     style: GoogleFonts.lexend(
                       color: greyText,
                       fontWeight: FontWeight.bold,
@@ -85,8 +86,9 @@ class ProgressPieChart extends StatelessWidget {
           ),
         ),
         PieChartWidget([
-          Sector(progress, Colors.green),
-          Sector(1 - progress, Colors.grey[200]!),
+          Sector(employeeScore! / examScores!, Colors.green),
+          Sector(
+              1 - (employeeScore! / examScores!).toDouble(), Colors.grey[200]!),
         ])
       ],
     );

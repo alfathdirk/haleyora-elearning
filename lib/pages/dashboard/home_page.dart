@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
   final box = GetStorage();
   AuthController authController = Get.find<AuthController>();
   CourseController courseController = Get.find<CourseController>();
+  QuizController quizController = Get.find<QuizController>();
   CustomSearchController searchController = Get.put(CustomSearchController());
 
   Future<void> init() async {
@@ -66,8 +67,8 @@ class HomePage extends StatelessWidget {
                         children: [
                           const CircleAvatar(
                             radius: 30,
-                            backgroundImage:
-                                AssetImage("assets/images/distribusi.png"),
+                            backgroundImage: NetworkImage(
+                                'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png'),
                           ),
                           const SizedBox(
                             width: 10,
@@ -175,92 +176,91 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          // GestureDetector(
-          //   onTap: () {
-          //     if (quizController.isStart.value == false) {
-          //       quizController.startQuiz();
-          //     }
-          //     Get.toNamed("/quiz");
-          //   },
-          //   child: Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     padding: const EdgeInsets.all(20),
-          //     child: CustomCard(
-          //       color: primaryColor,
-          //       child: Stack(
-          //         children: [
-          //           Positioned(
-          //               right: 0,
-          //               bottom: 0,
-          //               child: Icon(
-          //                 CupertinoIcons.pencil_ellipsis_rectangle,
-          //                 color: Colors.white.withOpacity(0.1),
-          //                 size: 100,
-          //               )),
-          //           Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Column(
-          //                 crossAxisAlignment: CrossAxisAlignment.start,
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Container(
-          //                     padding: const EdgeInsets.only(
-          //                       left: 20,
-          //                       right: 20,
-          //                       top: 20,
-          //                       bottom: 10,
-          //                     ),
-          //                     width: MediaQuery.of(context).size.width - 150,
-          //                     child: Text(
-          //                       "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
-          //                       style: GoogleFonts.mulish(
-          //                         color: Colors.white,
-          //                         fontWeight: FontWeight.bold,
-          //                         fontSize: 14,
-          //                       ),
-          //                     ),
-          //                   ),
-          //                   Container(
-          //                     padding: const EdgeInsets.only(
-          //                       left: 20,
-          //                       right: 20,
-          //                       bottom: 20,
-          //                     ),
-          //                     width: MediaQuery.of(context).size.width - 150,
-          //                     child: Text(
-          //                       "Selamat, Selesaikan pencapaianmu sekarang.",
-          //                       style: GoogleFonts.mulish(
-          //                         color: greyText,
-          //                         fontWeight: FontWeight.normal,
-          //                         fontSize: 10,
-          //                       ),
-          //                     ),
-          //                   )
-          //                 ],
-          //               ),
-          //               Container(
-          //                 padding: const EdgeInsets.only(
-          //                   right: 20,
-          //                 ),
-          //                 child: Obx(() => Text(
-          //                       "${(quizController.start.toInt() / 60).floor()}:${(quizController.start % 60).toString().padLeft(2, '0')}",
-          //                       style: GoogleFonts.mulish(
-          //                         color: Colors.yellow,
-          //                         fontWeight: FontWeight.bold,
-          //                         fontSize: 30,
-          //                       ),
-          //                     )),
-          //               ),
-          //             ],
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          if (quizController.hasOngoingQuiz.isTrue)
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                    '/quiz/${quizController.ongoingQuizId.value}/${quizController.ongoingCourseId.value}');
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(20),
+                child: CustomCard(
+                  color: primaryColor,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Icon(
+                            CupertinoIcons.pencil_ellipsis_rectangle,
+                            color: Colors.white.withOpacity(0.1),
+                            size: 100,
+                          )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 20,
+                                  bottom: 10,
+                                ),
+                                width: MediaQuery.of(context).size.width - 150,
+                                child: Text(
+                                  "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
+                                  style: GoogleFonts.mulish(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  bottom: 20,
+                                ),
+                                width: MediaQuery.of(context).size.width - 150,
+                                child: Text(
+                                  "Selesaikan ujianmu sekarang!",
+                                  style: GoogleFonts.mulish(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              right: 20,
+                            ),
+                            child: Obx(() => Text(
+                                  "${(quizController.startDuration / 60).floor().toString().padLeft(2, '0')}:${(quizController.startDuration % 60).floor().toString().padLeft(2, '0')}",
+                                  style: GoogleFonts.mulish(
+                                    color: Colors.yellow,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -280,6 +280,7 @@ class HomePage extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 20,
+                childAspectRatio: 1,
               ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -287,7 +288,6 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 CategoryData categoryList =
                     courseController.categoryList[index];
-
                 return CustomCard(
                     child: InkWell(
                   onTap: () {
@@ -349,7 +349,7 @@ class HomePage extends StatelessWidget {
           ),
           courseController.courseList.isNotEmpty
               ? SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.32,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: courseController.courseList.length < 5

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/card.dart';
@@ -14,9 +17,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetail extends StatelessWidget {
   CourseDetail({super.key});
-  final id = Get.parameters['id'];
+  final courseId = Get.parameters['id'];
   CourseController courseController = Get.find<CourseController>();
   AuthController authController = Get.find<AuthController>();
+  QuizController quizController = Get.find<QuizController>();
 
   final box = GetStorage();
 
@@ -28,8 +32,9 @@ class CourseDetail extends StatelessWidget {
 
   Future<void> initState() async {
     try {
-      await courseController.getCourseByEmployee(box.read('employee_id'), id!);
-      await courseController.fetchCourseById(id!);
+      await courseController.getCourseByEmployee(
+          box.read('employee_id'), courseId!);
+      await courseController.fetchCourseById(courseId!);
     } catch (e) {
       print(e);
     }
@@ -55,7 +60,6 @@ class CourseDetail extends StatelessWidget {
   Widget buildScafold(BuildContext context) {
     CourseData course = courseController.courseDetail.value;
     final courseByEmployee = courseController.courseByEmployee.value.data ?? [];
-
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -295,7 +299,14 @@ class CourseDetail extends StatelessWidget {
                   courseByEmployee.isNotEmpty
                       ? GestureDetector(
                           onTap: () {
-                            Get.toNamed('/video-player/${course.videoContent}');
+                            // print(
+                            //     '${courseByEmployee.first.lastVideoDuration}');
+                            Get.toNamed(
+                                '/video-player/$courseId/${course.videoContent}',
+                                arguments: {
+                                  "lastVideoDuration":
+                                      courseByEmployee.first.lastVideoDuration
+                                });
                           },
                           child: Container(
                             height: 55,
@@ -324,55 +335,6 @@ class CourseDetail extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Text(
                                   'Tonton Video',
-                                  style: GoogleFonts.mulish(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      decoration: TextDecoration.none),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
-                  courseByEmployee.isNotEmpty &&
-                          courseByEmployee.first.examAttempt! > 0 &&
-                          course.isOpenExam!
-                      ? GestureDetector(
-                          onTap: () {
-                            Get.toNamed('/quiz/${course.examQuiz}/$id');
-                          },
-                          child: Container(
-                            height: 55,
-                            decoration: BoxDecoration(
-                              // opacity: 0.3
-                              color: course.isOpenExam! &&
-                                      courseByEmployee.isNotEmpty
-                                  ? Colors.white
-                                  : Colors.white.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      const Color.fromARGB(255, 119, 119, 119)
-                                          .withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 1,
-                                  offset: const Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  CupertinoIcons.pencil_ellipsis_rectangle,
-                                  color: Colors.black,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  'Mulai Ujian',
                                   style: GoogleFonts.mulish(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
@@ -433,16 +395,41 @@ class CourseDetail extends StatelessWidget {
                 ],
               ),
             ),
-            courseByEmployee.isNotEmpty &&
-                    courseByEmployee.first.examAttempt! > 0
-                ? Text(
-                    'Anda memiliki 3 kali kesempatan untuk mengikuti ujian ini',
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed('/quiz/${course.examQuiz}/$courseId');
+                  quizController.ongoingCourseId.value = courseId!;
+                },
+                child: RoundedButton(
+                  isDisabled: !((courseByEmployee.isNotEmpty &&
+                          courseByEmployee.first.examAttempt! > 0 &&
+                          course.isOpenExam! &&
+                          !quizController.hasOngoingQuiz.value) ||
+                      (quizController.ongoingCourseId.value == courseId)),
+                  text: 'Mulai ujian',
+                  onPressed: () {
+                    Get.toNamed('/quiz/${course.examQuiz}/$courseId');
+                    quizController.ongoingCourseId.value = courseId!;
+                  },
+                  color: primaryColor,
+                  textColor: Colors.white,
+                ),
+              ),
+            ),
+            if (courseByEmployee.isNotEmpty &&
+                courseByEmployee.first.examAttempt! > 0)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    'Anda memiliki ${courseByEmployee.first.examAttempt} kali kesempatan untuk mengikuti ujian ini',
                     style: GoogleFonts.mulish(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        decoration: TextDecoration.none))
-                : SizedBox(),
+                        decoration: TextDecoration.none)),
+              )
           ],
         ),
       ),

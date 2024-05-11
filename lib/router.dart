@@ -22,7 +22,7 @@ class Routes {
   static String homePage = "/home";
   static String loginPage = "/login";
   static String courseDetail = "/course-detail/:id";
-  static String videoPlayer = "/video-player/:url";
+  static String videoPlayer = "/video-player/:courseId/:url";
   static String quizPage = "/quiz/:quizId/:id";
   static String listSector = "/list-sector";
   static String notificationList = "/notification";

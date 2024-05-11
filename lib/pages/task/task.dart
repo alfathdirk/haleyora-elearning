@@ -101,7 +101,7 @@ class TaskController extends GetxController {
             "employee": {
               "_eq": authController.currentUser.value.employeeData!.id
             },
-            "course": {"_eq": data.courseId}
+            "course": {"_eq": data.course?.id}
           }
         },
         "data": {
@@ -113,7 +113,7 @@ class TaskController extends GetxController {
       await dio.delete('/files/$id');
       courseController.getCourseByEmployee(
           authController.currentUser.value.employeeData!.id ?? '',
-          data.courseId);
+          data.course?.id ?? '');
       Get.snackbar('Sukses', 'Tugas berhasil dihapus',
           snackPosition: SnackPosition.BOTTOM);
       loadingUpload.value = false;

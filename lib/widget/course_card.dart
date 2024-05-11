@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
@@ -15,6 +16,8 @@ class CourseCard extends StatelessWidget {
   final int? totalEmployee;
   final void Function()? onTapBookmark;
   final bool? iconBookmark;
+  final double? totalDuration;
+  final double? heightTitle;
 
   const CourseCard({
     super.key,
@@ -28,6 +31,8 @@ class CourseCard extends StatelessWidget {
     this.duration = 0,
     this.onTapBookmark,
     this.iconBookmark = true,
+    this.totalDuration,
+    this.heightTitle,
   });
 
   @override
@@ -109,7 +114,7 @@ class CourseCard extends StatelessWidget {
                   Text(
                     title,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 3,
                     style: GoogleFonts.mulish(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -120,25 +125,24 @@ class CourseCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        totalEmployee != 0
-                            ? Row(
-                                children: [
-                                  const Icon(
-                                    CupertinoIcons.eye,
-                                    color: lightGrey,
-                                    size: 10,
-                                  ),
-                                  Text(
-                                    " $totalEmployee Dipelajari",
-                                    style: GoogleFonts.mulish(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.normal,
-                                      color: lightGrey,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
+                        if (totalEmployee != 0)
+                          Row(
+                            children: [
+                              const Icon(
+                                CupertinoIcons.eye,
+                                color: lightGrey,
+                                size: 10,
+                              ),
+                              Text(
+                                " $totalEmployee Dipelajari",
+                                style: GoogleFonts.mulish(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.normal,
+                                  color: lightGrey,
+                                ),
+                              ),
+                            ],
+                          ),
                         Row(
                           children: [
                             const Icon(
@@ -155,7 +159,22 @@ class CourseCard extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        if (totalDuration != null)
+                          SizedBox(
+                            width: 120,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: LinearProgressIndicator(
+                                value: totalDuration,
+                                minHeight: 6,
+                                backgroundColor: Colors.grey[300],
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  Color.fromARGB(255, 236, 135, 57),
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),

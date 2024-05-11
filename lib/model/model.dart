@@ -14,8 +14,8 @@ class CourseData {
   dynamic videoContent;
   bool? isOpenExam;
   bool? isOpenTask;
-  String? minScore;
-  dynamic examQuiz;
+  int? minScore;
+  dynamic? examQuiz;
   List<EmployeeCourseData>? employeeCourse;
   List<CourseBookmarkByEmployee>? employeeBookmark;
   ImageData? image;
@@ -382,7 +382,7 @@ class ResponseCourseByEmployee {
 
 class CourseByEmployee {
   String? id;
-  String? courseId;
+  CourseData? course;
   bool? completed;
   int? examScore;
   int? tasksScore;
@@ -392,7 +392,7 @@ class CourseByEmployee {
 
   CourseByEmployee({
     this.id,
-    this.courseId,
+    this.course,
     this.completed,
     this.examAttempt,
     this.tasks,
@@ -404,7 +404,7 @@ class CourseByEmployee {
   factory CourseByEmployee.fromJson(Map<String, dynamic> json) {
     return CourseByEmployee(
       id: json['id'],
-      courseId: json['course'],
+      course: CourseData.fromJson(json['course']),
       completed: json['completed'],
       examScore: json['exam_score'],
       tasksScore: json['tasks_score'],

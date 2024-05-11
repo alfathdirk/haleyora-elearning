@@ -66,6 +66,7 @@ class OngoingCourseData {
   final String? id;
   final int? examScore;
   final int? lastVideoDuration;
+  final int? videoDuration;
   final CourseMe? course;
   final List<dynamic>? tasks;
 
@@ -75,6 +76,7 @@ class OngoingCourseData {
     this.lastVideoDuration,
     this.course,
     this.tasks,
+    this.videoDuration,
   });
 
   factory OngoingCourseData.fromJson(Map<String, dynamic> json) {
@@ -82,6 +84,7 @@ class OngoingCourseData {
       id: json['id'],
       examScore: json['exam_score'],
       lastVideoDuration: json['last_video_duration'],
+      videoDuration: json['video_duration'],
       course: CourseMe.fromJson(json['course']),
       tasks: json['tasks'] ?? [],
     );

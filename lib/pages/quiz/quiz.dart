@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,7 +16,7 @@ class QuizPage extends StatelessWidget {
   QuizPage({super.key});
   final quizId = Get.parameters['quizId'];
   final courseId = Get.parameters['id'];
-  final controller = Get.find<QuizController>();
+  QuizController controller = Get.find<QuizController>();
   final box = GetStorage();
 
   @override
@@ -50,18 +52,19 @@ class QuizPage extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width - 130,
+                    width: MediaQuery.of(context).size.width - 150,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Obx(() => LinearProgressIndicator(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Obx(
+                          () => LinearProgressIndicator(
                             minHeight: 12,
-                            value: controller.questionIndex.toInt() /
-                                controller.questionList.length.toDouble(),
+                            value: controller.questionIndex.value +
+                                1 / controller.questionList.length.toDouble(),
                             backgroundColor: Colors.grey[300],
                             valueColor: const AlwaysStoppedAnimation<Color>(
                                 Colors.blue),
-                          )),
-                    ),
+                          ),
+                        )),
                   ),
                   const SizedBox(
                     width: 20,
@@ -84,16 +87,16 @@ class QuizPage extends StatelessWidget {
                         controller.startDuration < 10 ? Colors.red : orangeText,
                     size: 12,
                   ),
-                  Text(
-                    // timer minute
-                    "${(controller.startDuration / 60).floor()}:${(controller.startDuration % 60).toString().padLeft(2, '0')}",
-                    style: GoogleFonts.poppins(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: 8 < 10 ? Colors.red : orangeText,
-                      decoration: TextDecoration.none,
-                    ),
-                  ),
+                  Obx(() => Text(
+                        // timer minute
+                        "${(controller.startDuration / 60).floor().toString().padLeft(2, '0')}:${(controller.startDuration % 60).floor().toString().padLeft(2, '0')}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: 8 < 10 ? Colors.red : orangeText,
+                          decoration: TextDecoration.none,
+                        ),
+                      )),
                 ],
               ),
             ),
@@ -179,7 +182,9 @@ class QuizPage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: InkWell(
                     onTap: () {
-                      controller.questionIndex.value--;
+                      if (controller.questionIndex.value > 0) {
+                        controller.questionIndex.value--;
+                      }
                     },
                     child: const Icon(
                       Icons.arrow_back,
@@ -204,6 +209,11 @@ class QuizPage extends StatelessWidget {
                                 ImageDialog(
                                   buttonText: "OK",
                                   onPressed: () {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1000), () {
+                                      controller.resetQuiz();
+                                    });
+
                                     Get.offAllNamed('/home');
                                   },
                                   image: "assets/images/distribusi.png",

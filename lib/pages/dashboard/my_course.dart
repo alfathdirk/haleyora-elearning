@@ -129,6 +129,10 @@ class MyCoursePage extends StatelessWidget {
                               "$imageBaseUrl${course.course?.image}?access_token=${box.read('accessToken')}",
                           duration: course.course?.duration ?? 0,
                           iconBookmark: false,
+                          totalDuration: course.lastVideoDuration != null
+                              ? course.lastVideoDuration! /
+                                  course.videoDuration!.toDouble()
+                              : 0,
                         );
                       },
                     )),

@@ -173,12 +173,13 @@ class CourseController extends GetxController {
 
   Future<void> getCourseByEmployee(String empId, String? courseId) async {
     String withCourse = '';
+    print('$empId $courseId');
     try {
       if (courseId != null) {
         withCourse = '&filter[course][_eq]=$courseId';
       }
       final result = await dio.get(
-          '/items/employee_course?fields[]=id, course, completed, exam_score, tasks_score, last_video_duration, exam_attempt,tasks.id, tasks.directus_files_id.*&filter[employee][_eq]=$empId$withCourse');
+          '/items/employee_course?fields[]=id, course.id, course.title, course.min_score, course.activities.id,course.activities.title, completed, exam_score, tasks_score, last_video_duration, exam_attempt,tasks.id, tasks.directus_files_id.*&filter[employee][_eq]=$empId$withCourse');
       ResponseCourseByEmployee resultEmployee =
           ResponseCourseByEmployee.fromJson(result.data);
       courseByEmployee.value = resultEmployee;

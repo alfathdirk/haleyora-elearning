@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/quiz.dart';
 import 'package:haleyora/services/dio_client.dart';
 
@@ -15,6 +17,9 @@ class QuizController extends GetxController {
   var isStart = false.obs;
   var questionList = <QuizQuestion>[].obs;
   var answerList = [].obs;
+  var hasOngoingQuiz = false.obs;
+  var ongoingCourseId = ''.obs;
+  var ongoingQuizId = ''.obs;
 
   @override
   void onInit() {
@@ -29,14 +34,18 @@ class QuizController extends GetxController {
   }
 
   void resetQuiz() {
-    complete = false;
-    questionIndex.value = 0;
-    score.value = 0;
-    startDuration.value = 0;
-    scorePerQuestion.value = 0;
-    isStart.value = false;
+    complete = false.obs.value;
+    questionIndex.value = 0.obs.value;
+    score.value = 0.obs.value;
+    startDuration.value = 0.obs.value;
+    scorePerQuestion.value = 0.obs.value;
+    isStart.value = false.obs.value;
     questionList.clear();
     answerList.clear();
+    hasOngoingQuiz.value = false.obs.value;
+    ongoingCourseId.value = ''.obs.value;
+    ongoingQuizId.value = ''.obs.value;
+    timer?.cancel();
   }
 
   Future<void> fetchQuiz(String quizId) async {
@@ -44,12 +53,19 @@ class QuizController extends GetxController {
       final result = await dio.get(
           '/items/quiz/$quizId?fields[]=title,duration,score_per_question,randomize,quiz_question.title,quiz_question.image, quiz_question.choices,quiz_question.answer');
       Quiz quizQuestion = Quiz.fromJson(result.data['data']);
-      startDuration.value = quizQuestion.duration!;
+
       if (quizQuestion.randomize!) {
         quizQuestion.quizQuestions!.shuffle();
       }
       questionList.value = quizQuestion.quizQuestions!;
       scorePerQuestion.value = quizQuestion.scorePerQuestion!;
+
+      if (startDuration.value == 0) {
+        startDuration.value = quizQuestion.duration! * 60;
+        hasOngoingQuiz.value = true;
+        ongoingQuizId.value = quizId;
+        startQuiz();
+      }
     } catch (e) {
       print('error fetchQuiz: $e');
     }
@@ -61,13 +77,15 @@ class QuizController extends GetxController {
 
   Future<void> checkAnswer(String courseId) async {
     AuthController authController = Get.find<AuthController>();
+    CourseController courseController = Get.find<CourseController>();
+    final courseByEmployee = courseController.courseByEmployee.value.data ?? [];
+
     try {
-      for (int i = 0; i < questionList.length; i++) {
+      for (int i = 0; i < answerList.length; i++) {
         if (questionList[i].answer == answerList[i]) {
           score.value += scorePerQuestion.value;
         }
       }
-      complete = true;
       await dio.patch('/items/employee_course', data: {
         "query": {
           "filter": {
@@ -78,9 +96,11 @@ class QuizController extends GetxController {
           }
         },
         "data": {
-          "exam_score": score.value,
-          "completed": true,
-          "exam_attempt": 2
+          "exam_score": courseByEmployee.first.examScore! >= score.value
+              ? courseByEmployee.first.examScore
+              : score.value,
+          "exam_attempt": courseByEmployee.first.examAttempt! - 1,
+          "completed": courseByEmployee.first.examAttempt! - 1 == 0
         }
       });
     } catch (e) {
@@ -88,20 +108,32 @@ class QuizController extends GetxController {
     }
   }
 
-  // void removeAnswer(String answer, int index) {
-  //   answerList.removeAt(index);
-  // }
-
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     timer = Timer.periodic(
       oneSec,
       (timer) {
-        if (isStart.value == false) {
+        if (startDuration.value == 0 && hasOngoingQuiz.value) {
           timer.cancel();
-        } else {
-          startDuration.value--;
+          complete = true;
+          checkAnswer(ongoingCourseId.value);
+          Get.defaultDialog(
+            barrierDismissible: false,
+            title: 'Waktu Habis',
+            middleText: 'Ujian mu sudah selesai',
+            onConfirm: () {
+              Future.delayed(
+                const Duration(milliseconds: 1000),
+                () {
+                  resetQuiz();
+                },
+              );
+              Get.offAllNamed('/home');
+            },
+          );
+          return;
         }
+        startDuration.value--;
       },
     );
   }
