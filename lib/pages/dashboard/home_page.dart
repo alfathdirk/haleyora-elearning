@@ -176,87 +176,96 @@ class HomePage extends StatelessWidget {
             ),
           ),
           if (quizController.hasOngoingQuiz.isTrue)
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(
-                    '/quiz/${quizController.ongoingQuizId.value}/${quizController.ongoingCourseId.value}');
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(20),
-                child: CustomCard(
-                  color: primaryColor,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Icon(
-                            CupertinoIcons.pencil_ellipsis_rectangle,
-                            color: Colors.white.withOpacity(0.1),
-                            size: 100,
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(
+                        '/quiz/${quizController.ongoingQuizId.value}/${quizController.ongoingCourseId.value}');
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(20),
+                    child: CustomCard(
+                      color: primaryColor,
+                      child: Stack(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Positioned(
+                              right: 0,
+                              bottom: 0,
+                              child: Icon(
+                                CupertinoIcons.pencil_ellipsis_rectangle,
+                                color: Colors.white.withOpacity(0.1),
+                                size: 100,
+                              )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                  top: 20,
-                                  bottom: 10,
-                                ),
-                                width: MediaQuery.of(context).size.width - 150,
-                                child: Text(
-                                  "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
-                                  style: GoogleFonts.mulish(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      right: 20,
+                                      top: 20,
+                                      bottom: 10,
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width - 150,
+                                    child: Text(
+                                      "Anda mempunyai Ujian tertunda, segera selesaikan ujian Anda",
+                                      style: GoogleFonts.mulish(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      right: 20,
+                                      bottom: 20,
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width - 150,
+                                    child: Text(
+                                      "Selesaikan ujianmu sekarang!",
+                                      style: GoogleFonts.mulish(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                               Container(
                                 padding: const EdgeInsets.only(
-                                  left: 20,
                                   right: 20,
-                                  bottom: 20,
                                 ),
-                                width: MediaQuery.of(context).size.width - 150,
-                                child: Text(
-                                  "Selesaikan ujianmu sekarang!",
-                                  style: GoogleFonts.mulish(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              )
+                                child: Obx(() => Text(
+                                      "${(quizController.startDuration / 60).floor().toString().padLeft(2, '0')}:${(quizController.startDuration % 60).floor().toString().padLeft(2, '0')}",
+                                      style: GoogleFonts.mulish(
+                                        color: Colors.yellow,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),
+                                    )),
+                              ),
                             ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                              right: 20,
-                            ),
-                            child: Obx(() => Text(
-                                  "${(quizController.startDuration / 60).floor().toString().padLeft(2, '0')}:${(quizController.startDuration % 60).floor().toString().padLeft(2, '0')}",
-                                  style: GoogleFonts.mulish(
-                                    color: Colors.yellow,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                )),
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           Container(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
@@ -348,7 +357,7 @@ class HomePage extends StatelessWidget {
           ),
           courseController.courseList.isNotEmpty
               ? SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.32,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: courseController.courseList.length < 5
@@ -356,14 +365,14 @@ class HomePage extends StatelessWidget {
                         : 5,
                     itemBuilder: (context, index) {
                       CourseData course = courseController.courseList[index];
-
                       return Container(
-                        width: 300,
+                        width: 280,
                         padding: const EdgeInsets.only(
                           left: 20,
                           bottom: 20,
                         ),
                         child: CourseCard(
+                          heightTitle: 54,
                           onTapBookmark: () async {
                             bool isBookmarked = course.employeeBookmark!
                                 .map((e) => e.employee)

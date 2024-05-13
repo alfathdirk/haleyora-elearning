@@ -23,11 +23,13 @@ class NotificationService extends GetxService {
       print('Message data: ${message.data}');
 
       if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
+        print(
+            'Message also contained a notification: ${message.notification!.body}');
       }
     });
 
     final fcmToken = await FirebaseMessaging.instance.getToken();
+    await FirebaseMessaging.instance.subscribeToTopic("elearningTopic");
     print("FCMToken $fcmToken");
 
     return this;

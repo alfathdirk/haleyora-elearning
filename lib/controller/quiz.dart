@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/controller/course.dart';
@@ -98,7 +99,7 @@ class QuizController extends GetxController {
               ? courseByEmployee.first.examScore
               : score.value,
           "exam_attempt": courseByEmployee.first.examAttempt! - 1,
-          "completed": courseByEmployee.first.examAttempt! - 1 == 0
+          "completed": true,
         }
       });
     } catch (e) {

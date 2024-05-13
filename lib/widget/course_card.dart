@@ -94,7 +94,7 @@ class CourseCard extends StatelessWidget {
                     )
                   : const SizedBox(),
             ]),
-            Padding(
+            Container(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,47 +110,32 @@ class CourseCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: GoogleFonts.mulish(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: heightTitle,
+                    child: Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      style: GoogleFonts.mulish(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (totalEmployee != 0)
-                          Row(
-                            children: [
-                              const Icon(
-                                CupertinoIcons.eye,
-                                color: lightGrey,
-                                size: 10,
-                              ),
-                              Text(
-                                " $totalEmployee Dipelajari",
-                                style: GoogleFonts.mulish(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
-                                  color: lightGrey,
-                                ),
-                              ),
-                            ],
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (totalEmployee != 0)
                         Row(
                           children: [
                             const Icon(
-                              CupertinoIcons.time,
+                              CupertinoIcons.eye,
                               color: lightGrey,
                               size: 10,
                             ),
                             Text(
-                              " $duration Menit",
+                              " $totalEmployee Dipelajari",
                               style: GoogleFonts.mulish(
                                 fontSize: 10,
                                 fontWeight: FontWeight.normal,
@@ -159,23 +144,39 @@ class CourseCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        if (totalDuration != null)
-                          SizedBox(
-                            width: 120,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: LinearProgressIndicator(
-                                value: totalDuration,
-                                minHeight: 6,
-                                backgroundColor: Colors.grey[300],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Color.fromARGB(255, 236, 135, 57),
-                                ),
+                      Row(
+                        children: [
+                          const Icon(
+                            CupertinoIcons.time,
+                            color: lightGrey,
+                            size: 10,
+                          ),
+                          Text(
+                            " $duration Menit",
+                            style: GoogleFonts.mulish(
+                              fontSize: 10,
+                              fontWeight: FontWeight.normal,
+                              color: lightGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (totalDuration != null)
+                        SizedBox(
+                          width: 120,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: LinearProgressIndicator(
+                              value: totalDuration,
+                              minHeight: 6,
+                              backgroundColor: Colors.grey[300],
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(255, 236, 135, 57),
                               ),
                             ),
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
                 ],
               ),

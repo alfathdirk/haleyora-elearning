@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/controller/course.dart';
+import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/chart.dart';
 import 'package:haleyora/widget/pdf.dart';
@@ -11,6 +13,7 @@ import 'package:haleyora/widget/pdf.dart';
 class AchievmentPage extends StatelessWidget {
   AchievmentPage({super.key});
   CourseController courseController = Get.find<CourseController>();
+  QuizController quizController = Get.find<QuizController>();
   final box = GetStorage();
 
   @override
@@ -72,32 +75,34 @@ class AchievmentPage extends StatelessWidget {
                                     const SizedBox(
                                       width: 20,
                                     ),
-                                    ProgressPieChart(
-                                      examScores: courseController
-                                                  .courseByEmployee
-                                                  .value
-                                                  .data !=
-                                              null
-                                          ? courseController
-                                              .courseByEmployee.value.data!
-                                              .map((e) => e.course!.minScore)
-                                              .reduce((value, element) =>
-                                                  value! + element!)
-                                              ?.toDouble()
-                                          : 0,
-                                      employeeScore: courseController
-                                                  .courseByEmployee
-                                                  .value
-                                                  .data !=
-                                              null
-                                          ? courseController
-                                              .courseByEmployee.value.data!
-                                              .map((e) => e.examScore)
-                                              .reduce((value, element) =>
-                                                  value! + element!)
-                                              ?.toDouble()
-                                          : 0,
-                                    ),
+                                    if (courseController.courseByEmployee.value
+                                        .data!.isNotEmpty)
+                                      ProgressPieChart(
+                                        examScores: courseController
+                                                    .courseByEmployee
+                                                    .value
+                                                    .data !=
+                                                null
+                                            ? courseController
+                                                .courseByEmployee.value.data!
+                                                .map((e) => e.course!.minScore)
+                                                .reduce((value, element) =>
+                                                    value! + element!)
+                                                ?.toDouble()
+                                            : 0,
+                                        employeeScore: courseController
+                                                    .courseByEmployee
+                                                    .value
+                                                    .data !=
+                                                null
+                                            ? courseController
+                                                .courseByEmployee.value.data!
+                                                .map((e) => e.examScore)
+                                                .reduce((value, element) =>
+                                                    value! + element!)
+                                                ?.toDouble()
+                                            : 0,
+                                      ),
                                     const SizedBox(
                                       width: 20,
                                     ),
@@ -145,29 +150,53 @@ class AchievmentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Kursus yang sedang diikuti",
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.jost(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                  courseController.courseByEmployee.value.data!.isNotEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Kursus yang sedang diikuti",
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.jost(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 20, bottom: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.bookmark_add_outlined,
+                                size: 100,
+                                color: greyText,
+                              ),
+                              Text(
+                                "Belum ada kursus yang diikuti",
+                                style: GoogleFonts.jost(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: darkText),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount:
                           courseController.courseByEmployee.value.data!.length,
                       itemBuilder: (context, index) {
@@ -257,23 +286,64 @@ class AchievmentPage extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "ULANGI TEST",
-                                                  style: GoogleFonts.mulish(
-                                                    color: primaryColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 10,
+                                            !((courseController
+                                                            .courseByEmployee
+                                                            .value
+                                                            .data!
+                                                            .isNotEmpty &&
+                                                        courseController
+                                                                .courseByEmployee
+                                                                .value
+                                                                .data![index]
+                                                                .examAttempt! >
+                                                            0 &&
+                                                        !quizController
+                                                            .hasOngoingQuiz
+                                                            .value) ||
+                                                    (quizController
+                                                            .ongoingCourseId
+                                                            .value ==
+                                                        courseController
+                                                            .courseByEmployee
+                                                            .value
+                                                            .data![index]
+                                                            .course!
+                                                            .id))
+                                                ? const SizedBox()
+                                                : InkWell(
+                                                    onTap: () {
+                                                      final c = courseController
+                                                          .courseByEmployee
+                                                          .value
+                                                          .data![index];
+                                                      Get.toNamed(
+                                                          '/quiz/${c.course!.examQuiz}/${c.course!.id}');
+                                                      quizController
+                                                              .ongoingCourseId
+                                                              .value =
+                                                          c.course!.id!;
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "ULANGI TEST",
+                                                          style: GoogleFonts
+                                                              .mulish(
+                                                            color: primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                        const Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: primaryColor,
+                                                          size: 10,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: primaryColor,
-                                                  size: 10,
-                                                ),
-                                              ],
-                                            ),
                                             GestureDetector(
                                               onTap: () async {
                                                 await PDF.generate();

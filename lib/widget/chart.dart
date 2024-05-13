@@ -48,8 +48,8 @@ class ProgressPieChart extends StatelessWidget {
       children: [
         Positioned(
           // center
-          top: 36,
-          left: 30,
+          top: 40,
+          left: 26,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -69,7 +69,7 @@ class ProgressPieChart extends StatelessWidget {
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 16,
                     ),
                   ),
                   Text(

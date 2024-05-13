@@ -179,7 +179,7 @@ class CourseController extends GetxController {
         withCourse = '&filter[course][_eq]=$courseId';
       }
       final result = await dio.get(
-          '/items/employee_course?fields[]=id, course.id, course.title, course.min_score, course.activities.id,course.activities.title, completed, exam_score, tasks_score, last_video_duration, exam_attempt,tasks.id, tasks.directus_files_id.*&filter[employee][_eq]=$empId$withCourse');
+          '/items/employee_course?fields[]=id, course.id, course.title, course.min_score, course.exam_quiz, course.activities.id,course.activities.title, completed, exam_score, tasks_score, last_video_duration, exam_attempt,tasks.id, tasks.directus_files_id.*&filter[employee][_eq]=$empId$withCourse');
       ResponseCourseByEmployee resultEmployee =
           ResponseCourseByEmployee.fromJson(result.data);
       courseByEmployee.value = resultEmployee;
