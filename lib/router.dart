@@ -31,7 +31,7 @@ class Routes {
   static String notificationSetting = "/notification-setting";
   static String categoryList = "/category-list/:categoryId";
   static String filterPage = "/filter";
-  static String searchResult = "/search-result/:query";
+  static String searchResult = "/search-result";
   static String editPassword = "/edit-password";
   static String taskDetail = "/task-detail/:id";
 }
@@ -88,11 +88,11 @@ final pages = [
   GetPage(
     name: Routes.categoryList,
     // page: () => SharedAxisTransitionDemo(),
-    page: () => const CategoryListPage(),
+    page: () => CategoryListPage(),
   ),
   GetPage(
     name: Routes.filterPage,
-    page: () => const FilterPage(),
+    page: () => FilterPage(),
   ),
   GetPage(
     name: Routes.searchResult,

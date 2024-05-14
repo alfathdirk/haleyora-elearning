@@ -11,16 +11,20 @@ import 'package:haleyora/widget/course_card.dart';
 
 class SearchResultPage extends StatelessWidget {
   SearchResultPage({super.key});
-  final query = Get.parameters['query'];
-  final box = GetStorage();
+  final query = Get.arguments['query'] ?? '';
+  final activityId = Get.arguments['activityId'] ?? '';
+  final isFromCategory = Get.arguments['isFromCategory'] ?? false;
 
+  final box = GetStorage();
   CourseController courseController = Get.find<CourseController>();
   AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: courseController.searchCourse(query!),
+      future: !isFromCategory
+          ? courseController.searchCourse(query)
+          : courseController.searchCourseByActivity(activityId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -39,7 +43,7 @@ class SearchResultPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text("Hasil Pencarian \"$query\"",
+        title: Text("Hasil Pencarian ${query != '' ? '\"$query\"' : ''}",
             style: GoogleFonts.jost(
                 fontSize: 20, fontWeight: FontWeight.bold, color: darkText)),
         centerTitle: false,

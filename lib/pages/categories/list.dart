@@ -159,16 +159,17 @@ class ListCategory extends StatelessWidget {
                   CategoryOption data = categoryController.categoryList[index];
                   return ListTile(
                     title: Text(data.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                         style: GoogleFonts.mulish(
                             fontSize: 16, fontWeight: FontWeight.bold)),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-                    subtitle: Text(
-                        categoryController
-                            .categoryPage[categoryController.currentPage.value],
-                        style: GoogleFonts.mulish(
-                            fontSize: 12, color: Colors.grey)),
                     onTap: () {
                       if (categoryController.currentPage.value >= 2) {
+                        Get.toNamed('/search-result', arguments: {
+                          'activityId': data.id,
+                          'isFromCategory': true
+                        });
                         return;
                       }
                       categoryController.currentPage.value += 1;

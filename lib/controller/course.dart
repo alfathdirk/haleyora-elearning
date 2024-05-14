@@ -12,6 +12,7 @@ class CourseController extends GetxController {
   final categoryList = [].obs;
   final tabOngoing = false.obs;
   final courseByEmployee = ResponseCourseByEmployee().obs;
+  final listFilter = [].obs;
 
   final myCourseList = [].obs;
 
@@ -72,18 +73,6 @@ class CourseController extends GetxController {
       isAllCourse.value = true;
       final result = await dio.get(
           '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
-
-      // object add DONT DELETE
-      // List<CourseData> updatedData =
-      //     List<CourseData>.from(result.data['data'].map((x) {
-      //   final courseIds = x['employee_course']
-      //       ?.map((element) => element['employee'])
-      //       .toList();
-      //   bool isBookmarked = courseIds!.contains(1);
-      //   x['isBookmarked'] = isBookmarked;
-      //   return CourseData.fromJson(x);
-      // }));
-
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       courseList.value = courseResponse.data!.toList();
     } catch (e) {
@@ -104,20 +93,6 @@ class CourseController extends GetxController {
     }
   }
 
-  Future<void> fetchCourseCompleted(String empId) async {
-    try {
-      loading.value = true;
-      final result = await dio.get(
-          '/items/employee_course?filter[employee][_eq]=$empId&filter[status][_eq]=completed');
-      print(result);
-      // CourseResponse courseResponse = CourseResponse.fromJson(result.data);
-      // courseList.value = courseResponse.data!.toList();
-      // loading.value = false;
-    } catch (e) {
-      print('error fetchCourseCompleted: $e');
-    }
-  }
-
   Future<void> getCategory() async {
     try {
       final result = await dio.get('/items/category');
@@ -127,9 +102,6 @@ class CourseController extends GetxController {
     } catch (e) {
       print('error getCategory: $e');
     }
-    // final result = await dio.get('/items/category');
-    // CategoryResponse categoryResponse = CategoryResponse.fromJson(result.data);
-    // categoryList.value = categoryResponse.data!.toList();
   }
 
   Future<void> bookmarkCourse(String courseId, String empId) async {
@@ -161,13 +133,35 @@ class CourseController extends GetxController {
   }
 
   Future<void> searchCourse(String query) async {
+    String listQuery = '';
+    String q = '';
+    if (listFilter.isNotEmpty) {
+      listFilter.forEach((element) {
+        q +=
+            '{"activities": {"sub_sector" : {"sector_id": {"category_id": {"_eq": "$element"}}}}}';
+      });
+    }
+    listQuery =
+        '&filter={"_or": [$q], "_and": [{"title": {"_contains": "$query"}}]}';
     try {
       final result = await dio.get(
-          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id&filter[title][_contains]=$query');
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id$listQuery');
+
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       searchResults.value = courseResponse.data!.toList();
     } catch (e) {
       print('error searchCourse: $e');
+    }
+  }
+
+  Future<void> searchCourseByActivity(String activityId) async {
+    try {
+      final result = await dio.get(
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id&filter[activities][_eq]=$activityId');
+      CourseResponse courseResponse = CourseResponse.fromJson(result.data);
+      searchResults.value = courseResponse.data!.toList();
+    } catch (e) {
+      print('error searchCourseByActivity: $e');
     }
   }
 

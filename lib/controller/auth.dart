@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haleyora/model/me.dart';
 import 'package:haleyora/services/dio_client.dart';
+import 'dart:developer' as developer;
 
 class AuthController extends GetxController {
   final currentUser = ResponseData().obs;
@@ -21,7 +24,7 @@ class AuthController extends GetxController {
       box.write('employee_id', currentUser.value.employeeData?.id);
       currentUser.value = userData;
     } catch (e) {
-      print('error getMe: $e');
+      developer.log('error getMe: ${e.toString()}');
     }
   }
 }

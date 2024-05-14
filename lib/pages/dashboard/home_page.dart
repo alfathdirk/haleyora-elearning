@@ -84,8 +84,8 @@ class HomePage extends StatelessWidget {
                                     color: darkText),
                               ),
                               Text(
-                                authController.currentUser.value.employeeData!
-                                        .fullName ??
+                                authController.currentUser.value.employeeData
+                                        ?.fullName ??
                                     "",
                                 style: GoogleFonts.mulish(
                                     fontSize: 16,
@@ -143,7 +143,9 @@ class HomePage extends StatelessWidget {
                       controller: searchController.searchController,
                       onSubmitted: (value) {
                         if (value.isNotEmpty) {
-                          Get.toNamed("/search-result/$value");
+                          Get.toNamed("/search-result", arguments: {
+                            'query': value,
+                          });
                           return;
                         }
                       },
@@ -159,16 +161,33 @@ class HomePage extends StatelessWidget {
                     onTap: () {
                       Get.toNamed("/filter");
                     },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: primaryColor,
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.square_list,
-                        color: Colors.white,
-                      ),
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: primaryColor,
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.square_list,
+                            color: Colors.white,
+                          ),
+                        ),
+                        if (courseController.listFilter.isNotEmpty)
+                          Positioned(
+                            right: 0,
+                            child: Container(
+                              width: 10,
+                              height: 10,
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.orangeAccent,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   )
                 ],

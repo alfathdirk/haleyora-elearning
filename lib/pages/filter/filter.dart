@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/course.dart';
 
 class FilterPage extends StatelessWidget {
-  const FilterPage({super.key});
+  FilterPage({super.key});
+  CourseController courseController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    print(courseController.categoryList.length);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter'),
@@ -18,7 +22,7 @@ class FilterPage extends StatelessWidget {
         ),
         actions: [
           GestureDetector(
-            onTap: () => print('Clear'),
+            onTap: () => courseController.listFilter.clear(),
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Text('Clear',
@@ -38,7 +42,7 @@ class FilterPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Pekerjaan:',
+                'Bidang Pekerjaan:',
                 style: GoogleFonts.mulish(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -46,21 +50,32 @@ class FilterPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      fillColor: MaterialStateProperty.all(primaryColor),
-                      value: true,
-                      onChanged: (bool? value) {},
-                    ),
-                    Text(
-                      'Distribution',
-                      style: GoogleFonts.mulish(fontSize: 12),
-                    ),
-                  ],
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: courseController.categoryList.length,
+                  itemBuilder: (context, index) {
+                    return Obx(() => CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(
+                            courseController.categoryList[index].name,
+                            style: GoogleFonts.mulish(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          value: courseController.listFilter.contains(
+                              courseController.categoryList[index].id),
+                          onChanged: (value) {
+                            if (value == true) {
+                              courseController.listFilter
+                                  .add(courseController.categoryList[index].id);
+                              return;
+                            }
+                            courseController.listFilter.remove(
+                                courseController.categoryList[index].id);
+                          },
+                        ));
+                  },
                 ),
               ),
             ],
