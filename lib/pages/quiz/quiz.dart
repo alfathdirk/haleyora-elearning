@@ -33,6 +33,7 @@ class QuizPage extends StatelessWidget {
   }
 
   Scaffold quizView(BuildContext context) {
+    print(controller.questionList[controller.questionIndex.value].image);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quiz Page"),
@@ -54,8 +55,8 @@ class QuizPage extends StatelessWidget {
                         child: Obx(
                           () => LinearProgressIndicator(
                             minHeight: 12,
-                            value: controller.questionIndex.value +
-                                1 / controller.questionList.length.toDouble(),
+                            value: (controller.questionIndex.value + 1) /
+                                controller.questionList.length.toDouble(),
                             backgroundColor: Colors.grey[300],
                             valueColor: const AlwaysStoppedAnimation<Color>(
                                 Colors.blue),
@@ -112,12 +113,17 @@ class QuizPage extends StatelessWidget {
                                     null
                                 ? Column(
                                     children: [
-                                      Image.network(
-                                        "$imageBaseUrl${controller.questionList[controller.questionIndex.value].image!}?access_token=${box.read('accessToken')}",
-                                        width: double.infinity,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      if (controller
+                                              .questionList[controller
+                                                  .questionIndex.value]
+                                              .image !=
+                                          null)
+                                        Image.network(
+                                          "$imageBaseUrl${controller.questionList[controller.questionIndex.value].image!}?access_token=${box.read('accessToken')}",
+                                          width: double.infinity,
+                                          height: 200,
+                                          fit: BoxFit.cover,
+                                        ),
                                       const SizedBox(
                                         height: 20,
                                       ),

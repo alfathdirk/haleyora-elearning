@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -42,28 +44,36 @@ class _loginScreenState extends State<LoginScreen> {
         isLoading = true;
         isDisabled = true;
       });
-      final response = await dio.post('/api/login', data: {
-        // 'username': '7921203BDG',
-        // 'password': '07071979',
-        'username': _usernameController.text,
-        'password': _passwordController.text,
-      });
-      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-      box.write('accessToken', loginResponse.accessToken);
-      box.write('refreshToken', loginResponse.refreshToken);
-      await authService.setisLoggedIn(true);
-      setState(() {
-        isLoading = false;
-        isDisabled = false;
-      });
-      Get.offNamed('/home');
-      return;
+      try {
+        final response = await dio.post('/api/login', data: {
+          // 'username': '7921203BDG',
+          // 'password': '07071979',
+          'username': _usernameController.text,
+          'password': _passwordController.text,
+        });
+        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+        box.write('accessToken', loginResponse.accessToken);
+        box.write('refreshToken', loginResponse.refreshToken);
+        await authService.setisLoggedIn(true);
+        Get.offNamed('/home');
+        return;
+      } catch (e) {
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Error',
+            message: 'Username atau password salah!',
+            icon: Icon(Icons.info_outline),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+          isDisabled = false;
+        });
+      }
     }
-    setState(() {
-      isLoading = false;
-      isDisabled = false;
-    });
-    Get.snackbar('Error', 'Invalid username or password');
   }
 
   @override

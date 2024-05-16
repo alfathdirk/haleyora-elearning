@@ -15,8 +15,7 @@ void initServices() async {
   await Get.putAsync(() => GetStorage.init());
   await Get.putAsync(() => AuthService().init());
   await Get.putAsync(() => NotificationService().init());
-  // disable screenshot and recording here
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+
   // TODO: need to add exam service to check timeout;
   // await Get.putAsync(() => ExamService().init());
   print('All services started...');
@@ -26,6 +25,8 @@ void main(List<String> args) async {
   setPathUrlStrategy();
   initServices();
   configureDio();
+  // disable screenshot and recording here
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   if (GetPlatform.isAndroid) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,

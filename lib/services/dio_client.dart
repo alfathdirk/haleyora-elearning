@@ -33,17 +33,16 @@ void configureDio() {
         authService.logout();
         Get.offAllNamed('/login');
       }
-      print('e >>>>>: $e');
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Error',
-          message: 'something went wrong!',
-          icon: Icon(Icons.refresh),
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
-      );
-      // return handler.next(e);
+      // Get.showSnackbar(
+      //   const GetSnackBar(
+      //     title: 'Error',
+      //     message: 'something went wrong!',
+      //     icon: Icon(Icons.refresh),
+      //     duration: Duration(seconds: 3),
+      //     backgroundColor: Colors.red,
+      //   ),
+      // );
+      return handler.next(e);
     },
   ));
 }
