@@ -136,9 +136,14 @@ class CourseController extends GetxController {
     String listQuery = '';
     String q = '';
     if (listFilter.isNotEmpty) {
+      int i = 0;
       listFilter.forEach((element) {
+        if (i != 0) {
+          q += ',';
+        }
         q +=
             '{"activities": {"sub_sector" : {"sector_id": {"category_id": {"_eq": "$element"}}}}}';
+        i++;
       });
     }
     listQuery =

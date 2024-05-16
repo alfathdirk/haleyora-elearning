@@ -31,7 +31,7 @@ class RoundedButton extends StatelessWidget {
           backgroundColor: isDisabled ? Colors.grey : color,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
-        onPressed: isDisabled || isLoading ? null : onPressed,
+        onPressed: isDisabled || isLoading ? () {} : onPressed,
         child: Row(
           mainAxisAlignment: align,
           children: [

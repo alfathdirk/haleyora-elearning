@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class CourseDetail extends StatelessWidget {
   final box = GetStorage();
 
   Future<void> _launchInBrowserView(Uri url) async {
-    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
       throw Exception('Could not launch $url');
     }
   }
@@ -251,11 +250,10 @@ class CourseDetail extends StatelessWidget {
                   courseByEmployee.isNotEmpty
                       ? GestureDetector(
                           onTap: () {
-                            // print(
-                            //     '${imageBaseUrl}/${course.materialContent}?access_token=${box.read('accessToken')}');
-                            final Uri url = Uri.parse(
-                                '$imageBaseUrl${course.materialContent}?access_token=${box.read('accessToken')}');
-                            _launchInBrowserView(url);
+                            Get.toNamed('/pdf-view', arguments: {
+                              'path':
+                                  'https://docs.google.com/gview?embedded=true&url=$imageBaseUrl${course.materialContent}?access_token=${box.read('accessToken')}'
+                            });
                           },
                           child: Container(
                             height: 55,

@@ -37,29 +37,33 @@ class _loginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _login() async {
-    setState(() {
-      isLoading = true;
-      isDisabled = true;
-    });
-    // if (_formKey.currentState!.validate()) {
-    final response = await dio.post('/api/login', data: {
-      'username': '7921203BDG',
-      'password': '07071979',
-      // 'username': _usernameController.text,
-      // 'password': _passwordController.text,
-    });
-    LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-    box.write('accessToken', loginResponse.accessToken);
-    box.write('refreshToken', loginResponse.refreshToken);
-    await authService.setisLoggedIn(true);
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+        isDisabled = true;
+      });
+      final response = await dio.post('/api/login', data: {
+        // 'username': '7921203BDG',
+        // 'password': '07071979',
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      });
+      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      box.write('accessToken', loginResponse.accessToken);
+      box.write('refreshToken', loginResponse.refreshToken);
+      await authService.setisLoggedIn(true);
+      setState(() {
+        isLoading = false;
+        isDisabled = false;
+      });
+      Get.offNamed('/home');
+      return;
+    }
     setState(() {
       isLoading = false;
       isDisabled = false;
     });
-    Get.offNamed('/home');
-    return;
-    // }
-    // Get.snackbar('Error', 'Invalid username or password');
+    Get.snackbar('Error', 'Invalid username or password');
   }
 
   @override
@@ -145,7 +149,7 @@ class _loginScreenState extends State<LoginScreen> {
                             placeholder: 'User Name',
                             controller: _usernameController,
                             icon: const Icon(
-                              Icons.email_outlined,
+                              Icons.person_outline,
                               color: greyText,
                             ),
                             validator: (value) {
@@ -185,30 +189,30 @@ class _loginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: rememberMe,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      rememberMe = value!;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  'Ingatkan Saya',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: greyText),
-                                ),
-                              ],
-                            ),
-                          ]),
+                      // Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Row(
+                      //         children: [
+                      //           Checkbox(
+                      //             value: rememberMe,
+                      //             onChanged: (bool? value) {
+                      //               setState(() {
+                      //                 rememberMe = value!;
+                      //               });
+                      //             },
+                      //           ),
+                      //           Text(
+                      //             'Ingatkan Saya',
+                      //             style: GoogleFonts.poppins(
+                      //                 fontSize: 12,
+                      //                 fontWeight: FontWeight.w600,
+                      //                 color: greyText),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ]),
                     ],
                   ),
                 ),

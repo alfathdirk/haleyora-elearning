@@ -3,6 +3,7 @@ import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/course/detail.dart';
+import 'package:haleyora/pages/course/pdf_view.dart';
 import 'package:haleyora/pages/course/video_course.dart';
 import 'package:haleyora/pages/filter/filter.dart';
 import 'package:haleyora/pages/filter/result.dart';
@@ -34,6 +35,7 @@ class Routes {
   static String searchResult = "/search-result";
   static String editPassword = "/edit-password";
   static String taskDetail = "/task-detail/:id";
+  static String pdfView = "/pdf-view";
 }
 
 final pages = [
@@ -104,4 +106,8 @@ final pages = [
       binding: BindingsBuilder(() {
         Get.lazyPut(() => TaskController());
       })),
+  GetPage(
+    name: Routes.pdfView,
+    page: () => PDFscreen(),
+  ),
 ];

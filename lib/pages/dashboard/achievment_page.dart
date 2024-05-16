@@ -78,29 +78,23 @@ class AchievmentPage extends StatelessWidget {
                                     if (courseController.courseByEmployee.value
                                         .data!.isNotEmpty)
                                       ProgressPieChart(
-                                        examScores: courseController
-                                                    .courseByEmployee
-                                                    .value
-                                                    .data !=
-                                                null
-                                            ? courseController
-                                                .courseByEmployee.value.data!
-                                                .map((e) => e.course!.minScore)
-                                                .reduce((value, element) =>
-                                                    value! + element!)
-                                                ?.toDouble()
-                                            : 0,
+                                        examScores: 100,
                                         employeeScore: courseController
                                                     .courseByEmployee
                                                     .value
                                                     .data !=
                                                 null
-                                            ? courseController
-                                                .courseByEmployee.value.data!
-                                                .map((e) => e.examScore)
-                                                .reduce((value, element) =>
-                                                    value! + element!)
-                                                ?.toDouble()
+                                            ? (courseController.courseByEmployee
+                                                    .value.data!
+                                                    .map((e) => e.examScore)
+                                                    .reduce((value, element) =>
+                                                        value! + element!)!
+                                                    .toDouble() /
+                                                courseController
+                                                    .courseByEmployee
+                                                    .value
+                                                    .data!
+                                                    .length)
                                             : 0,
                                       ),
                                     const SizedBox(

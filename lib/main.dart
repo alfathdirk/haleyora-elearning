@@ -8,12 +8,15 @@ import 'package:haleyora/services/notification.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'router.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 void initServices() async {
   print('starting services ...');
   await Get.putAsync(() => GetStorage.init());
   await Get.putAsync(() => AuthService().init());
   await Get.putAsync(() => NotificationService().init());
+  // disable screenshot and recording here
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   // TODO: need to add exam service to check timeout;
   // await Get.putAsync(() => ExamService().init());
   print('All services started...');
