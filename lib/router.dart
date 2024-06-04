@@ -11,6 +11,7 @@ import 'package:haleyora/pages/home.dart';
 import 'package:haleyora/pages/notification/detail.dart';
 import 'package:haleyora/pages/notification/list.dart';
 import 'package:haleyora/pages/notification/settings.dart';
+import 'package:haleyora/pages/profile/detail.dart';
 import 'package:haleyora/pages/profile/edit_password.dart';
 import 'package:haleyora/pages/profile/form.dart';
 import 'package:haleyora/pages/quiz/quiz.dart';
@@ -36,6 +37,7 @@ class Routes {
   static String editPassword = "/edit-password";
   static String taskDetail = "/task-detail/:id";
   static String pdfView = "/pdf-view";
+  static String detailProfile = "/detail-profile";
 }
 
 final pages = [
@@ -110,4 +112,5 @@ final pages = [
     name: Routes.pdfView,
     page: () => PDFscreen(),
   ),
+  GetPage(name: Routes.detailProfile, page: () => ProfileDetailPage())
 ];

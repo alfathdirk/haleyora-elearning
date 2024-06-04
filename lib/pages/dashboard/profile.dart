@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.grey),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -72,17 +72,17 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: ListBody(
                         children: [
-                          // ListTile(
-                          //   leading: const Icon(Icons.person),
-                          //   title: Text('Edit Akun',
-                          //       style: GoogleFonts.mulish(
-                          //           fontSize: 16, fontWeight: FontWeight.bold)),
-                          //   trailing: const Icon(Icons.chevron_right),
-                          //   onTap: () {
-                          //     // navigate to edit profile page
-                          //     Get.toNamed("/form-profile");
-                          //   },
-                          // ),
+                          ListTile(
+                            leading: const Icon(Icons.person),
+                            title: Text('Detail Profil',
+                                style: GoogleFonts.mulish(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              // navigate to edit profile page
+                              Get.toNamed("/detail-profile");
+                            },
+                          ),
                           ListTile(
                             leading: const Icon(Icons.shield_moon_outlined),
                             title: Text('Keamanan',

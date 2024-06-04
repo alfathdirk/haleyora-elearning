@@ -53,10 +53,15 @@ class QuizController extends GetxController {
           '/items/quiz/$quizId?fields[]=title,duration,score_per_question,randomize,quiz_question.title,quiz_question.image, quiz_question.choices,quiz_question.answer');
       Quiz quizQuestion = Quiz.fromJson(result.data['data']);
 
-      if (quizQuestion.randomize!) {
-        quizQuestion.quizQuestions!.shuffle();
+      if (questionList.isEmpty) {
+        questionList.value = quizQuestion.quizQuestions!;
       }
-      questionList.value = quizQuestion.quizQuestions!;
+
+      if (quizQuestion.randomize! && startDuration.value == 0) {
+        quizQuestion.quizQuestions!.shuffle();
+        questionList.value = quizQuestion.quizQuestions!;
+      }
+
       scorePerQuestion.value = quizQuestion.scorePerQuestion!;
 
       if (startDuration.value == 0) {
