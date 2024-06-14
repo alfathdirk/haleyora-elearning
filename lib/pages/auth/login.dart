@@ -39,41 +39,41 @@ class _loginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _login() async {
-    // if (_formKey.currentState!.validate()) {
-    setState(() {
-      isLoading = true;
-      isDisabled = true;
-    });
-    try {
-      final response = await dio.post('/api/login', data: {
-        'username': '7921203BDG',
-        'password': '07071979',
-        // 'username': _usernameController.text,
-        // 'password': _passwordController.text,
-      });
-      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-      box.write('accessToken', loginResponse.accessToken);
-      box.write('refreshToken', loginResponse.refreshToken);
-      await authService.setisLoggedIn(true);
-      Get.offNamed('/home');
-      return;
-    } catch (e) {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Error',
-          message: 'Username atau password salah!',
-          icon: Icon(Icons.info_outline),
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
+    if (_formKey.currentState!.validate()) {
       setState(() {
-        isLoading = false;
-        isDisabled = false;
+        isLoading = true;
+        isDisabled = true;
       });
+      try {
+        final response = await dio.post('/api/login', data: {
+          // 'username': '7921203BDG',
+          // 'password': '07071979',
+          'username': _usernameController.text,
+          'password': _passwordController.text,
+        });
+        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+        box.write('accessToken', loginResponse.accessToken);
+        box.write('refreshToken', loginResponse.refreshToken);
+        await authService.setisLoggedIn(true);
+        Get.offNamed('/home');
+        return;
+      } catch (e) {
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Error',
+            message: 'Username atau password salah!',
+            icon: Icon(Icons.info_outline),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+          isDisabled = false;
+        });
+      }
     }
-    // }
   }
 
   @override

@@ -31,7 +31,8 @@ class ProfileDetailPage extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                 },
-                'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png',
+                authController.currentUser.value.employeeData!.photo ??
+                    'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png',
                 fit: BoxFit.cover,
                 width: 120,
                 height: 120,
@@ -67,7 +68,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Status Kerja',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Aktif',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .workStatus ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -75,7 +79,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Nomor Induk',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('123456',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .employeeId ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -83,7 +90,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Region',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Jawa Barat',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .placement ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -91,7 +101,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Jabatan',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Staff',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.position ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -99,7 +112,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Pekerjaan',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Staff',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.job ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -107,7 +123,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Unit',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Unit 1',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.unit ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -115,7 +134,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Unit PLN',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Unit 1',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.unitPLN ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -123,7 +145,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Penempatan',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Kantor Pusat',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .placement ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -131,7 +156,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Jenis Kelamin',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Laki-laki',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.gender ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -139,7 +167,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Tempat Lahir',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Jakarta',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .placeOfBirth ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -147,7 +178,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Tanggal Lahir',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('01-01-1990',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                    .dateOfBirth ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -155,7 +189,10 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Alamat KTP',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Jl. Kebon Jeruk No. 1',
+                        subtitle: Text(
+                            authController
+                                    .currentUser.value.employeeData!.address ??
+                                '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),
@@ -163,7 +200,12 @@ class ProfileDetailPage extends StatelessWidget {
                         title: Text('Nomor HP',
                             style: GoogleFonts.mulish(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
-                        subtitle: Text('08123456789',
+                        subtitle: Text(
+                            authController.currentUser.value.employeeData!
+                                        .phone !=
+                                    null
+                                ? '0${authController.currentUser.value.employeeData!.phone}'
+                                : '',
                             style: GoogleFonts.mulish(
                                 fontSize: 14, fontWeight: FontWeight.normal)),
                       ),

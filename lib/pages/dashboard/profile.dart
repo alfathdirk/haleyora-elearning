@@ -38,7 +38,8 @@ class ProfilePage extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             );
                     },
-                    'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png',
+                    authController.currentUser.value.employeeData!.photo ??
+                        'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png',
                     fit: BoxFit.cover,
                     width: 120,
                     height: 120,

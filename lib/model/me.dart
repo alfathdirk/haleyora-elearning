@@ -7,6 +7,19 @@ class EmployeeData {
   final String? role;
   final String? image;
   final String? status;
+  final String? workStatus;
+  final String? photo;
+  final String? placement;
+  final String? gender;
+  final String? placeOfBirth;
+  final String? dateOfBirth;
+  final String? address;
+  final String? phone;
+  final String? religion;
+  final String? unitPLN;
+  final String? position;
+  final String? unit;
+  final String? job;
 
   EmployeeData({
     this.id,
@@ -17,9 +30,23 @@ class EmployeeData {
     this.role,
     this.image,
     this.status,
+    this.workStatus,
+    this.photo,
+    this.placement,
+    this.gender,
+    this.placeOfBirth,
+    this.dateOfBirth,
+    this.address,
+    this.phone,
+    this.religion,
+    this.unitPLN,
+    this.position,
+    this.unit,
+    this.job,
   });
 
   factory EmployeeData.fromJson(Map<String, dynamic> json) {
+    print(json);
     return EmployeeData(
       id: json['id'],
       employeeId: json['employee_id'],
@@ -29,6 +56,19 @@ class EmployeeData {
       role: json['role'],
       image: json['image'],
       status: json['status'],
+      workStatus: json['work_status'],
+      photo: json['photo'],
+      placement: json['placement'],
+      gender: json['gender'],
+      placeOfBirth: json['place_of_birth'],
+      dateOfBirth: json['date_of_birth'],
+      address: json['address'],
+      phone: json['phone'],
+      religion: json['religion'],
+      unitPLN: json['unit_pln'],
+      position: json['position'],
+      unit: json['unit'],
+      job: json['job'],
     );
   }
 }

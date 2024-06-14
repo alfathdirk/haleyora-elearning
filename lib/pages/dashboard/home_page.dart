@@ -64,9 +64,10 @@ class HomePage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 30,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: NetworkImage(authController
+                                    .currentUser.value.employeeData!.photo ??
                                 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png'),
                           ),
                           const SizedBox(
