@@ -44,7 +44,6 @@ class CourseCard extends StatelessWidget {
             Stack(children: [
               Container(
                 padding: const EdgeInsets.only(bottom: 10.0),
-                height: 150,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(14),
@@ -163,7 +162,7 @@ class CourseCard extends StatelessWidget {
                       ),
                       if (totalDuration != null)
                         SizedBox(
-                          width: 120,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: LinearProgressIndicator(

@@ -16,11 +16,11 @@ class _PDFscreenState extends State<PDFscreen> {
   @override
   void initState() {
     super.initState();
-    log(path);
-    controller = WebViewController()
-      ..loadRequest(
-        Uri.parse(path),
-      );
+    controller = WebViewController();
+    controller.setJavaScriptMode(JavaScriptMode.unrestricted);
+    controller.loadRequest(
+      Uri.parse(path),
+    );
   }
 
   @override

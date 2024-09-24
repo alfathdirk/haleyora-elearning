@@ -84,13 +84,13 @@ class ProfilePage extends StatelessWidget {
                               Get.toNamed("/detail-profile");
                             },
                           ),
-                          ListTile(
-                            leading: const Icon(Icons.shield_moon_outlined),
-                            title: Text('Keamanan',
-                                style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            trailing: const Icon(Icons.chevron_right),
-                          ),
+                          // ListTile(
+                          //   leading: const Icon(Icons.shield_moon_outlined),
+                          //   title: Text('Keamanan',
+                          //       style: GoogleFonts.mulish(
+                          //           fontSize: 16, fontWeight: FontWeight.bold)),
+                          //   trailing: const Icon(Icons.chevron_right),
+                          // ),
                           // ListTile(
                           //   leading: const Icon(Icons.lock_outlined),
                           //   title: Text('Ubah Sandi',

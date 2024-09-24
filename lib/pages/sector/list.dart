@@ -40,12 +40,12 @@ class ListSector extends StatelessWidget {
                                   color: greyText)),
                           trailing: const Icon(Icons.chevron_right),
                         ),
-                        ListTile(
-                          title: Text('Keamanan',
-                              style: GoogleFonts.mulish(
-                                  fontSize: 14, fontWeight: FontWeight.bold)),
-                          trailing: const Icon(Icons.chevron_right),
-                        ),
+                        // ListTile(
+                        //   title: Text('Keamanan',
+                        //       style: GoogleFonts.mulish(
+                        //           fontSize: 14, fontWeight: FontWeight.bold)),
+                        //   trailing: const Icon(Icons.chevron_right),
+                        // ),
                         ListTile(
                           title: Text('Syarat dan Ketentuan',
                               style: GoogleFonts.mulish(

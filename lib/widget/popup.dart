@@ -29,7 +29,7 @@ class ImageDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20)),
             child: Column(
               children: <Widget>[
-                Image.asset(image, width: 200, height: 200),
+                Image.asset(image, width: 170),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: 200,

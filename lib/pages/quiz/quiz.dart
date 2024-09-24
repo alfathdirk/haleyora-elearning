@@ -200,8 +200,8 @@ class QuizPage extends StatelessWidget {
                   child: Obx(() => RoundedButton(
                         text: controller.questionIndex.toInt() ==
                                 controller.questionList.length - 1
-                            ? "Finish"
-                            : "Next",
+                            ? "Selesai"
+                            : "Lanjut",
                         onPressed: () async {
                           if (controller.questionIndex.toInt() ==
                               controller.questionList.length - 1) {

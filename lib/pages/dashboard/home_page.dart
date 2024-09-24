@@ -66,8 +66,7 @@ class HomePage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: NetworkImage(authController
-                                    .currentUser.value.employeeData!.photo ??
+                            backgroundImage: NetworkImage(
                                 'https://i.pinimg.com/originals/7c/c7/a6/7cc7a630624d20f7797cb4c8e93c09c1.png'),
                           ),
                           const SizedBox(
@@ -309,6 +308,7 @@ class HomePage extends StatelessWidget {
                 crossAxisCount: 3,
                 crossAxisSpacing: 20,
                 childAspectRatio: 1,
+                mainAxisSpacing: 15,
               ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -387,12 +387,15 @@ class HomePage extends StatelessWidget {
                       CourseData course = courseController.courseList[index];
                       return Container(
                         width: 280,
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                           left: 20,
                           bottom: 20,
+                          right: index == courseController.courseList.length - 1
+                              ? 20
+                              : 0,
                         ),
                         child: CourseCard(
-                          heightTitle: 54,
+                          // heightTitle: 54,
                           onTapBookmark: () async {
                             bool isBookmarked = course.employeeBookmark!
                                 .map((e) => e.employee)

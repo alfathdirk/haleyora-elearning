@@ -10,7 +10,8 @@ class QuizCard extends StatelessWidget {
   final Function(String) onSelected;
   final int? isSelectedIndex;
 
-  const QuizCard({super.key, 
+  const QuizCard({
+    super.key,
     required this.question,
     required this.choices,
     required this.onSelected,
@@ -41,15 +42,35 @@ class QuizCard extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: RoundedButton(
-                align: MainAxisAlignment.start,
-                color: isSelectedIndex == index ? darkText : Colors.white,
-                textColor:
-                    isSelectedIndex == index ? Colors.white : Colors.black,
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   onSelected(choices[index].id!);
                 },
-                text: choices[index].label!,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: isSelectedIndex == index
+                        ? Colors.blue[400]
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: isSelectedIndex == index
+                          ? Colors.blue[400]!
+                          : Colors.white,
+                    ),
+                  ),
+                  child: Text(
+                    choices[index].label!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: isSelectedIndex == index
+                          ? Colors.white
+                          : Colors.black,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ),
               ),
             );
           },
