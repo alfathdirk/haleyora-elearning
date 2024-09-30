@@ -100,40 +100,46 @@ class AchievmentPage extends StatelessWidget {
                                     const SizedBox(
                                       width: 20,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Total Kursus",
-                                          style: GoogleFonts.mulish(
-                                            color: greyText,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${courseController.courseByEmployee.value.data!.length}",
-                                          style: GoogleFonts.mulish(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 180,
-                                          child: Text(
-                                            "Selamat, Selesaikan pencapaianmu sekarang.",
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          2.5,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Total Kursus",
                                             style: GoogleFonts.mulish(
                                               color: greyText,
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
                                             ),
                                           ),
-                                        )
-                                      ],
+                                          Text(
+                                            "${courseController.courseByEmployee.value.data!.length}",
+                                            style: GoogleFonts.mulish(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            // overflow: TextOverflow.ellipsis,
+                                            child: Text(
+                                              // overflow: TextOverflow.ellipsis,
+                                              "Selamat, Selesaikan pencapaianmu sekarang.",
+                                              style: GoogleFonts.mulish(
+                                                color: greyText,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 10,
+                                                // text over flow
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -199,29 +205,31 @@ class AchievmentPage extends StatelessWidget {
                             0) {
                           return const SizedBox();
                         }
-                        return Padding(
+                        return Container(
                           padding: const EdgeInsets.only(
                               bottom: 12, left: 16, right: 16),
                           child: CustomCard(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.orange[50],
-                                    ),
-                                    child: const Icon(
-                                      Icons.emoji_events_outlined,
-                                      color: Colors.orange,
-                                      size: 50,
-                                    ),
+                            height: 90,
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.orange[50],
                                   ),
-                                  const SizedBox(
-                                    width: 20,
+                                  child: const Icon(
+                                    Icons.emoji_events_outlined,
+                                    color: Colors.orange,
+                                    size: 50,
                                   ),
-                                  Column(
+                                ),
+                                const SizedBox(
+                                  width: 13,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -275,7 +283,7 @@ class AchievmentPage extends StatelessWidget {
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.47,
+                                                1.5,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -350,13 +358,13 @@ class AchievmentPage extends StatelessWidget {
                                                       color: primaryColor,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 10,
+                                                      fontSize: 9,
                                                     ),
                                                   ),
                                                   const Icon(
                                                     Icons.arrow_forward_ios,
                                                     color: primaryColor,
-                                                    size: 10,
+                                                    size: 9,
                                                   )
                                                 ],
                                               ),
@@ -365,9 +373,9 @@ class AchievmentPage extends StatelessWidget {
                                         ),
                                       )
                                     ],
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         );

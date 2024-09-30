@@ -109,7 +109,7 @@ class MyCoursePage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: Obx(() => courseController.myCourseList.length > 0
                   ? Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: MasonryGridView.count(
                         itemCount: courseController.myCourseList.length,
                         shrinkWrap: true,

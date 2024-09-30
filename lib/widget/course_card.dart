@@ -39,144 +39,155 @@ class CourseCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: CustomCard(
-        child: Column(
+        child: Stack(
           children: [
-            Stack(children: [
-              Container(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(14),
-                    topRight: Radius.circular(14),
-                  ),
-                  child: Image.network(
-                    loadingBuilder: (context, child, progress) {
-                      return progress == null
-                          ? child
-                          : const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                    },
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: 100,
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(14),
+                          topRight: Radius.circular(14),
+                        ),
+                        child: Image.network(
+                          loadingBuilder: (context, child, progress) {
+                            return progress == null
+                                ? child
+                                : const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                          },
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 100,
+                        ),
+                      ),
+                    ),
+                    if (iconBookmark!)
+                      Positioned(
+                        bottom: 0,
+                        right: 12,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: isBookmarked ? primaryColor : Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: InkWell(
+                            onTap: onTapBookmark,
+                            child: Icon(
+                              CupertinoIcons.bookmark,
+                              color: isBookmarked ? Colors.white : primaryColor,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-              ),
-              iconBookmark!
-                  ? Positioned(
-                      bottom: 0,
-                      right: 12,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: isBookmarked ? primaryColor : Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: InkWell(
-                          onTap: onTapBookmark,
-                          child: Icon(
-                            CupertinoIcons.bookmark,
-                            color: isBookmarked ? Colors.white : primaryColor,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-            ]),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    spanText,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: GoogleFonts.mulish(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: orangeText,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: heightTitle,
-                    child: Text(
-                      title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      style: GoogleFonts.mulish(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (totalEmployee != 0)
-                        Row(
-                          children: [
-                            const Icon(
-                              CupertinoIcons.eye,
-                              color: lightGrey,
-                              size: 10,
-                            ),
-                            Text(
-                              " $totalEmployee Dipelajari",
-                              style: GoogleFonts.mulish(
-                                fontSize: 10,
-                                fontWeight: FontWeight.normal,
-                                color: lightGrey,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        spanText,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: GoogleFonts.mulish(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: orangeText,
                         ),
-                      Row(
-                        children: [
-                          const Icon(
-                            CupertinoIcons.time,
-                            color: lightGrey,
-                            size: 10,
-                          ),
-                          Text(
-                            " $duration Menit",
-                            style: GoogleFonts.mulish(
-                              fontSize: 10,
-                              fontWeight: FontWeight.normal,
-                              color: lightGrey,
-                            ),
-                          ),
-                        ],
                       ),
-                      if (totalDuration != null)
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: LinearProgressIndicator(
-                              value: totalDuration,
-                              minHeight: 6,
-                              backgroundColor: Colors.grey[300],
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color.fromARGB(255, 236, 135, 57),
-                              ),
-                            ),
+                      const SizedBox(height: 8),
+                      SizedBox(
+                        height: heightTitle,
+                        child: Text(
+                          title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: GoogleFonts.mulish(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                      ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 20), // Add space for the duration row
+              ],
+            ),
+            Positioned(
+              bottom: 8,
+              left: 8,
+              right: 8,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (totalEmployee != 0)
+                    Row(
+                      children: [
+                        const Icon(
+                          CupertinoIcons.eye,
+                          color: lightGrey,
+                          size: 10,
+                        ),
+                        Text(
+                          " $totalEmployee Dipelajari",
+                          style: GoogleFonts.mulish(
+                            fontSize: 10,
+                            fontWeight: FontWeight.normal,
+                            color: lightGrey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  Row(
+                    children: [
+                      const Icon(
+                        CupertinoIcons.time,
+                        color: lightGrey,
+                        size: 10,
+                      ),
+                      Text(
+                        " $duration Menit",
+                        style: GoogleFonts.mulish(
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                          color: lightGrey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (totalDuration != null)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: LinearProgressIndicator(
+                          value: totalDuration,
+                          minHeight: 6,
+                          backgroundColor: Colors.grey[300],
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            Color.fromARGB(255, 236, 135, 57),
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

@@ -80,7 +80,7 @@ class CoursePage extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.78,
               padding: const EdgeInsets.only(bottom: 20),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Obx(() => MasonryGridView.count(
                       itemCount: courseController.courseList.length,
                       crossAxisCount: 2,
