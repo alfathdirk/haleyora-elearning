@@ -133,7 +133,8 @@ class MyCoursePage extends StatelessWidget {
                             duration: course.course?.duration ?? 0,
                             iconBookmark: false,
                             totalDuration: course.lastVideoDuration != null &&
-                                    course.videoDuration != null
+                                    course.videoDuration != null &&
+                                    course.videoDuration! > 0
                                 ? course.lastVideoDuration! /
                                     course.videoDuration!.toDouble()
                                 : 0,

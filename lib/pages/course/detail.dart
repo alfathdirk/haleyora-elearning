@@ -298,6 +298,10 @@ class CourseDetail extends StatelessWidget {
                           onTap: () {
                             // print(
                             //     '${courseByEmployee.first.lastVideoDuration}');
+                            if (course.videoContent == null) {
+                              return;
+                            }
+
                             Get.toNamed(
                                 '/video-player/$courseId/${course.videoContent}',
                                 arguments: {
@@ -308,7 +312,9 @@ class CourseDetail extends StatelessWidget {
                           child: Container(
                             height: 55,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: course.videoContent != null
+                                  ? Colors.white
+                                  : Colors.grey[200],
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(

@@ -108,6 +108,10 @@ class ProfilePage extends StatelessWidget {
                                 style: GoogleFonts.mulish(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              // navigate to terms and conditions page
+                              Get.toNamed("/terms-and-conditions");
+                            },
                           ),
                           ListTile(
                             leading:

@@ -5,7 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 class PDF {
   static Future<void> generate() async {
-    final img = await rootBundle.load('assets/images/pdf.png');
+    final img = await rootBundle.load('assets/images/pdf.jpg');
     final imageBytes = img.buffer.asUint8List();
     pw.Image image1 = pw.Image(pw.MemoryImage(imageBytes));
 

@@ -65,7 +65,7 @@ class ProgressPieChart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    employeeScore.toString(),
+                    employeeScore!.toStringAsFixed(2),
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@ import 'package:haleyora/bindings.dart';
 import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
+import 'package:haleyora/pages/certificate/pdf.dart';
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/pdf_view.dart';
 import 'package:haleyora/pages/course/video_course.dart';
@@ -17,6 +18,7 @@ import 'package:haleyora/pages/profile/form.dart';
 import 'package:haleyora/pages/quiz/quiz.dart';
 import 'package:haleyora/pages/sector/list.dart';
 import 'package:haleyora/pages/task/task.dart';
+import 'package:haleyora/pages/termCondition/term.dart';
 import 'pages/auth/login.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +39,9 @@ class Routes {
   static String editPassword = "/edit-password";
   static String taskDetail = "/task-detail/:id";
   static String pdfView = "/pdf-view";
+  static String certificate = "/certificate";
   static String detailProfile = "/detail-profile";
+  static String termsAndConditions = "/terms-and-conditions";
 }
 
 final pages = [
@@ -112,5 +116,11 @@ final pages = [
     name: Routes.pdfView,
     page: () => PDFscreen(),
   ),
-  GetPage(name: Routes.detailProfile, page: () => ProfileDetailPage())
+  GetPage(name: Routes.detailProfile, page: () => ProfileDetailPage()),
+  GetPage(
+      name: Routes.termsAndConditions, page: () => const TermsAndConditions()),
+  GetPage(
+    name: Routes.certificate,
+    page: () => CertifcatePage(),
+  ),
 ];

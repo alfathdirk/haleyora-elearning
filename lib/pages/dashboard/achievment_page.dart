@@ -200,11 +200,6 @@ class AchievmentPage extends StatelessWidget {
                       itemCount:
                           courseController.courseByEmployee.value.data!.length,
                       itemBuilder: (context, index) {
-                        if (courseController.courseByEmployee.value.data![index]
-                                .examScore ==
-                            0) {
-                          return const SizedBox();
-                        }
                         return Container(
                           padding: const EdgeInsets.only(
                               bottom: 12, left: 16, right: 16),
@@ -240,6 +235,8 @@ class AchievmentPage extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           fontSize: 9,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                       SizedBox(
                                         width:
@@ -248,7 +245,7 @@ class AchievmentPage extends StatelessWidget {
                                         child: Text(
                                           "${courseController.courseByEmployee.value.data![index].course!.title}",
                                           overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
+                                          maxLines: 1,
                                           style: GoogleFonts.mulish(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -347,8 +344,8 @@ class AchievmentPage extends StatelessWidget {
                                                     ),
                                                   ),
                                             GestureDetector(
-                                              onTap: () async {
-                                                await PDF.generate();
+                                              onTap: () {
+                                                Get.toNamed('/certificate');
                                               },
                                               child: Row(
                                                 children: [
