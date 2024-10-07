@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:haleyora/controller/auth.dart';
+import 'package:haleyora/controller/certificate.dart';
 import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/model/quiz.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -82,7 +83,16 @@ class QuizController extends GetxController {
   Future<void> checkAnswer(String courseId) async {
     AuthController authController = Get.find<AuthController>();
     CourseController courseController = Get.find<CourseController>();
+    CertificateController certificateController =
+        Get.put(CertificateController());
+
     final courseByEmployee = courseController.courseByEmployee.value.data ?? [];
+
+    final detailCourse = courseByEmployee
+        .firstWhere((element) => element.course!.id == courseId);
+
+    log('employee: ${authController.currentUser.value.employeeData!.id}');
+    log('course: $courseId');
 
     try {
       for (int i = 0; i < answerList.length; i++) {
@@ -90,6 +100,19 @@ class QuizController extends GetxController {
           score.value += scorePerQuestion.value;
         }
       }
+
+      final hasCertificate =
+          await certificateController.getCertificateByCourseId(courseId);
+
+      if (score.value > detailCourse.course!.minScore! &&
+          hasCertificate.courseTitle.isEmpty) {
+        await dio.post('/items/employee_certificate', data: {
+          "employee": authController.currentUser.value.employeeData!.id,
+          "course": courseId,
+          "expired_days": 365,
+        });
+      }
+
       await dio.patch('/items/employee_course', data: {
         "query": {
           "filter": {
@@ -100,10 +123,10 @@ class QuizController extends GetxController {
           }
         },
         "data": {
-          "exam_score": courseByEmployee.first.examScore! >= score.value
-              ? courseByEmployee.first.examScore
+          "exam_score": detailCourse.examScore! >= score.value
+              ? detailCourse.examScore
               : score.value,
-          "exam_attempt": courseByEmployee.first.examAttempt! - 1,
+          "exam_attempt": detailCourse.examAttempt! - 1,
           "completed": true,
         }
       });

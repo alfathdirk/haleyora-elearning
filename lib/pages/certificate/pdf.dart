@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
+import 'package:haleyora/constants.dart';
+import 'package:haleyora/controller/certificate.dart';
+import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/button.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -17,7 +23,11 @@ class CertifcatePage extends StatefulWidget {
 
 class _CertificatePageState extends State<CertifcatePage> {
   String pdfPath = "";
+  String courseId = Get.parameters['courseId']!;
+
   final _controller = Completer<PDFViewController>();
+  CertificateController certificateController =
+      Get.put(CertificateController());
 
   @override
   void initState() {
@@ -25,15 +35,45 @@ class _CertificatePageState extends State<CertifcatePage> {
     generateCertificate();
   }
 
+  Future<Uint8List> _getNetworkImage(String url) async {
+    final response =
+        await dio.get(url, options: Options(responseType: ResponseType.bytes));
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
+
+  String getDuration(DateTime startDate, int days) {
+    DateTime currentDate = startDate;
+    DateTime newDate = currentDate.add(Duration(days: days));
+    String formattedDate = DateFormat('dd MMMM yyyy').format(newDate);
+    return formattedDate;
+  }
+
   Future<void> generateCertificate() async {
+    CertificateData result =
+        await certificateController.getCertificateByCourseId(courseId);
+
+    CertificateSetting setting =
+        await certificateController.getCertificateSetting();
+
+    final imageBytes = await _getNetworkImage(imageBaseUrl + setting.signature);
+
+    log(result.dateCreated);
     // Data to include in the certificate
-    const name = 'John Doe';
-    const course =
-        'Introduction to JavaScript Web Development & React JS Essentials';
-    const expDate = '2024-01-01';
-    const pic = 'Rio Dewanto';
-    const position = 'Director of Engineering';
-    const createdDate = '2024-01-01';
+    String name = result.employeeName;
+    String course = result.courseTitle;
+    String expDate = getDuration(
+        DateTime.parse(result.dateCreated.toString()), result.expiredDays);
+    String createdDate = DateFormat('dd MMMM yyyy')
+        .format(DateTime.parse(result.dateCreated.toString()));
+    String pic = setting.pic;
+    String position = setting.title;
+
+    // String expDate = getDuration(DateTime.now(), 30);
+    // String createdDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     // Create the PDF document
     final pdf = pw.Document();
@@ -134,12 +174,13 @@ class _CertificatePageState extends State<CertifcatePage> {
                               fontSize: 12, fontStyle: pw.FontStyle.italic),
                           textAlign: pw.TextAlign.center,
                         ),
+                        pw.SizedBox(height: 10),
                         pw.Text(
                           expDate,
                           style: pw.TextStyle(fontSize: 12),
                           textAlign: pw.TextAlign.center,
                         ),
-                        pw.SizedBox(height: 120),
+                        pw.SizedBox(height: 130),
                         pw.Text(
                           position,
                           style: pw.TextStyle(
@@ -149,7 +190,11 @@ class _CertificatePageState extends State<CertifcatePage> {
                           textAlign: pw.TextAlign.center,
                           maxLines: 2,
                         ),
-                        pw.SizedBox(height: 80),
+                        pw.SizedBox(height: 60),
+                        // add image signature
+                        pw.Image(pw.MemoryImage(imageBytes),
+                            width: 100, height: 100),
+                        pw.SizedBox(height: 30),
                         pw.Text(
                           pic,
                           style: pw.TextStyle(

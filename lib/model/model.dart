@@ -1,12 +1,11 @@
-
 class CourseData {
   String? id;
   String? status;
-  String? userCreated;
-  String? dateCreated;
-  String? userUpdated;
-  String? dateUpdated;
-  String? title;
+  dynamic userCreated;
+  dynamic dateCreated;
+  dynamic userUpdated;
+  dynamic dateUpdated;
+  dynamic title;
   ActivitiesData? activities;
   int? duration;
   dynamic materialContent;
@@ -18,8 +17,8 @@ class CourseData {
   List<EmployeeCourseData>? employeeCourse;
   List<CourseBookmarkByEmployee>? employeeBookmark;
   ImageData? image;
-  String? description;
-  String? taskDescription;
+  dynamic description;
+  dynamic taskDescription;
 
   CourseData({
     this.id,

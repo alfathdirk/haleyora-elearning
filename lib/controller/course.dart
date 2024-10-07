@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
@@ -13,6 +15,7 @@ class CourseController extends GetxController {
   final tabOngoing = false.obs;
   final courseByEmployee = ResponseCourseByEmployee().obs;
   final listFilter = [].obs;
+  final courseRecommendation = [].obs;
 
   final myCourseList = [].obs;
 
@@ -172,7 +175,6 @@ class CourseController extends GetxController {
 
   Future<void> getCourseByEmployee(String empId, String? courseId) async {
     String withCourse = '';
-    print('$empId $courseId');
     try {
       if (courseId != null) {
         withCourse = '&filter[course][_eq]=$courseId';
@@ -184,6 +186,18 @@ class CourseController extends GetxController {
       courseByEmployee.value = resultEmployee;
     } catch (e) {
       print('error getTaskByEmployeeId: $e');
+    }
+  }
+
+  Future<void> getCourseRecommendation(String empId) async {
+    try {
+      final result = await dio.get(
+          '/items/employee_course_recommendation?fields[]=course.*.*&filter[employee][_eq]=$empId');
+      CourseRecommendationResponse courseResponse =
+          CourseRecommendationResponse.fromJson(result.data);
+      courseRecommendation.value = courseResponse.data!.toList();
+    } catch (e) {
+      print('error getCourseRecommendation: $e');
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:haleyora/controller/notification.dart';
 import 'package:haleyora/middleware.dart';
 import 'package:haleyora/pages/categories/list.dart';
 import 'package:haleyora/pages/certificate/pdf.dart';
+import 'package:haleyora/pages/course/course_recomendation.dart';
 import 'package:haleyora/pages/course/detail.dart';
 import 'package:haleyora/pages/course/pdf_view.dart';
 import 'package:haleyora/pages/course/video_course.dart';
@@ -42,6 +43,7 @@ class Routes {
   static String certificate = "/certificate";
   static String detailProfile = "/detail-profile";
   static String termsAndConditions = "/terms-and-conditions";
+  static String courseRecommendation = "/course-recommendation";
 }
 
 final pages = [
@@ -122,5 +124,9 @@ final pages = [
   GetPage(
     name: Routes.certificate,
     page: () => CertifcatePage(),
+  ),
+  GetPage(
+    name: Routes.courseRecommendation,
+    page: () => CourseRecomendation(),
   ),
 ];

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,7 +35,7 @@ class QuizPage extends StatelessWidget {
   }
 
   Scaffold quizView(BuildContext context) {
-    print(controller.questionList[controller.questionIndex.value].image);
+    log(courseId.toString());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quiz Page"),

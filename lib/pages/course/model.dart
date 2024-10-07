@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../model/model.dart';
 
 class CourseResponse {
@@ -20,6 +22,21 @@ class CourseResponse {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+}
+
+class CourseRecommendationResponse {
+  List<CourseData>? data;
+
+  CourseRecommendationResponse({this.data});
+
+  CourseRecommendationResponse.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <CourseData>[];
+      json['data'].forEach((v) {
+        data!.add(CourseData.fromJson(v['course']));
+      });
+    }
   }
 }
 

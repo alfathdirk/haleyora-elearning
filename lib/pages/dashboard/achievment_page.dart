@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,12 +10,12 @@ import 'package:haleyora/controller/course.dart';
 import 'package:haleyora/controller/quiz.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/chart.dart';
-import 'package:haleyora/widget/pdf.dart';
 
 class AchievmentPage extends StatelessWidget {
   AchievmentPage({super.key});
   CourseController courseController = Get.find<CourseController>();
   QuizController quizController = Get.find<QuizController>();
+
   final box = GetStorage();
 
   @override
@@ -345,19 +347,36 @@ class AchievmentPage extends StatelessWidget {
                                                   ),
                                             GestureDetector(
                                               onTap: () {
-                                                Get.toNamed('/certificate');
+                                                Get.toNamed('/certificate',
+                                                    parameters: {
+                                                      'courseId':
+                                                          '${courseController.courseByEmployee.value.data![index].id}',
+                                                    });
                                               },
                                               child: Row(
                                                 children: [
-                                                  Text(
-                                                    "LIHAT SERTIFIKAT",
-                                                    style: GoogleFonts.mulish(
-                                                      color: primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 9,
-                                                    ),
-                                                  ),
+                                                  courseController
+                                                              .courseByEmployee
+                                                              .value
+                                                              .data![index]
+                                                              .examScore! >
+                                                          courseController
+                                                              .courseByEmployee
+                                                              .value
+                                                              .data![index]
+                                                              .course!
+                                                              .minScore!
+                                                      ? Text(
+                                                          "LIHAT SERTIFIKAT",
+                                                          style: GoogleFonts
+                                                              .mulish(
+                                                            color: primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 9,
+                                                          ),
+                                                        )
+                                                      : const SizedBox(),
                                                   const Icon(
                                                     Icons.arrow_forward_ios,
                                                     color: primaryColor,

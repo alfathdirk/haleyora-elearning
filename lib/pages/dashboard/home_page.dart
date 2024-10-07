@@ -11,7 +11,6 @@ import 'package:haleyora/model/model.dart';
 import 'package:haleyora/widget/card.dart';
 import 'package:haleyora/widget/course_card.dart';
 import 'package:haleyora/controller/quiz.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -25,8 +24,8 @@ class HomePage extends StatelessWidget {
     if (authController.currentUser.value.employeeData == null) {
       await authController.getMe();
     }
-    await courseController.fetchAllCourses();
     await courseController.getCategory();
+    await courseController.getCourseRecommendation(box.read('employee_id'));
   }
 
   @override
@@ -357,47 +356,57 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Rekomendasi Pembelajaran",
-                    style: GoogleFonts.mulish(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: darkText),
+            courseController.courseRecommendation.isEmpty
+                ? const SizedBox()
+                : Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Rekomendasi Pembelajaran",
+                          style: GoogleFonts.mulish(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: darkText),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed("/course-recommendation");
+                          },
+                          child: Text(
+                            "Lihat Semua",
+                            style: GoogleFonts.mulish(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: primaryColor),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "Lihat Semua",
-                    style: GoogleFonts.mulish(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: primaryColor),
-                  ),
-                ],
-              ),
-            ),
             Container(
-              child: courseController.courseList.isNotEmpty
+              child: courseController.courseRecommendation.isNotEmpty
                   ? SizedBox(
                       height: 250,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: courseController.courseList.length < 5
-                            ? courseController.courseList.length
-                            : 5,
+                        itemCount:
+                            courseController.courseRecommendation.length < 5
+                                ? courseController.courseRecommendation.length
+                                : 5,
                         itemBuilder: (context, index) {
                           CourseData course =
-                              courseController.courseList[index];
+                              courseController.courseRecommendation[index];
                           return Container(
                             width: MediaQuery.of(context).size.width / 1.5,
                             padding: EdgeInsets.only(
                               left: 20,
                               bottom: 20,
                               right: index ==
-                                      courseController.courseList.length - 1
+                                      courseController
+                                              .courseRecommendation.length -
+                                          1
                                   ? 20
                                   : 0,
                             ),
