@@ -366,22 +366,30 @@ class AchievmentPage extends StatelessWidget {
                                                               .data![index]
                                                               .course!
                                                               .minScore!
-                                                      ? Text(
-                                                          "LIHAT SERTIFIKAT",
-                                                          style: GoogleFonts
-                                                              .mulish(
-                                                            color: primaryColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 9,
-                                                          ),
+                                                      ? Row(
+                                                          children: [
+                                                            Text(
+                                                              "LIHAT SERTIFIKAT",
+                                                              style: GoogleFonts
+                                                                  .mulish(
+                                                                color:
+                                                                    primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 9,
+                                                              ),
+                                                            ),
+                                                            const Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios,
+                                                              color:
+                                                                  primaryColor,
+                                                              size: 9,
+                                                            )
+                                                          ],
                                                         )
                                                       : const SizedBox(),
-                                                  const Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    color: primaryColor,
-                                                    size: 9,
-                                                  )
                                                 ],
                                               ),
                                             ),
