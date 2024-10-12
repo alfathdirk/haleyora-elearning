@@ -119,8 +119,7 @@ final pages = [
     page: () => PDFscreen(),
   ),
   GetPage(name: Routes.detailProfile, page: () => ProfileDetailPage()),
-  GetPage(
-      name: Routes.termsAndConditions, page: () => const TermsAndConditions()),
+  GetPage(name: Routes.termsAndConditions, page: () => TermsAndConditions()),
   GetPage(
     name: Routes.certificate,
     page: () => CertifcatePage(),

@@ -213,7 +213,7 @@ class _CertificatePageState extends State<CertifcatePage> {
     );
 
     var output = await getApplicationDocumentsDirectory();
-    final file = File('${output.path}/certificate.pdf');
+    final file = File('${output.path}/certificate-$course.pdf');
     await file.writeAsBytes(await pdf.save());
 
     print(output.path);
