@@ -19,6 +19,22 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: courseController.fetchAllCourses(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return buildWidget(context);
+        }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildWidget(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(

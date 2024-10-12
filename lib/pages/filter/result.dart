@@ -85,12 +85,10 @@ class SearchResultPage extends StatelessWidget {
                                       box.read('employee_id'));
                                 }
                                 // unbookmark
-                                if (courseController.isAllCourse.isTrue) {
-                                  courseController.fetchAllCourses();
-                                } else {
-                                  courseController.getBookmarkByEmployee(
-                                      box.read('employee_id'));
-                                }
+                                !isFromCategory
+                                    ? courseController.searchCourse(query)
+                                    : courseController
+                                        .searchCourseByActivity(activityId);
                               },
                               onTap: () {
                                 Get.toNamed("/course-detail/${course.id}");

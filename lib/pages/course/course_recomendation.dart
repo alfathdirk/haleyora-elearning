@@ -57,13 +57,9 @@ class CourseRecomendation extends StatelessWidget {
                           await courseController.unBookmarkCourse(
                               course.id.toString(), box.read('employee_id'));
                         }
-                        // unbookmark
-                        if (courseController.isAllCourse.isTrue) {
-                          courseController.fetchAllCourses();
-                        } else {
-                          courseController
-                              .getBookmarkByEmployee(box.read('employee_id'));
-                        }
+
+                        await courseController
+                            .getCourseRecommendation(box.read('employee_id'));
                       },
                       onTap: () {
                         Get.toNamed("/course-detail/${course.id}");

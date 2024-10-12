@@ -27,7 +27,6 @@ class HomePage extends StatelessWidget {
       await authController.getMe();
     }
     await courseController.getCategory();
-    await courseController.fetchAllCourses();
     await courseController.getCourseRecommendation(box.read('employee_id'));
   }
 
@@ -463,12 +462,9 @@ class HomePage extends StatelessWidget {
                                             box.read('employee_id'));
                                       }
                                       // unbookmark
-                                      if (courseController.isAllCourse.isTrue) {
-                                        courseController.fetchAllCourses();
-                                      } else {
-                                        courseController.getBookmarkByEmployee(
-                                            box.read('employee_id'));
-                                      }
+                                      await courseController
+                                          .getCourseRecommendation(
+                                              box.read('employee_id'));
                                     },
                                     onTap: () {
                                       Get.toNamed(
