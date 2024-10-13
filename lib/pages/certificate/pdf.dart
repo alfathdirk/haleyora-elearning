@@ -213,7 +213,7 @@ class _CertificatePageState extends State<CertifcatePage> {
     );
 
     var output = await getApplicationDocumentsDirectory();
-    final file = File('${output.path}/certificate-$course.pdf');
+    final file = File('${output.path}/certificate.pdf');
     await file.writeAsBytes(await pdf.save());
 
     print(output.path);
@@ -275,7 +275,7 @@ class _CertificatePageState extends State<CertifcatePage> {
                                 ),
                               );
                               File(pdfPath).copy(
-                                  '/storage/emulated/0/Download/certificate.pdf');
+                                  '/storage/emulated/0/Download/certificate-${DateTime.now().millisecondsSinceEpoch}.pdf');
                             }).catchError((onError) {
                               Get.showSnackbar(
                                 const GetSnackBar(
