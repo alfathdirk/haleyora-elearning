@@ -350,7 +350,8 @@ class CourseDetail extends StatelessWidget {
                         )
                       : const SizedBox(),
                   courseByEmployee.isNotEmpty &&
-                          courseByEmployee.first.examAttempt! > 0
+                          courseByEmployee.first.examAttempt! > 0 &&
+                          course.isOpenTask!
                       ? GestureDetector(
                           onTap: () => Get.toNamed('/task-detail/${course.id}',
                               arguments: {

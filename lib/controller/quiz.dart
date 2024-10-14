@@ -104,14 +104,22 @@ class QuizController extends GetxController {
       final hasCertificate =
           await certificateController.getCertificateByCourseId(courseId);
 
+      print('cert: ${hasCertificate.courseTitle}');
+      log('employee course: ${detailCourse.id}');
+      log('employee id: ${authController.currentUser.value.employeeData!.id}');
+
       if (score.value > detailCourse.course!.minScore! &&
           hasCertificate.courseTitle.isEmpty) {
+        log('certificate generated');
         await dio.post('/items/employee_certificate', data: {
+          // change to employee course id
           "employee": authController.currentUser.value.employeeData!.id,
-          "course": courseId,
+          "course": detailCourse.id,
           "expired_days": 365,
         });
       }
+
+      log('score: ${score.value}');
 
       await dio.patch('/items/employee_course', data: {
         "query": {

@@ -19,18 +19,27 @@ class CertificateController extends GetxController {
   // Sector
   Future<CertificateData> getCertificateByCourseId(String courseId) async {
     var empId = box.read('employee_id');
+    log('/items/employee_certificate?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId&fields[]=*, employee.full_name, course.course.title');
     try {
       isLoading(true);
       final result = await dio.get(
           '/items/employee_certificate?filter[employee][_eq]=$empId&filter[course][_eq]=$courseId&fields[]=*, employee.full_name, course.course.title');
-      print(result.data['data'][0]);
-      return CertificateData.fromJson(result.data['data'][0]);
+      if (result.data['data'].isNotEmpty) {
+        return CertificateData.fromJson(result.data['data'][0]);
+      }
+      return CertificateData(
+        id: 0,
+        dateCreated: '',
+        dateUpdated: '',
+        expiredDays: 0,
+        employeeName: '',
+        courseTitle: '',
+      );
     } catch (e) {
       log('error getCertificateByCourseId: $e');
     } finally {
       isLoading(false);
     }
-    // Return a default CertificateData if no data is found or an error occurs
     return CertificateData(
       id: 0,
       dateCreated: '',
