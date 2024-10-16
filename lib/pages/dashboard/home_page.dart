@@ -486,7 +486,14 @@ class HomePage extends StatelessWidget {
                                 );
                               },
                             ))
-                        : const Center(child: CircularProgressIndicator()),
+                        : courseController.loading.value == true
+                            ? const Center(child: CircularProgressIndicator())
+                            : const SizedBox(
+                                child: Center(
+                                  child: Text(
+                                      "Belum ada rekomendasi pembelajaran"),
+                                ),
+                              ),
                   ),
                 ],
               )
