@@ -108,10 +108,9 @@ class HomePage extends StatelessWidget {
                                             color: darkText),
                                       ),
                                       Text(
-                                        // authController.currentUser.value
-                                        //         .employeeData?.fullName ??
-                                        //     "",
-                                        "Muhammad Fadil Imron Junaidi",
+                                        authController.currentUser.value
+                                                .employeeData?.fullName ??
+                                            "",
                                         style: GoogleFonts.mulish(
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w600,
