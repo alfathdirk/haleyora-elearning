@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
@@ -136,7 +137,9 @@ class TaskAssignment extends StatelessWidget {
         appBar: AppBar(
           title: Text("Tugas",
               style: GoogleFonts.mulish(
-                  fontSize: 24, fontWeight: FontWeight.bold, color: darkText)),
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
+                  color: darkText)),
           centerTitle: false,
           titleSpacing: 20,
         ),
@@ -151,7 +154,7 @@ class TaskAssignment extends StatelessWidget {
                       : taskDescription,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.mulish(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       color: darkText,
                       fontWeight: FontWeight.w700)),
               const SizedBox(height: 20),
@@ -160,14 +163,14 @@ class TaskAssignment extends StatelessWidget {
                       text:
                           'Silahkan upload tugas Anda pada tautan dibawah ini. Format dalam bentuk ',
                       style: GoogleFonts.mulish(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: darkText,
                       ),
                       children: [
                     TextSpan(
                       text: 'PDF, JPG, PNG dan Mp4.',
                       style: GoogleFonts.mulish(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           color: darkText,
                           fontWeight: FontWeight.bold),
                     )
@@ -191,7 +194,7 @@ class TaskAssignment extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.mulish(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 10,
+                                fontSize: 10.sp,
                                 color: darkText)),
                       ],
                     ),
@@ -220,7 +223,7 @@ class TaskAssignment extends StatelessWidget {
                               color: primaryColor, size: 30),
                           title: Text(task.directusFilesId!.title!,
                               style: GoogleFonts.mulish(
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   color: darkText,
                                   fontWeight: FontWeight.w700)),
                           trailing: IconButton(

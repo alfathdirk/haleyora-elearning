@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatelessWidget {
     if (authController.currentUser.value.employeeData == null) {
       await authController.getMe();
     }
+    log(box.read('accessToken'));
     await courseController.getCategory();
     await courseController.getCourseRecommendation(box.read('employee_id'));
   }
@@ -64,22 +66,23 @@ class HomePage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(20),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SizedBox(
-                          height: 100,
-                          width: MediaQuery.of(context).size.width - 40,
+                          height: MediaQuery.of(context).size.height / 10,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   CircleAvatar(
                                     radius: 30,
                                     backgroundImage: NetworkImage(authController
@@ -100,16 +103,17 @@ class HomePage extends StatelessWidget {
                                       Text(
                                         "Selamat datang",
                                         style: GoogleFonts.mulish(
-                                            fontSize: 12,
+                                            fontSize: 12.sp,
                                             fontWeight: FontWeight.w600,
                                             color: darkText),
                                       ),
                                       Text(
-                                        authController.currentUser.value
-                                                .employeeData?.fullName ??
-                                            "",
+                                        // authController.currentUser.value
+                                        //         .employeeData?.fullName ??
+                                        //     "",
+                                        "Muhammad Fadil Imron Junaidi",
                                         style: GoogleFonts.mulish(
-                                            fontSize: 16,
+                                            fontSize: 14.sp,
                                             fontWeight: FontWeight.w600,
                                             color: darkText),
                                       ),
@@ -117,16 +121,15 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                iconSize: 24,
-                                icon: const Icon(
-                                    Icons.notifications_active_outlined),
-                                onPressed: () async {
-                                  Get.toNamed("/notification");
-                                },
-                              ),
                             ],
                           ),
+                        ),
+                        IconButton(
+                          iconSize: 24.sp,
+                          icon: const Icon(Icons.notifications_active_outlined),
+                          onPressed: () async {
+                            Get.toNamed("/notification");
+                          },
                         ),
                       ],
                     ),
@@ -139,8 +142,8 @@ class HomePage extends StatelessWidget {
                             const EdgeInsets.only(left: 20, right: 20, top: 0),
                         child: Text(
                           "Apa yang mau kamu pelajari hari ini ?\nSilahkan masukan kata kunci nya dibawah ini ya",
-                          style:
-                              GoogleFonts.mulish(fontSize: 10, color: darkText),
+                          style: GoogleFonts.mulish(
+                              fontSize: 10.sp, color: darkText),
                         ),
                       ),
                     ],
@@ -177,7 +180,7 @@ class HomePage extends StatelessWidget {
                                 hintText: "Cari Kursus",
                                 border: InputBorder.none,
                                 hintStyle: GoogleFonts.mulish(
-                                    fontSize: 12, color: greyText),
+                                    fontSize: 12.sp, color: greyText),
                               ),
                             ),
                           ),
@@ -272,7 +275,7 @@ class HomePage extends StatelessWidget {
                                               style: GoogleFonts.mulish(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 14,
+                                                fontSize: 14.sp,
                                               ),
                                             ),
                                           ),
@@ -291,7 +294,7 @@ class HomePage extends StatelessWidget {
                                               style: GoogleFonts.mulish(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.normal,
-                                                fontSize: 10,
+                                                fontSize: 10.sp,
                                               ),
                                             ),
                                           )
@@ -306,7 +309,7 @@ class HomePage extends StatelessWidget {
                                               style: GoogleFonts.mulish(
                                                 color: Colors.yellow,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 30,
+                                                fontSize: 30.sp,
                                               ),
                                             )),
                                       ),
@@ -320,15 +323,15 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   Container(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 40),
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 20, top: 40, bottom: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Bidang Pekerjaan",
                           style: GoogleFonts.mulish(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                               color: darkText),
                         ),
@@ -379,7 +382,7 @@ class HomePage extends StatelessWidget {
                               Text(
                                 categoryList.name ?? "",
                                 style: GoogleFonts.mulish(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
                                     color: darkText),
                               ),
@@ -399,7 +402,7 @@ class HomePage extends StatelessWidget {
                               Text(
                                 "Rekomendasi Pembelajaran",
                                 style: GoogleFonts.mulish(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.bold,
                                     color: darkText),
                               ),
@@ -410,7 +413,7 @@ class HomePage extends StatelessWidget {
                                 child: Text(
                                   "Lihat Semua",
                                   style: GoogleFonts.mulish(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
                                       color: primaryColor),
                                 ),
@@ -488,8 +491,9 @@ class HomePage extends StatelessWidget {
                             ))
                         : courseController.loading.value == true
                             ? const Center(child: CircularProgressIndicator())
-                            : const SizedBox(
-                                child: Center(
+                            : Container(
+                                padding: const EdgeInsets.all(20),
+                                child: const Center(
                                   child: Text(
                                       "Belum ada rekomendasi pembelajaran"),
                                 ),

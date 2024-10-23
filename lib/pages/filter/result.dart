@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -45,7 +46,7 @@ class SearchResultPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Hasil Pencarian ${query != '' ? '\"$query\"' : ''}",
             style: GoogleFonts.jost(
-                fontSize: 20, fontWeight: FontWeight.bold, color: darkText)),
+                fontSize: 20.sp, fontWeight: FontWeight.bold, color: darkText)),
         centerTitle: false,
         titleSpacing: 20,
       ),
@@ -118,7 +119,7 @@ class SearchResultPage extends StatelessWidget {
                             Text(
                               "Tidak ada hasil yang ditemukan",
                               style: GoogleFonts.jost(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: darkText),
                             ),

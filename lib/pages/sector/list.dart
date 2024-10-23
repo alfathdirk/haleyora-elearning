@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
@@ -17,8 +18,8 @@ class ListSector extends StatelessWidget {
             },
           ),
           title: Text('Bidang Distribusi',
-              style:
-                  GoogleFonts.jost(fontSize: 20, fontWeight: FontWeight.bold)),
+              style: GoogleFonts.jost(
+                  fontSize: 20.sp, fontWeight: FontWeight.bold)),
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -32,10 +33,11 @@ class ListSector extends StatelessWidget {
                         ListTile(
                           title: Text('Yantek',
                               style: GoogleFonts.mulish(
-                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold)),
                           subtitle: Text('(Pelatihan Teknis)',
                               style: GoogleFonts.mulish(
-                                  fontSize: 11,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.normal,
                                   color: greyText)),
                           trailing: const Icon(Icons.chevron_right),
@@ -49,13 +51,15 @@ class ListSector extends StatelessWidget {
                         ListTile(
                           title: Text('Syarat dan Ketentuan',
                               style: GoogleFonts.mulish(
-                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold)),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                         ListTile(
                           title: Text('Keluar',
                               style: GoogleFonts.mulish(
-                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold)),
                           trailing: const Icon(Icons.chevron_right),
                         ),
                       ],

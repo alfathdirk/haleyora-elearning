@@ -103,6 +103,7 @@ class CourseController extends GetxController {
           CategoryResponse.fromJson(result.data);
       categoryList.value = categoryResponse.data!.toList();
     } catch (e) {
+      log('error getCategory: $e');
       print('error getCategory: $e');
     }
   }

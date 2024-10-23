@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/model/quiz.dart';
@@ -26,7 +27,7 @@ class QuizCard extends StatelessWidget {
         Text(
           question,
           style: GoogleFonts.poppins(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
             decoration: TextDecoration.none,
@@ -62,7 +63,7 @@ class QuizCard extends StatelessWidget {
                   child: Text(
                     choices[index].label!,
                     style: GoogleFonts.poppins(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       color: isSelectedIndex == index
                           ? Colors.white

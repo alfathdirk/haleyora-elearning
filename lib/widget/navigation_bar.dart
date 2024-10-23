@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,7 +39,7 @@ class CustomNavigationBar extends StatelessWidget {
                   Text(
                     "BERANDA",
                     style: GoogleFonts.mulish(
-                      fontSize: 8,
+                      fontSize: 8.sp,
                       fontWeight: FontWeight.bold,
                       color: navigationController.currentIndex.value == 0
                           ? Colors.white
@@ -60,7 +61,7 @@ class CustomNavigationBar extends StatelessWidget {
                   Text(
                     "KURSUS",
                     style: GoogleFonts.mulish(
-                      fontSize: 8,
+                      fontSize: 8.sp,
                       fontWeight: FontWeight.bold,
                       color: navigationController.currentIndex.value == 1
                           ? Colors.white
@@ -81,7 +82,7 @@ class CustomNavigationBar extends StatelessWidget {
                           : Colors.black),
                   Text("PENCAPAIAN",
                       style: GoogleFonts.mulish(
-                        fontSize: 8,
+                        fontSize: 8.sp,
                         fontWeight: FontWeight.bold,
                         color: navigationController.currentIndex.value == 2
                             ? Colors.white
@@ -102,7 +103,7 @@ class CustomNavigationBar extends StatelessWidget {
                   Text(
                     "KURSUSKU",
                     style: GoogleFonts.mulish(
-                      fontSize: 8,
+                      fontSize: 8.sp,
                       fontWeight: FontWeight.bold,
                       color: navigationController.currentIndex.value == 3
                           ? Colors.white
@@ -124,7 +125,7 @@ class CustomNavigationBar extends StatelessWidget {
                   Text(
                     "AKUN",
                     style: GoogleFonts.mulish(
-                      fontSize: 8,
+                      fontSize: 8.sp,
                       fontWeight: FontWeight.bold,
                       color: navigationController.currentIndex.value == 4
                           ? Colors.white

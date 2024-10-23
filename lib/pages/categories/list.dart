@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
@@ -28,7 +29,7 @@ class _CategoryListPage extends State<CategoryListPage> {
       appBar: AppBar(
         title: Text("Bidang Kategori",
             style: GoogleFonts.jost(
-                fontSize: 20, fontWeight: FontWeight.bold, color: darkText)),
+                fontSize: 20.sp, fontWeight: FontWeight.bold, color: darkText)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -162,7 +163,7 @@ class ListCategory extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: GoogleFonts.mulish(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
+                            fontSize: 16.sp, fontWeight: FontWeight.bold)),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 14),
                     onTap: () {
                       if (categoryController.currentPage.value >= 2) {

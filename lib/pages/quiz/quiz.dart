@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +72,7 @@ class QuizPage extends StatelessWidget {
                   Obx(() => Text(
                         "${controller.questionIndex.toInt() + 1}/${controller.questionList.length}",
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                           decoration: TextDecoration.none,
@@ -90,7 +91,7 @@ class QuizPage extends StatelessWidget {
                         // timer minute
                         "${(controller.startDuration / 60).floor().toString().padLeft(2, '0')}:${(controller.startDuration % 60).floor().toString().padLeft(2, '0')}",
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                           color: 8 < 10 ? Colors.red : orangeText,
                           decoration: TextDecoration.none,
@@ -168,7 +169,7 @@ class QuizPage extends StatelessWidget {
                                       child: Text(
                                         "No question found",
                                         style: GoogleFonts.poppins(
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black,
                                           decoration: TextDecoration.none,

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 
@@ -58,7 +59,7 @@ class ProgressPieChart extends StatelessWidget {
                 style: GoogleFonts.lexend(
                   color: greyText,
                   fontWeight: FontWeight.w600,
-                  fontSize: 8,
+                  fontSize: 8.sp,
                 ),
               ),
               Row(
@@ -69,7 +70,7 @@ class ProgressPieChart extends StatelessWidget {
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
                   Text(
@@ -77,7 +78,7 @@ class ProgressPieChart extends StatelessWidget {
                     style: GoogleFonts.lexend(
                       color: greyText,
                       fontWeight: FontWeight.bold,
-                      fontSize: 8,
+                      fontSize: 8.sp,
                     ),
                   ),
                 ],

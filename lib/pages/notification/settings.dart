@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/widget/button.dart';
@@ -58,7 +59,7 @@ class NotificationSetting extends StatelessWidget {
               Text(
                 "Edit Akun Berhasil",
                 style: GoogleFonts.jost(
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
@@ -87,8 +88,8 @@ class NotificationSetting extends StatelessWidget {
             },
           ),
           title: Text('Notifikasi',
-              style:
-                  GoogleFonts.jost(fontSize: 20, fontWeight: FontWeight.bold)),
+              style: GoogleFonts.jost(
+                  fontSize: 20.sp, fontWeight: FontWeight.bold)),
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -106,7 +107,7 @@ class NotificationSetting extends StatelessWidget {
                               ListTile(
                                 title: Text('Email',
                                     style: GoogleFonts.mulish(
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold)),
                                 trailing: SwitchCustom(
                                   value: c.emailValue.value,
@@ -122,7 +123,7 @@ class NotificationSetting extends StatelessWidget {
                               ListTile(
                                 title: Text('New Course',
                                     style: GoogleFonts.mulish(
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold)),
                                 trailing: SwitchCustom(
                                   value: c.newCourseValue.value,
@@ -138,7 +139,7 @@ class NotificationSetting extends StatelessWidget {
                               ListTile(
                                 title: Text('Sound',
                                     style: GoogleFonts.mulish(
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold)),
                                 trailing: SwitchCustom(
                                   value: c.soundValue.value,

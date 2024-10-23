@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,12 +47,14 @@ class _loginScreenState extends State<LoginScreen> {
       });
       try {
         final response = await dio.post('/api/login', data: {
-          'username': _usernameController.text,
-          'password': _passwordController.text,
+          // 'username': _usernameController.text,
+          // 'password': _passwordController.text,
           // 'username': '7921203BDG',
           // 'password': '07071979',
           // 'username': '13030BDG',
           // 'password': '24011972',
+          'username': '9018063PKU',
+          'password': '22111990',
         });
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
         box.write('accessToken', loginResponse.accessToken);
@@ -106,7 +109,7 @@ class _loginScreenState extends State<LoginScreen> {
                     'P L N',
                     textAlign: TextAlign.right,
                     style: GoogleFonts.poppins(
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                         color: primaryColor),
                   ),
@@ -218,7 +221,7 @@ class _loginScreenState extends State<LoginScreen> {
                       //           Text(
                       //             'Ingatkan Saya',
                       //             style: GoogleFonts.poppins(
-                      //                 fontSize: 12,
+                      //                 fontSize: 12.sp,
                       //                 fontWeight: FontWeight.w600,
                       //                 color: greyText),
                       //           ),

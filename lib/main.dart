@@ -10,6 +10,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'router.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void initServices() async {
   print('starting services ...');
@@ -45,15 +46,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'E-learning App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: Routes.homePage,
-      defaultTransition: Transition.rightToLeft,
-      getPages: pages,
-      debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: 'E-learning App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: Routes.homePage,
+          defaultTransition: Transition.rightToLeft,
+          getPages: pages,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

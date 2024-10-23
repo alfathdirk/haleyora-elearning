@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -46,7 +47,7 @@ class MyCoursePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Kursusku",
             style: GoogleFonts.jost(
-                fontSize: 20, fontWeight: FontWeight.bold, color: darkText)),
+                fontSize: 20.sp, fontWeight: FontWeight.bold, color: darkText)),
         centerTitle: false,
         titleSpacing: 20,
       ),
@@ -164,7 +165,7 @@ class MyCoursePage extends StatelessWidget {
                             Text(
                               "Belum ada kursus yang diambil",
                               style: GoogleFonts.jost(
-                                  fontSize: 20,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w400,
                                   color: darkText),
                             ),

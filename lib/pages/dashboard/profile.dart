@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/controller/auth.dart';
@@ -17,8 +18,8 @@ class ProfilePage extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text('Profile',
-              style:
-                  GoogleFonts.jost(fontSize: 20, fontWeight: FontWeight.bold)),
+              style: GoogleFonts.jost(
+                  fontSize: 20.sp, fontWeight: FontWeight.bold)),
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -51,14 +52,14 @@ class ProfilePage extends StatelessWidget {
                 Text(
                   authController.currentUser.value.employeeData!.fullName ?? '',
                   style: GoogleFonts.mulish(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
                 Text(
                   authController.currentUser.value.employeeData!.email ?? '',
                   style: GoogleFonts.mulish(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey),
                 ),
@@ -77,7 +78,8 @@ class ProfilePage extends StatelessWidget {
                             leading: const Icon(Icons.person),
                             title: Text('Detail Profil',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
                             onTap: () {
                               // navigate to edit profile page
@@ -88,14 +90,14 @@ class ProfilePage extends StatelessWidget {
                           //   leading: const Icon(Icons.shield_moon_outlined),
                           //   title: Text('Keamanan',
                           //       style: GoogleFonts.mulish(
-                          //           fontSize: 16, fontWeight: FontWeight.bold)),
+                          //           fontSize: 16.sp, fontWeight: FontWeight.bold)),
                           //   trailing: const Icon(Icons.chevron_right),
                           // ),
                           // ListTile(
                           //   leading: const Icon(Icons.lock_outlined),
                           //   title: Text('Ubah Sandi',
                           //       style: GoogleFonts.mulish(
-                          //           fontSize: 16, fontWeight: FontWeight.bold)),
+                          //           fontSize: 16.sp, fontWeight: FontWeight.bold)),
                           //   trailing: const Icon(Icons.chevron_right),
                           //   onTap: () {
                           //     // navigate to edit password page
@@ -106,7 +108,8 @@ class ProfilePage extends StatelessWidget {
                             leading: const Icon(Icons.shield_outlined),
                             title: Text('Syarat dan Ketentuan',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
                             onTap: () {
                               // navigate to terms and conditions page
@@ -118,7 +121,8 @@ class ProfilePage extends StatelessWidget {
                                 const Icon(Icons.power_settings_new_outlined),
                             title: Text('Keluar',
                                 style: GoogleFonts.mulish(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold)),
                             trailing: const Icon(Icons.chevron_right),
                             onTap: () => {
                               // show dialog confirmation

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/controller/auth.dart';
@@ -44,14 +45,14 @@ class ProfileDetailPage extends StatelessWidget {
             Text(
               authController.currentUser.value.employeeData!.fullName ?? '',
               style: GoogleFonts.mulish(
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
             Text(
               authController.currentUser.value.employeeData!.email ?? '',
               style: GoogleFonts.mulish(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.normal,
                   color: Colors.grey),
             ),
@@ -67,139 +68,151 @@ class ProfileDetailPage extends StatelessWidget {
                       ListTile(
                         title: Text('Status Kerja',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .workStatus ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Nomor Induk',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .employeeId ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Region',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .placement ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Jabatan',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.position ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Pekerjaan',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.job ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Unit',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.unit ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Unit PLN',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.unitPLN ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Penempatan',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .placement ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Jenis Kelamin',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.gender ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Tempat Lahir',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .placeOfBirth ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Tanggal Lahir',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                     .dateOfBirth ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Alamat KTP',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController
                                     .currentUser.value.employeeData!.address ??
                                 '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                       ListTile(
                         title: Text('Nomor HP',
                             style: GoogleFonts.mulish(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         subtitle: Text(
                             authController.currentUser.value.employeeData!
                                         .phone !=
@@ -207,7 +220,8 @@ class ProfileDetailPage extends StatelessWidget {
                                 ? '0${authController.currentUser.value.employeeData!.phone}'
                                 : '',
                             style: GoogleFonts.mulish(
-                                fontSize: 14, fontWeight: FontWeight.normal)),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.normal)),
                       ),
                     ],
                   ),

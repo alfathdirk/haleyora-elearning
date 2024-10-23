@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/widget/card.dart';
@@ -107,7 +108,7 @@ class CourseCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: GoogleFonts.mulish(
-                          fontSize: 10,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w600,
                           color: orangeText,
                         ),
@@ -120,7 +121,7 @@ class CourseCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
                           style: GoogleFonts.mulish(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -149,7 +150,7 @@ class CourseCard extends StatelessWidget {
                         Text(
                           " $totalEmployee Dipelajari",
                           style: GoogleFonts.mulish(
-                            fontSize: 10,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.normal,
                             color: lightGrey,
                           ),
@@ -166,7 +167,7 @@ class CourseCard extends StatelessWidget {
                       Text(
                         " $duration Menit",
                         style: GoogleFonts.mulish(
-                          fontSize: 10,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.normal,
                           color: lightGrey,
                         ),

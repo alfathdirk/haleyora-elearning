@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/controller/notification.dart';
@@ -53,8 +54,8 @@ class NotificationList extends StatelessWidget {
                 title: Text(notif.title,
                     style: GoogleFonts.mulish(fontWeight: FontWeight.bold)),
                 subtitle: Text(notif.description,
-                    style:
-                        GoogleFonts.mulish(fontSize: 12, color: Colors.black)),
+                    style: GoogleFonts.mulish(
+                        fontSize: 12.sp, color: Colors.black)),
                 // trailing time
                 trailing:
                     Text(formatted, style: GoogleFonts.mulish(fontSize: 9)),

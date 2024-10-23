@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,7 +42,7 @@ class AchievmentPage extends StatelessWidget {
           title: Text(
             "Pencapaian",
             style: GoogleFonts.jost(
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
               color: darkText,
             ),
@@ -127,7 +128,7 @@ class AchievmentPage extends StatelessWidget {
                                               style: GoogleFonts.mulish(
                                                 color: greyText,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 12,
+                                                fontSize: 12.sp,
                                               ),
                                             ),
                                             Text(
@@ -135,7 +136,7 @@ class AchievmentPage extends StatelessWidget {
                                               style: GoogleFonts.mulish(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 24,
+                                                fontSize: 24.sp,
                                               ),
                                             ),
                                             SizedBox(
@@ -146,7 +147,7 @@ class AchievmentPage extends StatelessWidget {
                                                 style: GoogleFonts.mulish(
                                                   color: greyText,
                                                   fontWeight: FontWeight.normal,
-                                                  fontSize: 10,
+                                                  fontSize: 10.sp,
                                                   // text over flow
                                                 ),
                                               ),
@@ -176,7 +177,7 @@ class AchievmentPage extends StatelessWidget {
                                   style: GoogleFonts.jost(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                               ],
@@ -197,7 +198,7 @@ class AchievmentPage extends StatelessWidget {
                                 Text(
                                   "Belum ada kursus yang diikuti",
                                   style: GoogleFonts.jost(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w500,
                                       color: darkText),
                                 ),
@@ -241,15 +242,21 @@ class AchievmentPage extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "${courseController.courseByEmployee.value.data![index].course!.activities?.title}",
-                                          style: GoogleFonts.mulish(
-                                            color: orangeText,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 9,
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.6,
+                                          child: Text(
+                                            "${courseController.courseByEmployee.value.data![index].course!.activities?.title}",
+                                            style: GoogleFonts.mulish(
+                                              color: orangeText,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 9,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
@@ -277,7 +284,7 @@ class AchievmentPage extends StatelessWidget {
                                                 style: GoogleFonts.mulish(
                                                   color: greyText,
                                                   fontWeight: FontWeight.normal,
-                                                  fontSize: 10,
+                                                  fontSize: 10.sp,
                                                 ),
                                               ),
                                               Text(
@@ -285,7 +292,7 @@ class AchievmentPage extends StatelessWidget {
                                                 style: GoogleFonts.mulish(
                                                   color: Colors.green,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 10,
+                                                  fontSize: 10.sp,
                                                 ),
                                               ),
                                             ],
@@ -349,7 +356,7 @@ class AchievmentPage extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 10,
+                                                              fontSize: 10.sp,
                                                             ),
                                                           ),
                                                           const Icon(

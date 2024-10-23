@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/widget/button.dart';
@@ -66,7 +67,7 @@ class EditPasswordPage extends StatelessWidget {
             Text(
               'Sandi Lama',
               style: GoogleFonts.mulish(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   decoration: TextDecoration.none),
@@ -85,7 +86,7 @@ class EditPasswordPage extends StatelessWidget {
             Text(
               'Sandi Baru',
               style: GoogleFonts.mulish(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   decoration: TextDecoration.none),

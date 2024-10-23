@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
@@ -27,7 +28,7 @@ class FilterPage extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Text('Clear',
                   style: GoogleFonts.mulish(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       color: primaryColor)),
             ),
@@ -44,7 +45,7 @@ class FilterPage extends StatelessWidget {
               Text(
                 'Bidang Pekerjaan:',
                 style: GoogleFonts.mulish(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -59,7 +60,7 @@ class FilterPage extends StatelessWidget {
                           title: Text(
                             courseController.categoryList[index].name,
                             style: GoogleFonts.mulish(
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
