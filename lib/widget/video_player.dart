@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/services/dio_client.dart';
@@ -22,6 +23,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     // _controller.setLooping(false);
     // _controller.play();
@@ -53,6 +58,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         }
       });
     });
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     _controller.dispose();
     super.dispose();
   }
