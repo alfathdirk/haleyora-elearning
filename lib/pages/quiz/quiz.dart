@@ -26,6 +26,7 @@ class QuizPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return quizView(context);
         }
+
         return const Scaffold(
           body: Center(
             child: CircularProgressIndicator(),
@@ -36,7 +37,6 @@ class QuizPage extends StatelessWidget {
   }
 
   Scaffold quizView(BuildContext context) {
-    log(courseId.toString());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quiz Page"),

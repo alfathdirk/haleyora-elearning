@@ -211,6 +211,14 @@ class CourseDetail extends StatelessWidget {
                                                         const EdgeInsets.all(
                                                             16),
                                                     child: RoundedButton(
+                                                      isDisabled:
+                                                          courseController
+                                                              .loadingTakeCourse
+                                                              .value,
+                                                      isLoading:
+                                                          courseController
+                                                              .loadingTakeCourse
+                                                              .value,
                                                       text: 'Ikuti Kursus',
                                                       onPressed: () async {
                                                         await courseController

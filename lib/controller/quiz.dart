@@ -53,8 +53,12 @@ class QuizController extends GetxController {
       final result = await dio.get(
           '/items/quiz/$quizId?fields[]=title,duration,score_per_question,randomize,quiz_question.title,quiz_question.image, quiz_question.choices,quiz_question.answer');
       Quiz quizQuestion = Quiz.fromJson(result.data['data']);
+      print('result: ${quizQuestion.quizQuestions!.length}');
 
       if (questionList.isEmpty) {
+        answerList =
+            List.generate(quizQuestion.quizQuestions!.length, (index) => '')
+                .obs;
         questionList.value = quizQuestion.quizQuestions!;
       }
 
@@ -77,7 +81,7 @@ class QuizController extends GetxController {
   }
 
   void saveAnswerToIndex(String answer, int index) {
-    answerList.insert(index, answer);
+    answerList[index] = answer;
   }
 
   Future<void> checkAnswer(String courseId) async {

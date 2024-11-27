@@ -16,6 +16,7 @@ class CourseController extends GetxController {
   final courseByEmployee = ResponseCourseByEmployee().obs;
   final listFilter = [].obs;
   final courseRecommendation = [].obs;
+  final loadingTakeCourse = false.obs;
 
   final myCourseList = [].obs;
 
@@ -36,14 +37,17 @@ class CourseController extends GetxController {
 
   Future<void> takeCourse(String courseId, String empId) async {
     try {
+      loadingTakeCourse.value = true;
       final result = await dio.post('/items/employee_course', data: {
         'employee': empId,
         'course': courseId,
       });
       await getCourseByEmployee(empId, courseId);
+      loadingTakeCourse.value = false;
       return result.data;
     } catch (e) {
       print('error bookmarkCourse: $e');
+      loadingTakeCourse.value = false;
     }
   }
 
@@ -75,7 +79,7 @@ class CourseController extends GetxController {
     try {
       isAllCourse.value = true;
       final result = await dio.get(
-          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
+          '/items/course?limit=200&fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       courseList.value = courseResponse.data!.toList();
     } catch (e) {
@@ -87,7 +91,7 @@ class CourseController extends GetxController {
     try {
       loading.value = true;
       final result = await dio.get(
-          '/items/course/$id?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
+          '/items/course/$id?limit=200&fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
       loading.value = false;
       courseDetail.value = CourseDetailResponse.fromJson(result.data).data!;
       return result.data;

@@ -70,7 +70,7 @@ class ProgressPieChart extends StatelessWidget {
                     style: GoogleFonts.lexend(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                      fontSize: 10.sp,
                     ),
                   ),
                   Text(
@@ -78,7 +78,7 @@ class ProgressPieChart extends StatelessWidget {
                     style: GoogleFonts.lexend(
                       color: greyText,
                       fontWeight: FontWeight.bold,
-                      fontSize: 8.sp,
+                      fontSize: 7.sp,
                     ),
                   ),
                 ],

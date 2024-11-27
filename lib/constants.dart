@@ -2,7 +2,7 @@ import 'dart:ui';
 
 // const apiURL = 'http://192.168.196.227:8066';
 const apiURL = 'http://103.10.97.221:8066';
-// const apiURL = 'http://192.168.1.2:8066';
+// const apiURL = 'http://192.168.1.7:8066';
 
 const imageBaseUrl = '$apiURL/assets/';
 

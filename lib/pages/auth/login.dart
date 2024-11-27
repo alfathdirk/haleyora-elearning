@@ -1,16 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:haleyora/constants.dart';
 import 'package:haleyora/model/auth.dart';
 import 'package:haleyora/services/auth_service.dart';
 import 'package:haleyora/services/dio_client.dart';
 import 'package:haleyora/widget/button.dart';
 import 'package:haleyora/widget/text_input.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,11 +23,33 @@ class _loginScreenState extends State<LoginScreen> {
   AuthService authService = Get.find<AuthService>();
   final box = GetStorage();
 
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
   @override
   void dispose() {
     _usernameController.clear();
     _passwordController.clear();
     super.dispose();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
   }
 
   bool isEmailCorrect = false;
@@ -49,12 +69,6 @@ class _loginScreenState extends State<LoginScreen> {
         final response = await dio.post('/api/login', data: {
           'username': _usernameController.text,
           'password': _passwordController.text,
-          // 'username': '7921203BDG',
-          // 'password': '07071979',
-          // 'username': '13030BDG',
-          // 'password': '24011972',
-          // 'username': '9018063PKU',
-          // 'password': '22111990',
         });
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
         box.write('accessToken', loginResponse.accessToken);
@@ -85,172 +99,150 @@ class _loginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundWhite,
-      appBar: AppBar(
-        backgroundColor: backgroundWhite,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                height: 30,
-                width: 30,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'P L N',
-                    textAlign: TextAlign.right,
-                    style: GoogleFonts.poppins(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor),
-                  ),
-                  Text(
-                    'Haleyora Power',
-                    style: GoogleFonts.poppins(
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/logo-elearning.png',
-                      height: 180,
-                      width: MediaQuery.of(context).size.width - 100,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.1,
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Form(
+                  key: _formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.only(left: 0, right: 0),
-                          child: TextFieldWithBoxShadow(
-                            placeholder: 'User Name',
-                            controller: _usernameController,
-                            icon: const Icon(
-                              Icons.person_outline,
-                              color: greyText,
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Enter a valid username';
-                              }
-                              return null;
-                            },
-                          )),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(height: MediaQuery.of(context).size.height / 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/logo-elearning.png',
+                            height: 180,
+                            width: MediaQuery.of(context).size.width - 100,
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 0, right: 0),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20)),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Form(
-                              child: TextFieldWithBoxShadow(
-                                isPassword: true,
-                                placeholder: 'Password',
-                                controller: _passwordController,
-                                icon: const Icon(
-                                  Icons.lock_outline,
-                                  color: greyText,
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty && value.length < 5) {
-                                    return 'Enter a valid password';
-                                  }
-                                  return null;
-                                },
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 0, right: 0),
+                                child: TextFieldWithBoxShadow(
+                                  placeholder: 'User Name',
+                                  controller: _usernameController,
+                                  icon: const Icon(
+                                    Icons.person_outline,
+                                    color: greyText,
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Enter a valid username';
+                                    }
+                                    return null;
+                                  },
+                                )),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 0, right: 0),
+                              child: Column(
+                                children: [
+                                  Form(
+                                    child: TextFieldWithBoxShadow(
+                                      isPassword: true,
+                                      placeholder: 'Password',
+                                      controller: _passwordController,
+                                      icon: const Icon(
+                                        Icons.lock_outline,
+                                        color: greyText,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty &&
+                                            value.length < 5) {
+                                          return 'Enter a valid password';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            // Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     crossAxisAlignment: CrossAxisAlignment.center,
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           Checkbox(
+                            //             value: rememberMe,
+                            //             onChanged: (bool? value) {
+                            //               setState(() {
+                            //                 rememberMe = value!;
+                            //               });
+                            //             },
+                            //           ),
+                            //           Text(
+                            //             'Ingatkan Saya',
+                            //             style: GoogleFonts.poppins(
+                            //                 fontSize: 12.sp,
+                            //                 fontWeight: FontWeight.w600,
+                            //                 color: greyText),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ]),
                           ],
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 50,
                       ),
-                      // Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           Checkbox(
-                      //             value: rememberMe,
-                      //             onChanged: (bool? value) {
-                      //               setState(() {
-                      //                 rememberMe = value!;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text(
-                      //             'Ingatkan Saya',
-                      //             style: GoogleFonts.poppins(
-                      //                 fontSize: 12.sp,
-                      //                 fontWeight: FontWeight.w600,
-                      //                 color: greyText),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ]),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        child: RoundedButton(
+                          text: "Login",
+                          isDisabled: isDisabled,
+                          isLoading: isLoading,
+                          onPressed: () async {
+                            await _login();
+                            // Get.offNamed('/home');
+                            // await PDF.generate();
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.1,
-                  height: 50,
-                  child: RoundedButton(
-                    text: "Login",
-                    isDisabled: isDisabled,
-                    isLoading: isLoading,
-                    onPressed: () async {
-                      await _login();
-                      // Get.offNamed('/home');
-                      // await PDF.generate();
-                    },
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              color: Colors.white,
+              child: Center(
+                child: Text(
+                  'Version ${_packageInfo.version}+${_packageInfo.buildNumber}',
+                  style: TextStyle(
+                    color: greyText,
+                    fontSize: 12.sp,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

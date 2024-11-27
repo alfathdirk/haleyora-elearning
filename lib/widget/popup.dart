@@ -23,17 +23,18 @@ class ImageDialog extends StatelessWidget {
     return Dialog(
         child: Container(
             width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery.of(context).size.height * 0.47,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: backgroundWhite,
                 borderRadius: BorderRadius.circular(20)),
             child: Column(
               children: <Widget>[
-                Image.asset(image, width: 170),
+                Image.asset(image,
+                    width: MediaQuery.of(context).size.width * 0.35),
                 const SizedBox(height: 30),
                 SizedBox(
-                  width: 200,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
@@ -43,7 +44,7 @@ class ImageDialog extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 RoundedButton(text: buttonText, onPressed: onPressed)
               ],
             )));

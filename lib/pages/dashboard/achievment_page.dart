@@ -218,7 +218,7 @@ class AchievmentPage extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 bottom: 12, left: 16, right: 16),
                             child: CustomCard(
-                              height: 90,
+                              height: MediaQuery.of(context).size.height * 0.1,
                               child: Row(
                                 children: [
                                   Container(
@@ -252,7 +252,7 @@ class AchievmentPage extends StatelessWidget {
                                             style: GoogleFonts.mulish(
                                               color: orangeText,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 9,
+                                              fontSize: 9.sp,
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
@@ -270,35 +270,36 @@ class AchievmentPage extends StatelessWidget {
                                             style: GoogleFonts.mulish(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 14,
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8, top: 8),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Nilai Test:",
-                                                style: GoogleFonts.mulish(
-                                                  color: greyText,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 10.sp,
-                                                ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Nilai Test:",
+                                              style: GoogleFonts.mulish(
+                                                color: greyText,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 10.sp,
                                               ),
-                                              Text(
-                                                " ${courseController.courseByEmployee.value.data![index].examScore}",
-                                                style: GoogleFonts.mulish(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 10.sp,
-                                                ),
+                                            ),
+                                            Text(
+                                              " ${courseController.courseByEmployee.value.data![index].examScore}",
+                                              style: GoogleFonts.mulish(
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10.sp,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01),
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
@@ -356,7 +357,7 @@ class AchievmentPage extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              fontSize: 10.sp,
+                                                              fontSize: 9.sp,
                                                             ),
                                                           ),
                                                           const Icon(
@@ -401,7 +402,8 @@ class AchievmentPage extends StatelessWidget {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                  fontSize: 9,
+                                                                  fontSize:
+                                                                      9.sp,
                                                                 ),
                                                               ),
                                                               const Icon(
