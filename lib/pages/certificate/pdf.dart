@@ -36,13 +36,25 @@ class _CertificatePageState extends State<CertifcatePage> {
   }
 
   Future<Uint8List> _getNetworkImage(String url) async {
-    final response =
-        await dio.get(url, options: Options(responseType: ResponseType.bytes));
-    if (response.statusCode == 200) {
-      return response.data;
-    } else {
-      throw Exception('Failed to load image');
+    try {
+      final response = await dio.get(url,
+          options: Options(responseType: ResponseType.bytes));
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Exception('Failed to load image');
+      }
+    } catch (e) {
+      log('error getNetworkImage: $e');
+      return Uint8List(0);
     }
+    // final response =
+    //     await dio.get(url, options: Options(responseType: ResponseType.bytes));
+    // if (response.statusCode == 200) {
+    //   return response.data;
+    // } else {
+    //   throw Exception('Failed to load image');
+    // }
   }
 
   String getDuration(DateTime startDate, int days) {
@@ -56,12 +68,11 @@ class _CertificatePageState extends State<CertifcatePage> {
     CertificateData result =
         await certificateController.getCertificateByCourseId(courseId);
 
-    CertificateSetting setting =
+    CertificateSetting certSetting =
         await certificateController.getCertificateSetting();
 
-    final imageBytes = await _getNetworkImage(imageBaseUrl + setting.signature);
-
-    log(result.dateCreated);
+    final imageBytes =
+        await _getNetworkImage(imageBaseUrl + certSetting.signature);
     // Data to include in the certificate
     String name = result.employeeName;
     String course = result.courseTitle;
@@ -69,8 +80,8 @@ class _CertificatePageState extends State<CertifcatePage> {
         DateTime.parse(result.dateCreated.toString()), result.expiredDays);
     String createdDate = DateFormat('dd MMMM yyyy')
         .format(DateTime.parse(result.dateCreated.toString()));
-    String pic = setting.pic;
-    String position = setting.title;
+    String pic = certSetting.pic;
+    String position = certSetting.title;
 
     // String expDate = getDuration(DateTime.now(), 30);
     // String createdDate = DateFormat('dd MMMM yyyy').format(DateTime.now());

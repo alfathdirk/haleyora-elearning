@@ -307,14 +307,15 @@ class CourseDetail extends StatelessWidget {
                     courseByEmployee.isNotEmpty
                         ? GestureDetector(
                             onTap: () {
+                              // print('videoUrl: ${course.videoUrl}');
                               // print(
                               //     '${courseByEmployee.first.lastVideoDuration}');
-                              if (course.videoContent == null) {
+                              if (course.videoUrl == null) {
                                 return;
                               }
 
                               Get.toNamed(
-                                  '/video-player/$courseId/${course.videoContent}',
+                                  '/video-player/$courseId/${course.videoUrl}',
                                   arguments: {
                                     "lastVideoDuration":
                                         courseByEmployee.first.lastVideoDuration
@@ -323,7 +324,7 @@ class CourseDetail extends StatelessWidget {
                             child: Container(
                               height: 55,
                               decoration: BoxDecoration(
-                                color: course.videoContent != null
+                                color: course.videoUrl != null
                                     ? Colors.white
                                     : Colors.grey[200],
                                 borderRadius: BorderRadius.circular(20),

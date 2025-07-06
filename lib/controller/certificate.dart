@@ -53,7 +53,14 @@ class CertificateController extends GetxController {
   Future<CertificateSetting> getCertificateSetting() async {
     try {
       final result = await dio.get('/items/certificate_setting');
-      return CertificateSetting.fromJson(result.data['data'][0]);
+      if (result.data['data'].isNotEmpty) {
+        return CertificateSetting.fromJson(result.data['data'][0]);
+      }
+      return CertificateSetting(
+        title: '',
+        signature: '',
+        pic: '',
+      );
     } catch (e) {
       log('error getCertificateSetting: $e');
     }
@@ -79,9 +86,9 @@ class CertificateSetting {
 
   factory CertificateSetting.fromJson(Map<String, dynamic> json) {
     return CertificateSetting(
-      title: json['title'],
-      signature: json['signature'],
-      pic: json['pic'],
+      title: json['title'] ?? '',
+      signature: json['signature'] ?? '',
+      pic: json['pic'] ?? '',
     );
   }
 }

@@ -27,7 +27,7 @@ void main(List<String> args) async {
   initServices();
   configureDio();
   // disable screenshot and recording here
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   // potrait mode
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

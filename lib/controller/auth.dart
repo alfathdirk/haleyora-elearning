@@ -22,6 +22,12 @@ class AuthController extends GetxController {
       final resultMe = await dio.get('/api/me');
       final userData = ResponseData.fromJson(resultMe.data['message']);
       box.write('employee_id', currentUser.value.employeeData?.id);
+      box.write('id_region', currentUser.value.employeeData?.idRegion);
+      box.write('job', currentUser.value.employeeData?.job);
+      box.write('unit', currentUser.value.employeeData?.unit);
+      box.write('unit_pln', currentUser.value.employeeData?.unitPLN);
+      box.write('position', currentUser.value.employeeData?.position);
+
       currentUser.value = userData;
     } catch (e) {
       developer.log('error getMe: ${e.toString()}');

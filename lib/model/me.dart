@@ -20,6 +20,7 @@ class EmployeeData {
   final String? position;
   final String? unit;
   final String? job;
+  final int? idRegion;
 
   EmployeeData({
     this.id,
@@ -43,6 +44,7 @@ class EmployeeData {
     this.position,
     this.unit,
     this.job,
+    this.idRegion,
   });
 
   factory EmployeeData.fromJson(Map<String, dynamic> json) {
@@ -69,6 +71,7 @@ class EmployeeData {
       position: json['position'],
       unit: json['unit'],
       job: json['job'],
+      idRegion: json['id_region'],
     );
   }
 }

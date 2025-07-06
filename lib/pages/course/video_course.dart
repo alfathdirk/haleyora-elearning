@@ -19,8 +19,7 @@ class VideoPlayerApp extends StatelessWidget {
         child: Stack(
           children: [
             VideoPlayerWidget(
-              videoUrl:
-                  '$imageBaseUrl$dataUrl?access_token=${box.read('accessToken')}',
+              videoUrl: dataUrl,
             ),
             Positioned(
               top: 20,

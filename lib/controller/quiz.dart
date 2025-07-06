@@ -112,7 +112,7 @@ class QuizController extends GetxController {
       log('employee course: ${detailCourse.id}');
       log('employee id: ${authController.currentUser.value.employeeData!.id}');
 
-      if (score.value > detailCourse.course!.minScore! &&
+      if (score.value >= detailCourse.course!.minScore! &&
           hasCertificate.courseTitle.isEmpty) {
         log('certificate generated');
         await dio.post('/items/employee_certificate', data: {

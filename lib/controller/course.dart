@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:haleyora/controller/auth.dart';
 import 'package:haleyora/model/model.dart';
 import 'package:haleyora/pages/course/model.dart';
 import 'package:haleyora/services/dio_client.dart';
+import 'package:intl/intl.dart';
 
 class CourseController extends GetxController {
   final courseList = [].obs;
@@ -17,8 +20,24 @@ class CourseController extends GetxController {
   final listFilter = [].obs;
   final courseRecommendation = [].obs;
   final loadingTakeCourse = false.obs;
-
   final myCourseList = [].obs;
+  final courseFilter = ''.obs;
+
+  final box = GetStorage();
+
+  @override
+  void onInit() {
+    super.onInit();
+    var job = box.read('job');
+    var unit = box.read('unit');
+    var region = box.read('id_region');
+    var position = box.read('position');
+    var unitPLN = box.read('unit_pln');
+
+    String now = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    courseFilter.value =
+        '&filter[_or][0][course_availability][entity_name][_eq]=$position&filter[_or][1][course_availability][entity_name][_eq]=$unitPLN&filter[_or][2][course_availability][entity_name][_eq]=0$region&filter[_or][3][course_availability][entity_name][_eq]=$unit&filter[_or][4][course_availability][entity_name][_eq]=$job&filter[course_availability][start_date][_lte]=$now&filter[course_availability][end_date][_gte]=$now';
+  }
 
   Future<void> getCourseByEmployeeId(String empId) async {
     try {
@@ -78,8 +97,9 @@ class CourseController extends GetxController {
   Future<void> fetchAllCourses() async {
     try {
       isAllCourse.value = true;
+      log('>>> $courseFilter');
       final result = await dio.get(
-          '/items/course?limit=200&fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id');
+          '/items/course?limit=200&fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id$courseFilter');
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       courseList.value = courseResponse.data!.toList();
     } catch (e) {
@@ -158,7 +178,7 @@ class CourseController extends GetxController {
         '&filter={"_or": [$q], "_and": [{"title": {"_contains": "$query"}}]}';
     try {
       final result = await dio.get(
-          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id$listQuery');
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id$courseFilter$listQuery');
 
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       searchResults.value = courseResponse.data!.toList();
@@ -170,7 +190,7 @@ class CourseController extends GetxController {
   Future<void> searchCourseByActivity(String activityId) async {
     try {
       final result = await dio.get(
-          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id&filter[activities][_eq]=$activityId');
+          '/items/course?fields[]=*,image.*,activities.title,activities.id,employee_course.*, employee_bookmark.id, employee_bookmark.employee_id&filter[activities][_eq]=$activityId$courseFilter');
       CourseResponse courseResponse = CourseResponse.fromJson(result.data);
       searchResults.value = courseResponse.data!.toList();
     } catch (e) {

@@ -10,6 +10,7 @@ class CourseData {
   int? duration;
   dynamic materialContent;
   dynamic videoContent;
+  String? videoUrl;
   bool? isOpenExam;
   bool? isOpenTask;
   int? minScore;
@@ -32,6 +33,7 @@ class CourseData {
     this.duration,
     this.materialContent,
     this.videoContent,
+    this.videoUrl,
     this.isOpenExam,
     this.isOpenTask,
     this.minScore,
@@ -57,6 +59,7 @@ class CourseData {
     duration = json['duration'];
     materialContent = json['material_content'];
     videoContent = json['video_content'];
+    videoUrl = json['video_url'];
     isOpenExam = json['is_open_exam'];
     isOpenTask = json['is_open_task'];
     minScore = json['min_score'];
@@ -89,6 +92,7 @@ class CourseData {
     data['duration'] = duration;
     data['material_content'] = materialContent;
     data['video_content'] = videoContent;
+    data['video_url'] = videoUrl;
     data['is_open_exam'] = isOpenExam;
     data['is_open_task'] = isOpenTask;
     data['min_score'] = minScore;

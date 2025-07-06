@@ -383,7 +383,7 @@ class AchievmentPage extends StatelessWidget {
                                                                 .courseByEmployee
                                                                 .value
                                                                 .data![index]
-                                                                .examScore! >
+                                                                .examScore! >=
                                                             courseController
                                                                 .courseByEmployee
                                                                 .value
